@@ -1,0 +1,73 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+
+/**
+ * Sketch logomark — ink linework matching HandDrawnCircle / site illustrations.
+ * Geometry follows the jessica monogram (み-like continuous stroke):
+ * top stem → through the central crossings → right teardrop → bottom bowl → left terminal.
+ */
+const ring =
+  'M 50.6,5.8 C 73.2,4.4 94.8,21.6 95.2,49.4 C 95.6,76.2 76.4,95.4 50.8,95.8 C 25.6,96.2 5.4,78.8 4.8,51.2 C 4.2,25.4 24.8,5.2 48.4,5.0 C 49.6,4.9 51.4,6.2 50.4,7.2';
+
+const ringAccent = 'M 14.8,79.6 C 9.2,68.4 8.4,53.6 13.2,41.8';
+
+// Primary monogram — imperfect control points for pen feel
+const mark =
+  'M 29 17 C 37 16.5 46 19 52 27 C 56 34 57 44 54 52 C 50 62 38 70 28 64 C 22 60 24 50 36 52 C 48 54 58 55 66 50 C 76 42 86 37 92 43 C 98 49 96 60 86 62 C 78 64 72 58 71 66 C 70 78 60 90 46 90 C 30 90 18 78 18 62 C 18 54 21 50 24 49';
+
+// Second pass, lightly offset — reads as overdrawn ink
+const markAccent =
+  'M 30 18.5 C 38 17.5 46.5 20.5 52.5 28.5 C 56.5 35.5 57.5 44.5 54.5 52.5 C 50.5 62.5 38.5 70.5 28.5 64.5 C 22.5 60.5 24.5 50.5 36.5 52.5 C 48.5 54.5 58.5 55.5 66.5 50.5 C 76.5 42.5 86.5 37.5 91.5 43.5 C 97.5 49.5 95.5 60.5 85.5 62.5 C 77.5 64.5 71.5 58.5 70.5 66.5 C 69.5 78.5 59.5 90.5 45.5 90.5 C 29.5 90.5 17.5 78.5 17.5 62.5 C 17.5 54.5 20.5 50.5 23.5 49.5';
+---
+
+<svg
+  class:list={['jessica-mark', className]}
+  viewBox="0 0 100 100"
+  fill="none"
+  aria-hidden="true"
+>
+  <defs>
+    <filter
+      id="jessica-mark-sketch"
+      x="-12%"
+      y="-12%"
+      width="124%"
+      height="124%"
+      color-interpolation-filters="sRGB"
+    >
+      <feTurbulence
+        type="fractalNoise"
+        baseFrequency="0.9"
+        numOctaves="2"
+        seed="7"
+        result="noise"
+      />
+      <feDisplacementMap
+        in="SourceGraphic"
+        in2="noise"
+        scale="1.15"
+        xChannelSelector="R"
+        yChannelSelector="G"
+      />
+    </filter>
+  </defs>
+
+  <g filter="url(#jessica-mark-sketch)" class="jessica-mark__ink">
+    <path class="jessica-mark__ring" d={ring} pathLength="100" />
+    <path
+      class="jessica-mark__ring jessica-mark__ring--accent"
+      d={ringAccent}
+      pathLength="100"
+    />
+    <path class="jessica-mark__glyph" d={mark} pathLength="100" />
+    <path
+      class="jessica-mark__glyph jessica-mark__glyph--accent"
+      d={markAccent}
+      pathLength="100"
+    />
+  </g>
+</svg>

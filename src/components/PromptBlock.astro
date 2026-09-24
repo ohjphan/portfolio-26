@@ -1,0 +1,64 @@
+---
+interface Props {
+  text: string;
+  compact?: boolean;
+}
+
+const { text, compact = false } = Astro.props;
+const normalized = text.replace(/^\n+|\n+$/g, '');
+---
+
+<div class:list={['prompt-block', compact && 'prompt-block--compact']}>
+  <button
+    type="button"
+    class="prompt-block__copy"
+    data-prompt-copy
+    aria-label="Copy prompt"
+  >
+    <span class="prompt-block__copy-idle">Copy</span>
+    <span class="prompt-block__copy-done" hidden>Copied</span>
+  </button>
+  <pre class="prompt-block__pre"><code>{normalized}</code></pre>
+</div>
+
+<script>
+  function bindPromptCopy(root: ParentNode = document) {
+    root.querySelectorAll<HTMLButtonElement>('[data-prompt-copy]').forEach((button) => {
+      if (button.dataset.bound === 'true') return;
+      button.dataset.bound = 'true';
+
+      button.addEventListener('click', async () => {
+        const block = button.closest('.prompt-block');
+        const code = block?.querySelector('code');
+        const text = code?.textContent ?? '';
+        if (!text) return;
+
+        try {
+          await navigator.clipboard.writeText(text);
+        } catch {
+          const range = document.createRange();
+          range.selectNodeContents(code!);
+          const selection = window.getSelection();
+          selection?.removeAllRanges();
+          selection?.addRange(range);
+          document.execCommand('copy');
+          selection?.removeAllRanges();
+        }
+
+        const idle = button.querySelector<HTMLElement>('.prompt-block__copy-idle');
+        const done = button.querySelector<HTMLElement>('.prompt-block__copy-done');
+        if (idle && done) {
+          idle.hidden = true;
+          done.hidden = false;
+          window.setTimeout(() => {
+            idle.hidden = false;
+            done.hidden = true;
+          }, 1600);
+        }
+      });
+    });
+  }
+
+  bindPromptCopy();
+  document.addEventListener('astro:page-load', () => bindPromptCopy());
+</script>

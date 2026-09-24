@@ -1,0 +1,99 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import HandDrawnDivider from '../../components/HandDrawnDivider.astro';
+import JessicaSection from '../../components/JessicaSection.astro';
+import WethosStyleViz from '../../components/WethosStyleViz.astro';
+import TraitsViz from '../../components/TraitsViz.astro';
+import SketchLink from '../../components/SketchLink.astro';
+import { jessica } from '../../data/jessica';
+
+const { howToWork } = jessica;
+---
+
+<Layout title={howToWork.meta.title} description={howToWork.meta.description}>
+  <article class="how-to-work">
+    <header class="how-to-work__hero">
+      <p class="eyebrow">Collaboration guide</p>
+      <h1 class="heading-xl how-to-work__title">{howToWork.title}</h1>
+      <p class="how-to-work__role">{howToWork.role}</p>
+      <p class="how-to-work__intro">{howToWork.intro}</p>
+    </header>
+
+    <HandDrawnDivider />
+
+    <JessicaSection label="About me" title="My Wethos profile">
+      <div class="prose">
+        <p>
+          My Wethos Style is <strong>{howToWork.styleCode}</strong>. Here is how that
+          translates to my everyday work as a Staff Product Designer:
+        </p>
+      </div>
+    </JessicaSection>
+
+    <div class="how-to-work__viz">
+      <WethosStyleViz
+        styleCode={howToWork.styleCode}
+        dimensions={howToWork.dimensions}
+      />
+    </div>
+
+    <div class="how-to-work__dimensions">
+      {
+        howToWork.dimensions.map((d) => (
+          <section class="how-to-work__dimension">
+            <p class="how-to-work__dimension-score" aria-hidden="true">
+              {d.score}
+            </p>
+            <div>
+              <h3 class="how-to-work__dimension-title">
+                {d.key} {d.score} — {d.label}
+              </h3>
+              <p class="how-to-work__dimension-body">{d.description}</p>
+            </div>
+          </section>
+        ))
+      }
+    </div>
+
+    <HandDrawnDivider />
+
+    <JessicaSection label="Profile" title="Complete traits & biases">
+      <div class="prose">
+        <p>Below is the complete mapping of my observed traits and cognitive biases.</p>
+      </div>
+    </JessicaSection>
+
+    <div class="how-to-work__viz">
+      <TraitsViz traits={howToWork.traits} />
+    </div>
+
+    <HandDrawnDivider />
+
+    <JessicaSection label="Collaborate" title="Collaboration guidelines">
+      <div class="how-to-work__guidelines">
+        {
+          howToWork.guidelines.map((g) => (
+            <section class="how-to-work__guideline">
+              <p class="how-to-work__guideline-number">{g.number}</p>
+              <h3 class="how-to-work__guideline-title">{g.title}</h3>
+              {g.lead && <p class="how-to-work__guideline-lead">{g.lead}</p>}
+              <ul class="how-to-work__points">
+                {g.points.map((p) => (
+                  <li>
+                    <strong>{p.title}:</strong> {p.text}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))
+        }
+      </div>
+    </JessicaSection>
+
+    <HandDrawnDivider />
+
+    <p class="how-to-work__back">
+      <SketchLink href="/jessica">Back to Jessica</SketchLink>
+    </p>
+  </article>
+</Layout>

@@ -1,0 +1,30 @@
+---
+interface Props {
+  label: string;
+  title?: string;
+  number?: string;
+}
+
+const { label, title, number } = Astro.props;
+---
+
+<section class="jessica-band">
+  <div class="jessica-band__rail">
+    <p class="jessica-band__label">{label}</p>
+  </div>
+  <div class="jessica-band__main">
+    {
+      number && (
+        <p class="jessica-band__number">{number}</p>
+      )
+    }
+    {
+      title && (
+        <h2 class="jessica-band__title">{title}</h2>
+      )
+    }
+    <div class="jessica-band__body">
+      <slot />
+    </div>
+  </div>
+</section>

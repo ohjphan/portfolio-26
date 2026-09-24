@@ -1,0 +1,79 @@
+---
+import Layout from '../layouts/Layout.astro';
+import HandDrawnLinkStroke from '../components/HandDrawnLinkStroke.astro';
+import HomePortrait from '../components/HomePortrait.astro';
+import BrandMarquee from '../components/BrandMarquee.astro';
+import { site } from '../data/site';
+import { selectedWorkLogos } from '../data/selected-work';
+
+const { hello, prefix, shuffle, closing } = site.intro;
+---
+
+<Layout>
+  <header class="home-hero">
+    <div class="home-hero__copy">
+      <p class="eyebrow home-hero__hello">{hello}</p>
+      <h1 class="heading-xl home-hero__title">
+        <span class="home-hero__prefix">{prefix}</span>
+        <span class="home-hero__shuffle" aria-live="polite">
+          <span class="home-hero__shuffle-sizer" aria-hidden="true">
+            {shuffle.reduce((a, b) => (a.length >= b.length ? a : b))}
+          </span>
+          {
+            shuffle.map((phrase, index) => (
+              <span
+                class:list={[
+                  'home-hero__shuffle-item',
+                  index === 0 && 'is-active',
+                ]}
+              >
+                {phrase}
+              </span>
+            ))
+          }
+        </span>
+      </h1>
+      <p class="home-hero__lede">{closing}</p>
+      <div class="home-hero__cta">
+        <a href="/writing" class="home-btn home-btn--primary">
+          <span class="home-btn__text">
+            <span class="home-btn__label">Read Field Notes</span>
+            <HandDrawnLinkStroke />
+          </span>
+        </a>
+      </div>
+    </div>
+
+    <div class="home-hero__visual">
+      <HomePortrait />
+    </div>
+  </header>
+
+  <BrandMarquee items={selectedWorkLogos} />
+</Layout>
+
+<script is:inline>
+  (() => {
+    const root = document.querySelector('.home-hero__shuffle');
+    if (!root) return;
+
+    const items = Array.from(
+      root.querySelectorAll('.home-hero__shuffle-item'),
+    );
+    if (items.length < 2) return;
+
+    const reduceMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)',
+    ).matches;
+    if (reduceMotion) return;
+
+    let index = 0;
+    const intervalMs = 2800;
+
+    window.setInterval(() => {
+      items[index].classList.remove('is-active');
+      index = (index + 1) % items.length;
+      items[index].classList.add('is-active');
+    }, intervalMs);
+  })();
+</script>

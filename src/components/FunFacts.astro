@@ -1,0 +1,39 @@
+---
+interface FunFact {
+  image: string;
+  imageAlt: string;
+  headline: string;
+  detail: string;
+}
+
+interface Props {
+  items: readonly FunFact[];
+}
+
+const { items } = Astro.props;
+---
+
+<ul class="fun-facts" role="list">
+  {
+    items.map((item) => (
+      <li class="fun-facts__item">
+        <figure class="fun-facts__card">
+          <div class="fun-facts__media">
+            <img
+              src={item.image}
+              alt={item.imageAlt}
+              width="640"
+              height="480"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          <figcaption class="fun-facts__caption">
+            <p class="fun-facts__headline">{item.headline}</p>
+            <p class="fun-facts__detail">{item.detail}</p>
+          </figcaption>
+        </figure>
+      </li>
+    ))
+  }
+</ul>

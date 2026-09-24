@@ -1,0 +1,27 @@
+---
+import HandDrawnCircleStroke from './HandDrawnCircleStroke.astro';
+import HandDrawnLinkStroke from './HandDrawnLinkStroke.astro';
+
+interface Props {
+  href: string;
+  label: string;
+  current?: boolean;
+  class?: string;
+}
+
+const { href, label, current = false, class: className } = Astro.props;
+---
+
+<a
+  href={href}
+  class:list={['nav-link', 'eyebrow', className]}
+  aria-current={current ? 'page' : undefined}
+>
+  <span class="nav-link__label">
+    <span class="nav-link__ellipsis" aria-hidden="true">…</span>{label}
+  </span>
+  <HandDrawnCircleStroke />
+  <span class="nav-link__underline">
+    <HandDrawnLinkStroke />
+  </span>
+</a>

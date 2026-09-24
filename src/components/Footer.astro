@@ -1,0 +1,146 @@
+---
+import { site } from '../data/site';
+import HandDrawnDivider from './HandDrawnDivider.astro';
+
+const year = new Date().getFullYear();
+const { contact, madeIn } = site.footer;
+---
+
+<footer class="site-footer">
+  <HandDrawnDivider />
+  <p class="site-footer__meta">
+    <span>{madeIn}</span>
+    <span class="site-footer__meta-sep" aria-hidden="true">·</span>
+    <span>&copy; {year} Jessica Phan</span>
+    <span class="site-footer__socials">
+      <button
+        type="button"
+        class="site-footer__social"
+        data-email-user-rev={contact.emailUserRev}
+        data-email-domain={contact.emailDomain}
+        aria-label="Copy email address"
+        title="Copy email address"
+      >
+        <svg
+          class="site-footer__social-icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path
+            class="site-footer__social-path"
+            d="M 3.2,7.2 C 3,5.8 4.2,4.6 5.8,4.5 L 18.1,4.3 C 19.8,4.2 21.1,5.5 21,7.1 L 20.7,16.6 C 20.6,18.2 19.2,19.4 17.6,19.3 L 5.4,19.6 C 3.8,19.7 2.7,18.4 2.9,16.8 Z"
+            pathLength="100"
+          />
+          <path
+            class="site-footer__social-path"
+            d="M 3.4,7.1 C 7.8,10.4 11.2,12.8 12.1,13.3 C 12.7,13.7 13.4,13.6 14,13.2 C 15.2,12.4 18.6,9.8 20.8,7.4"
+            pathLength="100"
+          />
+          <path
+            class="site-footer__social-path site-footer__social-path--accent"
+            d="M 5.2,8.8 C 4.8,8.2 5.4,7.6 6.1,7.9"
+            pathLength="100"
+          />
+        </svg>
+      </button>
+      <a
+        class="site-footer__social"
+        href={contact.linkedin}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Jessica Phan on LinkedIn"
+      >
+        <svg
+          class="site-footer__social-icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path
+            class="site-footer__social-path"
+            d="M 5.2,3.4 C 3.6,3.6 2.6,4.8 2.8,6.6 L 3.1,17.6 C 3.2,19.5 4.6,20.7 6.4,20.5 L 17.6,20.2 C 19.4,20.1 20.6,18.6 20.4,16.8 L 20.1,5.9 C 20,4.1 18.4,3.1 16.6,3.3 Z"
+            pathLength="100"
+          />
+          <path
+            class="site-footer__social-path"
+            d="M 7.4,9.2 C 7.5,12.4 7.3,15.6 7.5,18.1"
+            pathLength="100"
+          />
+          <path
+            class="site-footer__social-path"
+            d="M 7.4,6.2 C 7.9,5.7 8.8,5.8 8.9,6.6 C 9,7.4 8.1,7.8 7.5,7.3 C 7.1,7 7.1,6.5 7.4,6.2"
+            pathLength="100"
+          />
+          <path
+            class="site-footer__social-path"
+            d="M 11.2,18 C 11.3,14.8 11.1,12.2 11.4,11 C 11.8,9.6 13.6,9.1 14.8,10 C 15.6,10.6 15.8,11.6 15.7,12.8 L 15.5,18"
+            pathLength="100"
+          />
+          <path
+            class="site-footer__social-path site-footer__social-path--accent"
+            d="M 4.6,5.2 C 4.2,4.8 4.8,4.4 5.2,4.7"
+            pathLength="100"
+          />
+        </svg>
+      </a>
+    </span>
+  </p>
+</footer>
+
+<script>
+  async function copyText(text: string) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      const input = document.createElement('textarea');
+      input.value = text;
+      input.setAttribute('readonly', '');
+      input.style.position = 'fixed';
+      input.style.opacity = '0';
+      document.body.appendChild(input);
+      input.select();
+      const ok = document.execCommand('copy');
+      document.body.removeChild(input);
+      return ok;
+    }
+  }
+
+  function bindObfuscatedEmail(root: ParentNode = document) {
+    root
+      .querySelectorAll<HTMLButtonElement>('[data-email-user-rev][data-email-domain]')
+      .forEach((button) => {
+        if (button.dataset.bound === 'true') return;
+        button.dataset.bound = 'true';
+
+        const userRev = button.dataset.emailUserRev;
+        const domain = button.dataset.emailDomain;
+        if (!userRev || !domain) return;
+
+        const address = `${userRev.split('').reverse().join('')}@${domain}`;
+        const idleLabel = 'Copy email address';
+        const doneLabel = 'Email copied';
+
+        button.addEventListener('click', async () => {
+          const ok = await copyText(address);
+          if (!ok) return;
+
+          button.setAttribute('aria-label', doneLabel);
+          button.setAttribute('title', doneLabel);
+          button.classList.add('is-copied');
+
+          window.setTimeout(() => {
+            button.setAttribute('aria-label', idleLabel);
+            button.setAttribute('title', idleLabel);
+            button.classList.remove('is-copied');
+          }, 1600);
+        });
+      });
+  }
+
+  bindObfuscatedEmail();
+  document.addEventListener('astro:page-load', () => bindObfuscatedEmail());
+</script>

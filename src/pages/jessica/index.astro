@@ -1,0 +1,114 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import HandDrawnDivider from '../../components/HandDrawnDivider.astro';
+import JessicaSection from '../../components/JessicaSection.astro';
+import FunFacts from '../../components/FunFacts.astro';
+import SketchLink from '../../components/SketchLink.astro';
+import HandDrawnLinkStroke from '../../components/HandDrawnLinkStroke.astro';
+import { jessica } from '../../data/jessica';
+
+const amazonUrl = (asin: string) =>
+  `https://www.amazon.com/dp/${asin}?tag=${jessica.books.amazonTag}`;
+---
+
+<Layout title={jessica.meta.title} description={jessica.meta.description}>
+  <header class="jessica-hero">
+    <div class="jessica-hero__main">
+      <h1 class="heading-xl">{jessica.hero.title}</h1>
+      <p class="tagline">{jessica.hero.subheading}</p>
+    </div>
+  </header>
+
+  <HandDrawnDivider />
+
+  <JessicaSection label={jessica.about.label}>
+    <div class="jessica-about-layout">
+      <div class="jessica-about-layout__copy">
+        <div class="prose jessica-about">
+          {
+            jessica.about.paragraphs.map((paragraph) => (
+              <p>
+                {typeof paragraph === 'string' ? (
+                  paragraph
+                ) : (
+                  paragraph.segments.map((segment) =>
+                    'href' in segment ? (
+                      <SketchLink href={segment.href}>{segment.text}</SketchLink>
+                    ) : (
+                      segment.text
+                    ),
+                  )
+                )}
+              </p>
+            ))
+          }
+        </div>
+        <p class="jessica-about__cta">
+          <a href={jessica.howToWork.href} class="home-btn home-btn--primary">
+            <span class="home-btn__text">
+              <span class="home-btn__label">{jessica.howToWork.cta}</span>
+              <HandDrawnLinkStroke />
+            </span>
+          </a>
+        </p>
+      </div>
+      <figure class="jessica-about-layout__portrait">
+        <img
+          src="/images/jessica-in-5/16-closing-sketch.png"
+          alt="Ink sketch of Jessica in her studio chair"
+          width="720"
+          height="900"
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+    </div>
+  </JessicaSection>
+
+  <HandDrawnDivider />
+
+  <JessicaSection label={jessica.funFacts.label}>
+    <FunFacts items={jessica.funFacts.items} />
+  </JessicaSection>
+
+  <HandDrawnDivider />
+
+  <JessicaSection label="A few favorite books">
+    <p class="jessica-section__lede">{jessica.books.lede}</p>
+    <div class="book-shelf">
+      <ul class="book-shelf__grid" role="list">
+        {
+          jessica.books.items.map((book) => (
+            <li class="book-shelf__item">
+              <a
+                class="book-shelf__cover-link"
+                href={amazonUrl(book.asin)}
+                target="_blank"
+                rel="noopener noreferrer sponsored"
+                aria-label={`View ${book.title} on Amazon`}
+              >
+                <div class="book-shelf__media">
+                  <img
+                    class="book-shelf__cover"
+                    src={book.image}
+                    alt={book.imageAlt}
+                    width="240"
+                    height="360"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+              </a>
+              <div class="book-shelf__caption">
+                <p class="book-shelf__title">{book.title}</p>
+                <p class="book-shelf__author">{book.author}</p>
+                <p class="book-shelf__note">{book.note}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="book-shelf__disclosure">{jessica.books.amazonDisclosure}</p>
+    </div>
+  </JessicaSection>
+</Layout>

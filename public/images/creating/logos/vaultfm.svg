@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="Vault.fm">
+  <defs>
+    <mask id="vault-wave">
+      <rect width="48" height="48" fill="#ffffff"/>
+      <rect rx="1.12097" x="8.33447" y="22.879" width="2.24194" height="2.24194" fill="#000000"/>
+      <rect rx="1.12097" x="13.1826" y="20.6371" width="2.24194" height="6.72581" fill="#000000"/>
+      <rect rx="1.12097" x="18.0308" y="15.5928" width="2.24194" height="16.8145" fill="#000000"/>
+      <rect rx="1.12097" x="22.8789" y="10.9688" width="2.24194" height="26.0625" fill="#000000"/>
+      <rect rx="1.12097" x="27.7271" y="15.5928" width="2.24194" height="16.8145" fill="#000000"/>
+      <rect rx="1.12097" x="32.5752" y="20.6371" width="2.24194" height="6.72581" fill="#000000"/>
+      <rect rx="1.12097" x="37.4238" y="22.879" width="2.24194" height="2.24194" fill="#000000"/>
+    </mask>
+  </defs>
+  <rect width="48" height="48" rx="24" fill="#111111" mask="url(#vault-wave)"/>
+</svg>

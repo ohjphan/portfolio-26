@@ -1,0 +1,14 @@
+interface:
+  display_name: Storyboards and Concept Sketches
+  short_description: Create low-fidelity stories and UI flows
+  default_prompt: Use $storyboards-and-concept-sketches to turn this experience or
+    product idea into an approved low-fidelity visual.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

@@ -1,0 +1,9 @@
+---
+import SketchLink from './SketchLink.astro';
+
+const { href } = Astro.props;
+---
+
+<SketchLink href={href} class="prose-link">
+  <slot />
+</SketchLink>

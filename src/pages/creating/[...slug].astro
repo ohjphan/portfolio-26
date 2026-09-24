@@ -1,0 +1,95 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import SketchAnchor from '../../components/SketchAnchor.astro';
+import HandDrawnLinkStroke from '../../components/HandDrawnLinkStroke.astro';
+import HandDrawnDivider from '../../components/HandDrawnDivider.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import PromptBlock from '../../components/PromptBlock.astro';
+import WorkflowSteps from '../../components/WorkflowSteps.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects', ({ data }) => !data.draft);
+
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const { category, organization, description, projectUrl, projectUrlLabel } =
+  project.data;
+
+const ctaLabel = projectUrlLabel ?? 'Try it live';
+
+const allProjects = (
+  await getCollection('projects', ({ data }) => !data.draft)
+).sort((a, b) => {
+  const orderA = a.data.order ?? Infinity;
+  const orderB = b.data.order ?? Infinity;
+  if (orderA !== orderB) return orderA - orderB;
+  return a.data.title.localeCompare(b.data.title);
+});
+
+const others = allProjects.filter((item) => item.id !== project.id);
+const sameCategory = others.filter((item) => item.data.category === category);
+const related = [
+  ...sameCategory,
+  ...others.filter((item) => item.data.category !== category),
+].slice(0, 3);
+---
+
+<Layout title={project.data.title} description={description}>
+  <article>
+    <header class="essay-header">
+      <h1 class="essay-title">{organization}</h1>
+      <aside class="project-lede" aria-label="Project summary">
+        <p class="project-lede__text">{description}</p>
+        {
+          projectUrl && (
+            <p class="project-cta">
+              <a
+                href={projectUrl}
+                class="home-btn home-btn--primary"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span class="home-btn__text">
+                  <span class="home-btn__label">{ctaLabel}</span>
+                  <HandDrawnLinkStroke />
+                </span>
+              </a>
+            </p>
+          )
+        }
+      </aside>
+    </header>
+
+    <div class="prose">
+      <Content components={{ a: SketchAnchor, PromptBlock, WorkflowSteps }} />
+    </div>
+
+    {
+      related.length > 0 && (
+        <aside class="related-section related-section--projects">
+          <HandDrawnDivider />
+          <h2 class="related-title">More creating</h2>
+          <div class="project-grid">
+            {related.map((item) => (
+              <ProjectCard
+                title={item.data.title}
+                description={item.data.description}
+                organization={item.data.organization}
+                href={`/creating/${item.id}`}
+                illustration={item.data.illustration}
+                illustrationAlt={item.data.illustrationAlt}
+              />
+            ))}
+          </div>
+        </aside>
+      )
+    }
+  </article>
+</Layout>

@@ -1,0 +1,23 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import JessicaInFive from '../../components/JessicaInFive.astro';
+import { jessica } from '../../data/jessica';
+
+const { inFive } = jessica;
+---
+
+<Layout
+  title={inFive.title}
+  description={inFive.description}
+  pageClass="page--deck"
+  hideFooter
+  hideNav
+>
+  <div class="deck">
+    <a href="/jessica" class="deck__close" aria-label="Close Jessica in 5">
+      <span aria-hidden="true">×</span>
+    </a>
+
+    <JessicaInFive slides={inFive.slides} presentation />
+  </div>
+</Layout>

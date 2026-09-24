@@ -1,0 +1,41 @@
+---
+import { getCollection, render } from 'astro:content';
+import EssayLayout from '../../layouts/EssayLayout.astro';
+import SketchAnchor from '../../components/SketchAnchor.astro';
+
+export async function getStaticPaths() {
+  const essays = await getCollection('essays', ({ data }) => !data.draft);
+
+  return essays.map((essay) => ({
+    params: { slug: essay.id },
+    props: { essay },
+  }));
+}
+
+const { essay } = Astro.props;
+const { Content } = await render(essay, {
+  components: { a: SketchAnchor },
+});
+
+const allEssays = (
+  await getCollection('essays', ({ data }) => !data.draft)
+).sort((a, b) => {
+  const orderA = a.data.order ?? Infinity;
+  const orderB = b.data.order ?? Infinity;
+  if (orderA !== orderB) return orderA - orderB;
+  return a.data.title.localeCompare(b.data.title);
+});
+
+const others = allEssays.filter((item) => item.id !== essay.id);
+const sameCategory = others.filter(
+  (item) => item.data.category === essay.data.category,
+);
+const related = [
+  ...sameCategory,
+  ...others.filter((item) => item.data.category !== essay.data.category),
+].slice(0, 3);
+---
+
+<EssayLayout essay={essay} related={related}>
+  <Content />
+</EssayLayout>

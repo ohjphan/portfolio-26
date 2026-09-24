@@ -1,0 +1,106 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import EssayCard from '../../components/EssayCard.astro';
+import EssayFeature from '../../components/EssayFeature.astro';
+import HandDrawnCircleStroke from '../../components/HandDrawnCircleStroke.astro';
+import HandDrawnLinkStroke from '../../components/HandDrawnLinkStroke.astro';
+import { getCollection } from 'astro:content';
+import { essayCategories } from '../../content.config';
+import { interleaveEssaysByCategory } from '../../lib/essays';
+
+const published = await getCollection('essays', ({ data }) => !data.draft);
+
+const featured =
+  published.find((essay) => essay.data.featured && essay.data.cover) ?? null;
+
+const essays = interleaveEssaysByCategory(
+  featured
+    ? published.filter((essay) => essay.id !== featured.id)
+    : published,
+);
+
+const activeCategories = essayCategories;
+const filters = [
+  { label: 'All', value: 'all' },
+  ...activeCategories.map((category) => ({ label: category, value: category })),
+];
+---
+
+<Layout
+  title="Writing"
+  description="A collection of thoughts and ideas. My field notes."
+>
+  <header>
+    <h1 class="heading-lg">Writing</h1>
+    <p class="text-muted" style="margin-top: 0.75rem;">
+      A collection of thoughts and ideas. My field notes.
+    </p>
+  </header>
+
+  {
+    featured && (
+      <EssayFeature
+        title={featured.data.title}
+        description={featured.data.description}
+        href={`/writing/${featured.id}`}
+        category={featured.data.category}
+        cover={featured.data.cover!}
+        coverAlt={featured.data.coverAlt}
+      />
+    )
+  }
+
+  <div class="essay-filters" role="group" aria-label="Filter by category">
+    {
+      filters.map(({ label, value }, index) => (
+        <button
+          type="button"
+          class:list={['essay-filter', { 'is-active': index === 0 }]}
+          data-filter={value}
+        >
+          <span class="essay-filter__label">{label}</span>
+          <HandDrawnCircleStroke />
+          <span class="essay-filter__underline">
+            <HandDrawnLinkStroke />
+          </span>
+        </button>
+      ))
+    }
+  </div>
+
+  <div class="essay-grid" id="essay-grid">
+    {
+      essays.map((essay) => (
+        <EssayCard
+          title={essay.data.title}
+          description={essay.data.description}
+          href={`/writing/${essay.id}`}
+          category={essay.data.category}
+          cover={essay.data.cover}
+          coverAlt={essay.data.coverAlt}
+        />
+      ))
+    }
+  </div>
+</Layout>
+
+<script>
+  const filterButtons = document.querySelectorAll('.essay-filter');
+  const cards = document.querySelectorAll('.essay-card');
+
+  filterButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const filter = button.getAttribute('data-filter') ?? 'all';
+
+      filterButtons.forEach((item) => {
+        item.classList.toggle('is-active', item === button);
+      });
+
+      cards.forEach((card) => {
+        const category = card.getAttribute('data-category');
+        const visible = filter === 'all' || category === filter;
+        card.toggleAttribute('hidden', !visible);
+      });
+    });
+  });
+</script>

@@ -1,0 +1,19 @@
+---
+import SketchIcon from './SketchIcon.astro';
+
+interface Props {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+const { icon, title, description } = Astro.props;
+---
+
+<article class="idea-card">
+  <div class="idea-card__icon" aria-hidden="true">
+    <SketchIcon name={icon} />
+  </div>
+  <h3 class="idea-card__title">{title}</h3>
+  <p class="idea-card__description">{description}</p>
+</article>

@@ -1,0 +1,34 @@
+---
+import HandDrawnPlus from './HandDrawnPlus.astro';
+import SketchLink from './SketchLink.astro';
+
+interface Item {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  items: readonly string[] | readonly Item[];
+}
+
+const { items } = Astro.props;
+
+function getItem(item: string | Item) {
+  if (typeof item === 'string') return { label: item, href: undefined };
+  return item;
+}
+---
+
+<ul class="editorial-list">
+  {
+    items.map((item) => {
+      const { label, href } = getItem(item);
+      return (
+        <li class="editorial-list__item">
+          <HandDrawnPlus class="editorial-list__plus" />
+          <span>{href ? <SketchLink href={href}>{label}</SketchLink> : label}</span>
+        </li>
+      );
+    })
+  }
+</ul>

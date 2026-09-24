@@ -1,0 +1,60 @@
+---
+import {
+  isLightBrand,
+  type SelectedWorkItem,
+} from '../data/selected-work';
+
+interface Props {
+  items: SelectedWorkItem[];
+}
+
+const { items } = Astro.props;
+/** Duplicate for a seamless loop */
+const loop = [...items, ...items];
+---
+
+<section class="brand-marquee" aria-label="Companies I've worked with">
+  <div class="brand-marquee__head">
+    <p class="section-title">Worked with</p>
+  </div>
+
+  <div class="brand-marquee__viewport">
+    <ul class="brand-marquee__track">
+      {
+        loop.map((item, index) => (
+          <li
+            class="brand-marquee__item"
+            aria-hidden={index >= items.length ? 'true' : undefined}
+          >
+            <a
+              href={item.href}
+              class:list={[
+                'logo-garden__card',
+                'brand-marquee__card',
+                isLightBrand(item.color) && 'logo-garden__card--light',
+              ]}
+              style={`--brand: ${item.color}; --logo-scale: ${item.logoScale ?? 1}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              tabindex={index >= items.length ? -1 : undefined}
+              aria-label={`${item.label}, ${item.category}`}
+            >
+              <span class="logo-garden__category">{item.category}</span>
+              {item.logo ? (
+                <img
+                  class="logo-garden__logo"
+                  src={item.logo}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : (
+                <span class="logo-garden__mark">{item.label}</span>
+              )}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

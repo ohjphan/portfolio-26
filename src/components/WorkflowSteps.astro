@@ -1,0 +1,91 @@
+---
+import SketchLink from './SketchLink.astro';
+
+interface Step {
+  title?: string;
+  detail?: string;
+  text?: string;
+  href?: string;
+}
+
+interface Props {
+  steps: Step[];
+}
+
+const { steps } = Astro.props;
+
+const circles = [
+  'M 18,5.5 C 26,3.5 33.5,8.5 34,18 C 35,27 28.5,34.5 18.5,34 C 9,35 3.5,27.5 4,18 C 3,9 10,4 18,5.5 C 16.5,4 15,5.5 16.5,6.5',
+  'M 17.5,4.8 C 27,3 34.5,9 34.2,18.5 C 34.8,28.5 27,35 17.8,34.5 C 8,35.2 3,27 3.8,17.5 C 3.2,8.5 9.5,3.5 17.5,4.8 C 16,3.8 14.5,5 16,6',
+  'M 18.2,5 C 25.5,3.2 34,8 34.5,17.8 C 35.2,27.5 28,35 18,34.2 C 8.5,34.8 2.8,27 3.5,18.2 C 2.8,9.2 10.5,3.8 18.2,5 C 17,4.2 15.5,5.2 16.8,6.2',
+];
+
+const connectors = [
+  'M 6,2 C 4.5,12 7.5,22 5.5,34 C 4,46 7,56 6,68',
+  'M 5.5,1 C 7,14 4,26 6.2,38 C 7.5,50 4.5,60 5.8,70',
+  'M 6.2,2 C 5,13 7.8,24 5.2,36 C 3.5,48 6.5,58 5.5,69',
+];
+---
+
+<ol class="workflow-steps">
+  {
+    steps.map((step, index) => {
+      const circle = circles[index % circles.length];
+      const connector = connectors[index % connectors.length];
+      const isLast = index === steps.length - 1;
+
+      return (
+        <li class="workflow-steps__item">
+          <span class="workflow-steps__marker" aria-hidden="true">
+            <svg
+              class="workflow-steps__circle"
+              viewBox="0 0 38 38"
+              overflow="visible"
+            >
+              <path class="workflow-steps__circle-path" d={circle} pathLength="100" />
+              <path
+                class="workflow-steps__circle-path workflow-steps__circle-path--accent"
+                d="M 8,22 C 6.5,18.5 8,14.5 11.5,15.5"
+                pathLength="100"
+              />
+            </svg>
+            <span class="workflow-steps__num">{index + 1}</span>
+            {!isLast && (
+              <svg
+                class="workflow-steps__connector"
+                viewBox="0 0 12 72"
+                preserveAspectRatio="none"
+                overflow="visible"
+              >
+                <path
+                  class="workflow-steps__connector-path"
+                  d={connector}
+                  pathLength="100"
+                />
+                <path
+                  class="workflow-steps__connector-path workflow-steps__connector-path--accent"
+                  d={connectors[(index + 1) % connectors.length]}
+                  pathLength="100"
+                />
+              </svg>
+            )}
+          </span>
+          <span class="workflow-steps__body">
+            {step.text ? (
+              step.href ? (
+                <SketchLink href={step.href}>{step.text}</SketchLink>
+              ) : (
+                step.text
+              )
+            ) : (
+              <>
+                <strong>{step.title}</strong>
+                {step.detail ? <> — {step.detail}</> : null}
+              </>
+            )}
+          </span>
+        </li>
+      );
+    })
+  }
+</ol>

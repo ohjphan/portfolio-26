@@ -1,0 +1,149 @@
+---
+interface Dimension {
+  key: string;
+  score: number;
+  label: string;
+}
+
+interface Props {
+  styleCode: string;
+  dimensions: readonly Dimension[];
+  maxScore?: number;
+}
+
+const { styleCode, dimensions, maxScore = 5 } = Astro.props;
+
+const size = 280;
+const cx = size / 2;
+const cy = size / 2;
+const radius = 96;
+
+function point(index: number, score: number) {
+  const angle = (-Math.PI / 2) + (index * 2 * Math.PI) / dimensions.length;
+  const r = (score / maxScore) * radius;
+  return {
+    x: cx + Math.cos(angle) * r,
+    y: cy + Math.sin(angle) * r,
+  };
+}
+
+function labelPoint(index: number) {
+  const angle = (-Math.PI / 2) + (index * 2 * Math.PI) / dimensions.length;
+  const r = radius + 36;
+  return {
+    x: cx + Math.cos(angle) * r,
+    y: cy + Math.sin(angle) * r,
+  };
+}
+
+const rings = [1, 2, 3, 4, 5];
+const polygon = dimensions
+  .map((d, i) => {
+    const p = point(i, d.score);
+    return `${p.x.toFixed(1)},${p.y.toFixed(1)}`;
+  })
+  .join(' ');
+---
+
+<figure class="wethos-style-viz" aria-labelledby="wethos-style-viz-title">
+  <div class="wethos-style-viz__header">
+    <p class="wethos-style-viz__code" aria-hidden="true">{styleCode}</p>
+    <h3 id="wethos-style-viz-title" class="wethos-style-viz__title">
+      Wethos style {styleCode}
+    </h3>
+    <p class="wethos-style-viz__caption">
+      Ideas · Relational · Action · Order on a 1–5 scale
+    </p>
+  </div>
+
+  <div class="wethos-style-viz__body">
+    <svg
+      class="wethos-style-viz__radar"
+      viewBox={`0 0 ${size} ${size}`}
+      role="img"
+      aria-label={`Radar chart of Wethos scores: ${dimensions.map((d) => `${d.key} ${d.score}`).join(', ')}`}
+    >
+      {
+        rings.map((ring) => {
+          const pts = dimensions
+            .map((_, i) => {
+              const p = point(i, ring);
+              return `${p.x.toFixed(1)},${p.y.toFixed(1)}`;
+            })
+            .join(' ');
+          return (
+            <polygon
+              class="wethos-style-viz__ring"
+              points={pts}
+              fill="none"
+            />
+          );
+        })
+      }
+      {
+        dimensions.map((_, i) => {
+          const tip = point(i, maxScore);
+          return (
+            <line
+              class="wethos-style-viz__axis"
+              x1={cx}
+              y1={cy}
+              x2={tip.x}
+              y2={tip.y}
+            />
+          );
+        })
+      }
+      <polygon class="wethos-style-viz__shape" points={polygon} />
+      {
+        dimensions.map((d, i) => {
+          const p = point(i, d.score);
+          return <circle class="wethos-style-viz__dot" cx={p.x} cy={p.y} r="4.5" />;
+        })
+      }
+      {
+        dimensions.map((d, i) => {
+          const p = labelPoint(i);
+          return (
+            <text
+              class="wethos-style-viz__label"
+              x={p.x}
+              y={p.y}
+              text-anchor="middle"
+              dominant-baseline="middle"
+            >
+              {d.key}
+              <tspan class="wethos-style-viz__score" x={p.x} dy="1.15em">
+                {d.score}
+              </tspan>
+            </text>
+          );
+        })
+      }
+    </svg>
+
+    <ul class="wethos-style-viz__bars" aria-label="Dimension scores">
+      {
+        dimensions.map((d) => (
+          <li class="wethos-bar">
+            <div class="wethos-bar__meta">
+              <span class="wethos-bar__key">{d.key}</span>
+              <span class="wethos-bar__value">{d.score}/{maxScore}</span>
+            </div>
+            <div
+              class="wethos-bar__track"
+              role="img"
+              aria-label={`${d.key}: ${d.score} out of ${maxScore}`}
+            >
+              <span
+                class="wethos-bar__fill"
+                style={`--score: ${d.score / maxScore}`}
+              />
+            </div>
+            <p class="wethos-bar__label">{d.label}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</figure>

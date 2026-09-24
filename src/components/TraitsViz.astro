@@ -1,0 +1,132 @@
+---
+interface Trait {
+  name: string;
+  range: string;
+  frequency: string;
+  kind?: string;
+}
+
+interface Props {
+  traits: readonly Trait[];
+}
+
+const { traits } = Astro.props;
+
+const mediumHigh = traits.filter((t) => t.range === 'Medium to High');
+const lowMedium = traits.filter((t) => t.range === 'Low to Medium');
+const few = traits.filter((t) => t.frequency === 'few');
+const many = traits.filter((t) => t.frequency === 'many');
+const biases = traits.filter((t) => t.kind === 'bias');
+const personality = traits.filter((t) => t.kind !== 'bias');
+
+const maxCount = Math.max(mediumHigh.length, lowMedium.length, few.length, many.length);
+---
+
+<figure class="traits-viz" aria-labelledby="traits-viz-title">
+  <div class="traits-viz__header">
+    <h3 id="traits-viz-title" class="traits-viz__title">Traits & biases at a glance</h3>
+    <p class="traits-viz__caption">
+      {personality.length} personality traits · {biases.length} cognitive biases ·
+      observation frequency from the Wethos profile
+    </p>
+  </div>
+
+  <div class="traits-viz__summary" role="list">
+    <div class="traits-stat" role="listitem">
+      <p class="traits-stat__value">{mediumHigh.length}</p>
+      <p class="traits-stat__label">Medium → High range</p>
+      <div class="traits-stat__meter" aria-hidden="true">
+        <span style={`--pct: ${mediumHigh.length / maxCount}`} />
+      </div>
+    </div>
+    <div class="traits-stat" role="listitem">
+      <p class="traits-stat__value">{lowMedium.length}</p>
+      <p class="traits-stat__label">Low → Medium range</p>
+      <div class="traits-stat__meter" aria-hidden="true">
+        <span style={`--pct: ${lowMedium.length / maxCount}`} />
+      </div>
+    </div>
+    <div class="traits-stat" role="listitem">
+      <p class="traits-stat__value">{few.length}</p>
+      <p class="traits-stat__label">Few observations</p>
+      <div class="traits-stat__meter" aria-hidden="true">
+        <span style={`--pct: ${few.length / maxCount}`} />
+      </div>
+    </div>
+    <div class="traits-stat traits-stat--accent" role="listitem">
+      <p class="traits-stat__value">{many.length}</p>
+      <p class="traits-stat__label">Many observations</p>
+      <div class="traits-stat__meter" aria-hidden="true">
+        <span style={`--pct: ${many.length / maxCount}`} />
+      </div>
+    </div>
+  </div>
+
+  <div class="traits-viz__groups">
+    <div class="traits-group">
+      <h4 class="traits-group__title">Medium to High · few observations</h4>
+      <ul class="traits-chips">
+        {
+          traits
+            .filter((t) => t.range === 'Medium to High' && t.frequency === 'few')
+            .map((t) => (
+              <li class="traits-chip">{t.name}</li>
+            ))
+        }
+      </ul>
+    </div>
+    <div class="traits-group">
+      <h4 class="traits-group__title">Low to Medium · few observations</h4>
+      <ul class="traits-chips">
+        {
+          traits
+            .filter((t) => t.range === 'Low to Medium' && t.frequency === 'few')
+            .map((t) => (
+              <li class="traits-chip traits-chip--muted">{t.name}</li>
+            ))
+        }
+      </ul>
+    </div>
+    <div class="traits-group traits-group--bias">
+      <h4 class="traits-group__title">Cognitive biases · many observations</h4>
+      <ul class="traits-chips">
+        {
+          biases.map((t) => (
+            <li class="traits-chip traits-chip--bias">{t.name}</li>
+          ))
+        }
+      </ul>
+      <p class="traits-group__note">
+        These show up often — worth collaborative awareness, especially around scoping and timelines.
+      </p>
+    </div>
+  </div>
+
+  <div class="traits-table-wrap">
+    <table class="traits-table">
+      <caption class="visually-hidden">Complete traits and biases profile</caption>
+      <thead>
+        <tr>
+          <th scope="col">Trait or bias</th>
+          <th scope="col">Range</th>
+          <th scope="col">Frequency</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          traits.map((t) => (
+            <tr class:list={[t.kind === 'bias' && 'is-bias']}>
+              <th scope="row">{t.name}</th>
+              <td>{t.range}</td>
+              <td>
+                <span class:list={['traits-freq', t.frequency === 'many' && 'traits-freq--many']}>
+                  {t.frequency === 'many' ? 'many observations' : 'few observations'}
+                </span>
+              </td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+</figure>

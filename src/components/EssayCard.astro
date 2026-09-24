@@ -1,0 +1,48 @@
+---
+import HandDrawnLinkStroke from './HandDrawnLinkStroke.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  href: string;
+  category: string;
+  cover?: string;
+  coverAlt?: string;
+}
+
+const { title, description, href, category, cover, coverAlt = '' } = Astro.props;
+---
+
+<article
+  class:list={['essay-card', cover && 'essay-card--cover']}
+  data-category={category}
+>
+  <a href={href} class="essay-card__link">
+    <div class="essay-card__face" data-category={category}>
+      {
+        cover && (
+          <div class="essay-card__media">
+            <img
+              src={cover}
+              alt={coverAlt}
+              width="960"
+              height="720"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        )
+      }
+      <span class="essay-card__category">{category}</span>
+      <div class="essay-card__content">
+        <h3 class="essay-card__title">
+          <span class="essay-card__title-sketch">
+            <span class="essay-card__title-text">{title}</span>
+            <HandDrawnLinkStroke />
+          </span>
+        </h3>
+        <p class="essay-card__description">{description}</p>
+      </div>
+    </div>
+  </a>
+</article>

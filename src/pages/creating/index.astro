@@ -1,0 +1,69 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import LogoGarden from '../../components/LogoGarden.astro';
+import SelectedWorksCarousel from '../../components/SelectedWorksCarousel.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import HandDrawnDivider from '../../components/HandDrawnDivider.astro';
+import { getCollection } from 'astro:content';
+import { selectedWorkLogos, selectedWorkSlides } from '../../data/selected-work';
+
+const published = (
+  await getCollection('projects', ({ data }) => !data.draft)
+).sort((a, b) => {
+  const orderA = a.data.order ?? Infinity;
+  const orderB = b.data.order ?? Infinity;
+  if (orderA !== orderB) return orderA - orderB;
+  return a.data.title.localeCompare(b.data.title);
+});
+
+const experiments = published.filter(
+  (project) => project.data.category === 'Experiments',
+);
+---
+
+<Layout
+  title="Creating"
+  description="A few of the companies I’ve worked with along the way from early-stage startups, hypergrowth teams, enterprise, and more."
+>
+  <header class="creating-hero">
+    <h1 class="heading-lg">Creating</h1>
+    <p class="text-muted creating-hero__intro">
+      A few of the companies I’ve worked with along the way from early-stage
+      startups, hypergrowth teams, enterprise, and more.
+    </p>
+  </header>
+
+  {
+    selectedWorkSlides.length > 0 && (
+      <section class="creating-selected" aria-label="Selected works">
+        <SelectedWorksCarousel slides={selectedWorkSlides} />
+      </section>
+    )
+  }
+
+  <HandDrawnDivider />
+
+  <LogoGarden items={selectedWorkLogos} title="Worked with" />
+
+  {
+    experiments.length > 0 && (
+      <>
+        <HandDrawnDivider />
+        <section class="creating-experiments" aria-label="Projects">
+          <div class="project-grid">
+            {experiments.map((project) => (
+              <ProjectCard
+                title={project.data.title}
+                description={project.data.description}
+                organization={project.data.organization}
+                href={`/creating/${project.id}`}
+                illustration={project.data.illustration}
+                illustrationAlt={project.data.illustrationAlt}
+              />
+            ))}
+          </div>
+        </section>
+      </>
+    )
+  }
+</Layout>

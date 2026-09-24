@@ -1,0 +1,10 @@
+---
+import { site } from '../data/site';
+---
+
+<section>
+  <p class="section-title">Currently</p>
+  <ul class="currently-list">
+    {site.currently.map((item) => <li>{item}</li>)}
+  </ul>
+</section>

@@ -1,0 +1,178 @@
+---
+interface Slide {
+  image: string;
+  alt: string;
+  eyebrow: string;
+  title: string;
+  note: string;
+}
+
+interface Props {
+  slides: readonly Slide[];
+  presentation?: boolean;
+}
+
+const { slides, presentation = false } = Astro.props;
+const total = slides.length;
+---
+
+<div
+  class:list={['in-five', presentation && 'in-five--presentation']}
+  data-in-five
+  data-total={total}
+>
+  <div class="in-five__stage">
+    {
+      slides.map((slide, index) => (
+        <figure
+          class:list={['in-five__slide', index === 0 && 'is-active']}
+          data-slide={index}
+          aria-hidden={index === 0 ? 'false' : 'true'}
+        >
+          <div class="in-five__media">
+            <img
+              src={slide.image}
+              alt={slide.alt}
+              width="1600"
+              height="900"
+              loading={index === 0 ? 'eager' : 'lazy'}
+              decoding="async"
+            />
+          </div>
+          <figcaption class="in-five__caption">
+            <p class="in-five__eyebrow">{slide.eyebrow}</p>
+            <h2 class="in-five__title">{slide.title}</h2>
+            <p class="in-five__note">{slide.note}</p>
+          </figcaption>
+        </figure>
+      ))
+    }
+
+    <div class="in-five__chrome">
+      <button
+        type="button"
+        class="in-five__nav in-five__nav--prev"
+        data-prev
+        aria-label="Previous slide"
+      >
+        <span aria-hidden="true">←</span>
+      </button>
+
+      <div class="in-five__status">
+        <p class="in-five__progress" aria-live="polite">
+          <span data-progress-current>1</span>
+          <span class="in-five__progress-sep" aria-hidden="true">/</span>
+          <span>{total}</span>
+        </p>
+        <div class="in-five__dots" role="tablist" aria-label="Jessica in 5 slides">
+          {
+            slides.map((_, index) => (
+              <button
+                type="button"
+                class:list={['in-five__dot', index === 0 && 'is-active']}
+                role="tab"
+                aria-selected={index === 0 ? 'true' : 'false'}
+                aria-label={`Go to slide ${index + 1}`}
+                data-goto={index}
+              />
+            ))
+          }
+        </div>
+      </div>
+
+      <button
+        type="button"
+        class="in-five__nav in-five__nav--next"
+        data-next
+        aria-label="Next slide"
+      >
+        <span aria-hidden="true">→</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (() => {
+    const root = document.querySelector('[data-in-five]');
+    if (!root) return;
+
+    const slides = [...root.querySelectorAll('[data-slide]')];
+    const dots = [...root.querySelectorAll('[data-goto]')];
+    const prev = root.querySelector('[data-prev]');
+    const next = root.querySelector('[data-next]');
+    const progress = root.querySelector('[data-progress-current]');
+    if (slides.length === 0) return;
+
+    let index = 0;
+    let timer = null;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const INTERVAL = 10000;
+    const isPresentation = root.classList.contains('in-five--presentation');
+
+    const show = (nextIndex) => {
+      index = (nextIndex + slides.length) % slides.length;
+      slides.forEach((slide, i) => {
+        const active = i === index;
+        slide.classList.toggle('is-active', active);
+        slide.setAttribute('aria-hidden', active ? 'false' : 'true');
+      });
+      dots.forEach((dot, i) => {
+        const active = i === index;
+        dot.classList.toggle('is-active', active);
+        dot.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+      if (progress) progress.textContent = String(index + 1);
+    };
+
+    const stop = () => {
+      if (timer) {
+        clearInterval(timer);
+        timer = null;
+      }
+    };
+
+    const start = () => {
+      if (reduceMotion || isPresentation) return;
+      stop();
+      timer = setInterval(() => show(index + 1), INTERVAL);
+    };
+
+    prev?.addEventListener('click', () => {
+      show(index - 1);
+      start();
+    });
+    next?.addEventListener('click', () => {
+      show(index + 1);
+      start();
+    });
+    dots.forEach((dot) => {
+      dot.addEventListener('click', () => {
+        show(Number(dot.getAttribute('data-goto')));
+        start();
+      });
+    });
+
+    window.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowRight' || event.key === ' ') {
+        event.preventDefault();
+        show(index + 1);
+        start();
+      } else if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        show(index - 1);
+        start();
+      }
+    });
+
+    if (!isPresentation) {
+      root.addEventListener('mouseenter', stop);
+      root.addEventListener('mouseleave', start);
+      root.addEventListener('focusin', stop);
+      root.addEventListener('focusout', (event) => {
+        if (!root.contains(event.relatedTarget)) start();
+      });
+      start();
+    }
+  })();
+</script>
