@@ -1,5 +1,6 @@
 ---
 import HandDrawnLinkStroke from './HandDrawnLinkStroke.astro';
+import { withBase } from '../lib/paths';
 
 interface Props {
   title: string;
@@ -35,13 +36,13 @@ const showThumb = Boolean(illustration);
   ]}
   data-category={category}
 >
-  <a href={href} class="project-card__link">
+  <a href={withBase(href)} class="project-card__link">
     <div class="project-card__face" data-category={category}>
       {
         isFeatured && showThumb && (
           <div class="project-card__media">
             <img
-              src={illustration}
+              src={withBase(illustration!)}
               alt={illustrationAlt}
               width="480"
               height="480"
@@ -55,7 +56,7 @@ const showThumb = Boolean(illustration);
         !isFeatured && showThumb && (
           <div class="project-card__thumb">
             <img
-              src={illustration}
+              src={withBase(illustration!)}
               alt={illustrationAlt}
               width="960"
               height="640"

@@ -1,5 +1,6 @@
 ---
 import HandDrawnLinkStroke from './HandDrawnLinkStroke.astro';
+import { withBase } from '../lib/paths';
 
 interface Props {
   title: string;
@@ -14,10 +15,10 @@ const { title, description, href, category, cover, coverAlt = '' } = Astro.props
 ---
 
 <article class="essay-feature" data-category={category}>
-  <a href={href} class="essay-feature__link">
+  <a href={withBase(href)} class="essay-feature__link">
     <div class="essay-feature__media">
       <img
-        src={cover}
+        src={withBase(cover)}
         alt={coverAlt}
         width="1440"
         height="960"

@@ -1,17 +1,18 @@
 ---
 import { site } from '../data/site';
+import { stripBase, withBase } from '../lib/paths';
 import NavLink from './NavLink.astro';
 import HandDrawnCircleStroke from './HandDrawnCircleStroke.astro';
 import HandDrawnLinkStroke from './HandDrawnLinkStroke.astro';
 import JessicaMark from './JessicaMark.astro';
 
-const { pathname } = Astro.url;
+const pathname = stripBase(Astro.url.pathname);
 const homeCurrent = pathname === '/';
 ---
 
 <nav class="site-nav" aria-label="Main">
   <a
-    href="/"
+    href={withBase('/')}
     class="nav-link eyebrow site-nav__home"
     aria-current={homeCurrent ? 'page' : undefined}
     aria-label={site.title}
@@ -31,7 +32,7 @@ const homeCurrent = pathname === '/';
       site.nav.map(({ label, href }) => (
         <li>
           <NavLink
-            href={href}
+            href={withBase(href)}
             label={label}
             current={pathname.startsWith(href) && href !== '/'}
           />

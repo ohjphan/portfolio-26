@@ -1,5 +1,6 @@
 ---
 import HandDrawnLinkStroke from './HandDrawnLinkStroke.astro';
+import { withBase } from '../lib/paths';
 
 interface Props {
   title: string;
@@ -17,13 +18,13 @@ const { title, description, href, category, cover, coverAlt = '' } = Astro.props
   class:list={['essay-card', cover && 'essay-card--cover']}
   data-category={category}
 >
-  <a href={href} class="essay-card__link">
+  <a href={withBase(href)} class="essay-card__link">
     <div class="essay-card__face" data-category={category}>
       {
         cover && (
           <div class="essay-card__media">
             <img
-              src={cover}
+              src={withBase(cover)}
               alt={coverAlt}
               width="960"
               height="720"

@@ -1,4 +1,6 @@
 ---
+import { withBase } from '../lib/paths';
+
 /**
  * Homepage hero collage portrait (transparent background).
  */
@@ -9,7 +11,7 @@ const height = 682;
 <figure class="home-portrait">
   <img
     class="home-portrait__image"
-    src="/images/jessica-hero-portrait-collage.png"
+    src={withBase('/images/jessica-hero-portrait-collage.png')}
     alt="Collage portrait of Jessica resting her chin on her hand, layered with torn blue, orange, and purple paper shapes"
     width={width}
     height={height}

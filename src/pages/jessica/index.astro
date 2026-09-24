@@ -7,6 +7,8 @@ import SketchLink from '../../components/SketchLink.astro';
 import HandDrawnLinkStroke from '../../components/HandDrawnLinkStroke.astro';
 import { jessica } from '../../data/jessica';
 
+import { withBase } from '../../lib/paths';
+
 const amazonUrl = (asin: string) =>
   `https://www.amazon.com/dp/${asin}?tag=${jessica.books.amazonTag}`;
 ---
@@ -44,7 +46,7 @@ const amazonUrl = (asin: string) =>
           }
         </div>
         <p class="jessica-about__cta">
-          <a href={jessica.howToWork.href} class="home-btn home-btn--primary">
+          <a href={withBase(jessica.howToWork.href)} class="home-btn home-btn--primary">
             <span class="home-btn__text">
               <span class="home-btn__label">{jessica.howToWork.cta}</span>
               <HandDrawnLinkStroke />
@@ -54,7 +56,7 @@ const amazonUrl = (asin: string) =>
       </div>
       <figure class="jessica-about-layout__portrait">
         <img
-          src="/images/jessica-in-5/16-closing-sketch.png"
+          src={withBase("/images/jessica-in-5/16-closing-sketch.png")}
           alt="Ink sketch of Jessica in her studio chair"
           width="720"
           height="900"
@@ -90,7 +92,7 @@ const amazonUrl = (asin: string) =>
                 <div class="book-shelf__media">
                   <img
                     class="book-shelf__cover"
-                    src={book.image}
+                    src={withBase(book.image)}
                     alt={book.imageAlt}
                     width="240"
                     height="360"

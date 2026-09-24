@@ -6,6 +6,8 @@ import BrandMarquee from '../components/BrandMarquee.astro';
 import { site } from '../data/site';
 import { selectedWorkLogos } from '../data/selected-work';
 
+import { withBase } from '../lib/paths';
+
 const { hello, prefix, shuffle, closing } = site.intro;
 ---
 
@@ -35,7 +37,7 @@ const { hello, prefix, shuffle, closing } = site.intro;
       </h1>
       <p class="home-hero__lede">{closing}</p>
       <div class="home-hero__cta">
-        <a href="/writing" class="home-btn home-btn--primary">
+        <a href={withBase("/writing")} class="home-btn home-btn--primary">
           <span class="home-btn__text">
             <span class="home-btn__label">Read Field Notes</span>
             <HandDrawnLinkStroke />

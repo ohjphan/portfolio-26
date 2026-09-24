@@ -17,6 +17,7 @@ const {
 } = Astro.props;
 
 const ariaLabel = title || intro || 'Companies I\u2019ve worked with';
+import { withBase } from '../lib/paths';
 ---
 
 <section class="logo-garden" aria-label={ariaLabel}>
@@ -45,7 +46,7 @@ const ariaLabel = title || intro || 'Companies I\u2019ve worked with';
             {item.logo ? (
               <img
                 class="logo-garden__logo"
-                src={item.logo}
+                src={withBase(item.logo)}
                 alt=""
                 loading="lazy"
               />

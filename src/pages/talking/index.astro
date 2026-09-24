@@ -4,6 +4,7 @@ import HandDrawnDivider from '../../components/HandDrawnDivider.astro';
 import HandDrawnLinkStroke from '../../components/HandDrawnLinkStroke.astro';
 import { talking } from '../../data/talking';
 import { site } from '../../data/site';
+import { withBase } from '../../lib/paths';
 ---
 
 <Layout title={talking.meta.title} description={talking.meta.description}>
@@ -15,7 +16,7 @@ import { site } from '../../data/site';
   <figure class="talking-feature">
     <img
       class="talking-feature__image"
-      src="/images/talking/ideation-sketching-workshop-melbourne.png"
+      src={withBase("/images/talking/ideation-sketching-workshop-melbourne.png")}
       alt="Torn-paper collage of Jessica speaking into a mic at a workshop, with audience sketches and floating design diagrams on blue and red scraps"
       width="1024"
       height="682"
@@ -68,7 +69,7 @@ import { site } from '../../data/site';
     <figure class="talking-invite__figure">
       <img
         class="talking-invite__image"
-        src="/images/talking/open-invitation.png"
+        src={withBase("/images/talking/open-invitation.png")}
         alt="Collage of an empty chair linked by a hand-drawn red line to a woman gesturing in conversation"
         width="960"
         height="520"

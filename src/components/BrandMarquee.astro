@@ -11,6 +11,7 @@ interface Props {
 const { items } = Astro.props;
 /** Duplicate for a seamless loop */
 const loop = [...items, ...items];
+import { withBase } from '../lib/paths';
 ---
 
 <section class="brand-marquee" aria-label="Companies I've worked with">
@@ -43,7 +44,7 @@ const loop = [...items, ...items];
               {item.logo ? (
                 <img
                   class="logo-garden__logo"
-                  src={item.logo}
+                  src={withBase(item.logo)}
                   alt=""
                   loading="lazy"
                   decoding="async"

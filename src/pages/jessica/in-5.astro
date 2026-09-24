@@ -3,6 +3,8 @@ import Layout from '../../layouts/Layout.astro';
 import JessicaInFive from '../../components/JessicaInFive.astro';
 import { jessica } from '../../data/jessica';
 
+import { withBase } from '../../lib/paths';
+
 const { inFive } = jessica;
 ---
 
@@ -14,7 +16,7 @@ const { inFive } = jessica;
   hideNav
 >
   <div class="deck">
-    <a href="/jessica" class="deck__close" aria-label="Close Jessica in 5">
+    <a href={withBase("/jessica")} class="deck__close" aria-label="Close Jessica in 5">
       <span aria-hidden="true">×</span>
     </a>
 

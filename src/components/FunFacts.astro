@@ -11,6 +11,7 @@ interface Props {
 }
 
 const { items } = Astro.props;
+import { withBase } from '../lib/paths';
 ---
 
 <ul class="fun-facts" role="list">
@@ -20,7 +21,7 @@ const { items } = Astro.props;
         <figure class="fun-facts__card">
           <div class="fun-facts__media">
             <img
-              src={item.image}
+              src={withBase(item.image)}
               alt={item.imageAlt}
               width="640"
               height="480"

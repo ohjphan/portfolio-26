@@ -1,5 +1,6 @@
 ---
 import HandDrawnLinkStroke from './HandDrawnLinkStroke.astro';
+import { withBase } from '../lib/paths';
 
 interface Props {
   href: string;
@@ -14,10 +15,12 @@ const {
   external = false,
   'aria-current': ariaCurrent,
 } = Astro.props;
+
+const resolvedHref = external ? href : withBase(href);
 ---
 
 <a
-  href={href}
+  href={resolvedHref}
   class:list={['sketch-link', className]}
   aria-current={ariaCurrent}
   target={external ? '_blank' : undefined}

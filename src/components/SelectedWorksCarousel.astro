@@ -7,6 +7,7 @@ interface Props {
 
 const { slides } = Astro.props;
 const total = slides.length;
+import { withBase } from '../lib/paths';
 ---
 
 {
@@ -25,7 +26,7 @@ const total = slides.length;
           >
             <div class="in-five__media selected-works__media">
               <img
-                src={slide.image}
+                src={withBase(slide.image)}
                 alt={`${slide.company} — ${slide.project}. ${slide.imageAlt}`}
                 width="1600"
                 height="900"

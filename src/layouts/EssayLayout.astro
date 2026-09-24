@@ -4,6 +4,7 @@ import HandDrawnDivider from '../components/HandDrawnDivider.astro';
 import SketchLink from '../components/SketchLink.astro';
 import SketchIcon from '../components/SketchIcon.astro';
 import EssayCard from '../components/EssayCard.astro';
+import { withBase } from '../lib/paths';
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
@@ -24,7 +25,7 @@ const { title, category, tldr, publication, publicationUrl, cover, coverAlt } =
           <figure class="essay-cover">
             <img
               class="essay-cover__image"
-              src={cover}
+              src={withBase(cover)}
               alt={coverAlt ?? ''}
               width="1200"
               height="900"
