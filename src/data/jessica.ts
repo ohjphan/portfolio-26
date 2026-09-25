@@ -166,6 +166,14 @@ export const jessica = {
           'College summers sealing cars, bolting seatbelts, installing ECUs — and learning a thing or two about grit.',
       },
       {
+        image: '/images/jessica/fun-facts/03-christmas-trees.jpg',
+        imageAlt:
+          'Collage of luxury holiday wreaths, garlands, and Christmas trees',
+        headline: 'I’ve designed holiday collections still sold today.',
+        detail:
+          'A handful of luxury wreaths and holiday collections for Balsam Hill in 2010 — still on shelves years later.',
+      },
+      {
         image: '/images/jessica/fun-facts/05-crypto-hack.jpg',
         imageAlt:
           'Collage of a late-night laptop hackathon with neon light trails',
@@ -177,9 +185,17 @@ export const jessica = {
         image: '/images/jessica/fun-facts/04-jewelry.jpg',
         imageAlt:
           'Surreal collage of a gold and black ring on a pedestal with a Newton’s cradle shadow',
-        headline: 'A ring I’ve designed made it to the museum.',
+        headline: 'I founded a jewelry brand on the side.',
         detail:
-          'A Hathorway piece sold at SFMOMA — and was worn by the leading lady in Netflix’s Clickbait.',
+          'Hathorway — geometric pieces in upcycled buffalo horn. One ring sold at SFMOMA and was worn by the leading lady in Netflix’s Clickbait.',
+      },
+      {
+        image: '/images/jessica/fun-facts/06-ritual-meals.jpg',
+        imageAlt:
+          'Collage of Ritual Meals — chopping herbs, grain bowls, packaging, and the coral bowl logo',
+        headline: 'I built the postpartum support I couldn’t find.',
+        detail:
+          'Co-founded Ritual Meals after my first pregnancy — brand, marketing, content, and code for nourishing meal delivery.',
       },
       {
         image: '/images/jessica/fun-facts/07-house.jpg',
@@ -194,8 +210,6 @@ export const jessica = {
   books: {
     lede: 'You are what you eat, what you consume, what you read. Here is a peek into mine. In short, these have shaped me to be an intuitive builder, principled human, gentle with imperfection, serious about craft.',
     amazonTag: 'jessicaphan0d-20',
-    amazonDisclosure:
-      'If you buy something, I may earn a small commission. Obviously, no extra cost to you.',
     items: [
       {
         title: 'Women Who Run with the Wolves',

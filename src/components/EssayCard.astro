@@ -22,7 +22,7 @@ const { title, description, href, category, cover, coverAlt = '' } = Astro.props
     <div class="essay-card__face" data-category={category}>
       {
         cover && (
-          <div class="essay-card__media">
+          <div class="essay-card__media" data-mosaic-scroll>
             <img
               src={withBase(cover)}
               alt={coverAlt}

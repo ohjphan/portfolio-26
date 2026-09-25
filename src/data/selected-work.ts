@@ -1,9 +1,8 @@
 export type SelectedWorkShowcase = {
   project: string;
-  role: string;
   image: string;
   imageAlt: string;
-  /** Short project context from the original case study */
+  /** Punchy one-liner under the headline */
   summary?: string;
   date?: string;
 };
@@ -19,7 +18,7 @@ export type SelectedWorkItem = {
   logoScale?: number;
   /** When false, hide from logo garden / marquee (showcase-only) */
   inLogos?: boolean;
-  /** Featured work slides for the Creating carousel */
+  /** Featured work for the Creating scroll showcase */
   showcases?: SelectedWorkShowcase[];
 };
 
@@ -27,7 +26,6 @@ export type SelectedWorkSlide = {
   company: string;
   companyHref: string;
   project: string;
-  role: string;
   image: string;
   imageAlt: string;
   summary?: string;
@@ -49,6 +47,42 @@ export function isLightBrand(hex: string): boolean {
 
 export const selectedWork: SelectedWorkItem[] = [
   {
+    label: 'Learning Commons',
+    href: 'https://learningcommons.org',
+    color: '#1DB470',
+    category: 'AI Infra',
+    logo: '/images/creating/logos/learning-commons.svg',
+    showcases: [
+      {
+        project: 'One meaningful first action',
+        date: '2026',
+        summary:
+          'Developer portal onboarding that guides new builders through setup to one first win — so they don’t stall before getting value.',
+        image: '/images/creating/showcases/learning-commons-onboarding.jpg',
+        imageAlt:
+          'Torn-paper collage of Learning Commons developer portal onboarding — create account, tell us about yourself, home dashboard with finish-your-setup, and Knowledge Graph get-started steps linked by a green path',
+      },
+      {
+        project: 'Trust before access',
+        date: '2026',
+        summary:
+          'Partnership admin for the developer portal — verify orgs, confirm DNS, and manage dataset requests so the catalog stays trusted as partners come online.',
+        image: '/images/creating/showcases/learning-commons-admin.jpg',
+        imageAlt:
+          'Torn-paper collage of the Learning Commons Partnership Admin dashboard — org verifications list, DNS-verified org detail with evidence checklist, dataset requests, and status menu',
+      },
+      {
+        project: 'Docs, out of the docs',
+        date: '2025',
+        summary:
+          'Spearheaded moving Learning Commons documentation off Google Docs onto a public Mintlify site — vendor audit, styling, and migration.',
+        image: '/images/creating/showcases/learning-commons-docs.jpg',
+        imageAlt:
+          'Collage of Learning Commons Docs on Mintlify — home with product cards, Knowledge Graph, Evaluators, Agent Skills, and API Reference screens floating over green geometric and code accents',
+      },
+    ],
+  },
+  {
     label: 'OpenSea',
     href: 'https://opensea.io',
     color: '#2081E2',
@@ -56,28 +90,28 @@ export const selectedWork: SelectedWorkItem[] = [
     logo: '/images/creating/logos/opensea.svg',
     showcases: [
       {
-        project: 'OpenSea logo',
+        project: 'A quieter ship',
         date: '2021',
-        role: 'Logo & brand design',
-        summary: 'A quieter ship mark for OpenSea, redesigned as the brand grew up.',
+        summary:
+          'Logo and brand design for a quieter ship mark as OpenSea grew up.',
         image: '/images/creating/showcases/opensea-logo.jpg',
         imageAlt:
           'Collage of OpenSea logo exploration — pencil sketches, digital iterations, and the final blue sailboat mark',
       },
       {
-        project: 'OpenSea iOS App',
+        project: 'OpenSea, in your pocket',
         date: '2018 – Present',
-        role: 'Product design, marketing & brand design',
-        summary: 'The first mobile app for OpenSea, designed end to end.',
+        summary:
+          'Product, marketing, and brand design for OpenSea’s first mobile app — end to end.',
         image: '/images/creating/showcases/opensea-mobile-product.jpg',
         imageAlt:
           'Three phones showing OpenSea mobile — discovery, rankings, and profile — against a dark blue and purple NFT collage',
       },
       {
-        project: 'OpenSea marketplace',
+        project: 'Marketplace at full tilt',
         date: '2018 – 2022',
-        role: 'Product design',
-        summary: 'The full marketplace experience for OpenSea, shaped through hypergrowth.',
+        summary:
+          'Product design for the full OpenSea marketplace experience through hypergrowth.',
         image: '/images/creating/showcases/opensea-marketplace.jpg',
         imageAlt:
           'Surreal isometric collage of OpenSea marketplace screens — discovery, profiles, collections, and price history — woven into an Escher-like architectural world',
@@ -116,11 +150,10 @@ export const selectedWork: SelectedWorkItem[] = [
     logo: '/images/creating/logos/vaultfm.svg',
     showcases: [
       {
-        project: 'Vault.fm iOS app',
+        project: 'Before anyone else hears it',
         date: '2024 – Present',
-        role: 'Product design',
         summary:
-          'An exclusive music community on Vault.fm where artists share unreleased tracks. First user, James Blake.',
+          'Product design for an exclusive music community. First user: James Blake.',
         image: '/images/creating/showcases/vaultfm-ios-app.jpg',
         imageAlt:
           'Three phones showing Vault.fm screens for artist profile, community chat, and earnings against a street-style music collage',
@@ -135,10 +168,9 @@ export const selectedWork: SelectedWorkItem[] = [
     inLogos: false,
     showcases: [
       {
-        project: 'Sound.xyz iOS app',
+        project: 'Music, on-chain',
         date: '2018 – Present',
-        role: 'Product design',
-        summary: 'A web3 music discovery app for Sound.xyz.',
+        summary: 'Product design for a web3 music discovery app on Sound.xyz.',
         image: '/images/creating/showcases/sound-xyz-ios-app.jpg',
         imageAlt:
           'Six phones showing Sound.xyz iOS screens for home, search, feed, player, playlist, and library against neon audio waves',
@@ -156,48 +188,11 @@ export const selectedWork: SelectedWorkItem[] = [
       {
         project: 'The Membership Guide',
         date: '2020',
-        role: 'Site design, infographics, logo design',
-        summary: 'A membership handbook for newsrooms, designed for NYU.',
+        summary:
+          'Site, infographics, and logo design for a membership handbook for newsrooms.',
         image: '/images/creating/showcases/nyu-membership-guide.jpg',
         imageAlt:
           'Hands holding The Membership Guide homepage among torn-paper collage pieces — logo, member-journey map, and handbook screens',
-      },
-    ],
-  },
-  {
-    label: 'Hathorway',
-    href: 'https://hathorway.com',
-    color: '#1C1C1C',
-    category: 'Jewelry',
-    inLogos: false,
-    showcases: [
-      {
-        project: 'Hathorway jewelry',
-        date: '2018 – Present',
-        role: 'Design & craft',
-        summary:
-          'A jewelry brand I founded — geometric pieces in upcycled buffalo horn, from brand and craft to logistics at Hathorway.',
-        image: '/images/creating/showcases/hathorway-jewelry.jpg',
-        imageAlt:
-          'Process collage of Hathorway earrings — cutting horn, assembling geometric pieces, and the finished dangle on a stone stand',
-      },
-    ],
-  },
-  {
-    label: 'Ritual Meals',
-    href: 'https://ritualmeals.com',
-    color: '#E87A3A',
-    category: 'Food',
-    inLogos: false,
-    showcases: [
-      {
-        project: 'Ritual Meals',
-        date: '2018 – Present',
-        role: 'Co-founder — brand, design, marketing & packaging',
-        summary: 'A postpartum meal delivery service I co-founded at Ritual Meals.',
-        image: '/images/creating/showcases/ritual-meals.jpg',
-        imageAlt:
-          'Collage of Ritual Meals packaging and hands holding colorful postpartum meal bowls against warm concentric circles',
       },
     ],
   },
@@ -207,13 +202,6 @@ export const selectedWork: SelectedWorkItem[] = [
     color: '#00A5A8',
     category: 'Education',
     logo: '/images/creating/logos/czi.svg',
-  },
-  {
-    label: 'Learning Commons',
-    href: 'https://learningcommons.org',
-    color: '#1DB470',
-    category: 'AI Infra',
-    logo: '/images/creating/logos/learning-commons.svg',
   },
   {
     label: 'Weee!',
@@ -238,22 +226,15 @@ export const selectedWork: SelectedWorkItem[] = [
     category: 'Ecommerce',
     logo: '/images/creating/logos/jcpenney.svg',
     logoScale: 0.85,
-  },
-  {
-    label: 'Balsam Hill',
-    href: 'https://www.balsamhill.com',
-    color: '#7C1324',
-    category: 'Ecommerce',
-    logo: '/images/creating/logos/balsam-hill.png',
-    logoScale: 1.2,
     showcases: [
       {
-        project: 'Wreaths & garlands',
-        role: 'Product design',
-        summary: 'Realistic Christmas trees, wreaths, and garlands designed for Balsam Hill.',
-        image: '/images/creating/showcases/balsam-hill-wreaths.jpg',
+        project: 'Mobile, finally',
+        date: '2014',
+        summary:
+          'Product design for a responsive overhaul as shoppers moved to phones.',
+        image: '/images/creating/showcases/jcpenney-mobile.jpg',
         imageAlt:
-          'Collage of Balsam Hill holiday wreaths, garlands, and a small tree with red and green graphic overlays',
+          'JCPenney mobile screens floating over a vintage department-store collage — homepage, product listing, product detail, and navigation woven with a red ribbon',
       },
     ],
   },
@@ -264,14 +245,13 @@ export const selectedWorkLogos = selectedWork.filter(
   (item) => item.inLogos !== false,
 );
 
-/** Featured Creating carousel slides — only entries with showcase images */
+/** Featured Creating showcase rows — only entries with showcase images */
 export const selectedWorkSlides: SelectedWorkSlide[] = selectedWork.flatMap(
   (item) =>
     (item.showcases ?? []).map((showcase) => ({
       company: item.label,
       companyHref: item.href,
       project: showcase.project,
-      role: showcase.role,
       image: showcase.image,
       imageAlt: showcase.imageAlt,
       summary: showcase.summary,

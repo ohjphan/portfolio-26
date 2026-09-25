@@ -1,0 +1,278 @@
+---
+import type { SelectedWorkSlide } from '../data/selected-work';
+import { withBase } from '../lib/paths';
+
+interface Props {
+  works: readonly SelectedWorkSlide[];
+}
+
+const { works } = Astro.props;
+const total = works.length;
+
+const sketchCircles = [
+  'M 18,5.5 C 26,3.5 33.5,8.5 34,18 C 35,27 28.5,34.5 18.5,34 C 9,35 3.5,27.5 4,18 C 3,9 10,4 18,5.5 C 16.5,4 15,5.5 16.5,6.5',
+  'M 17.5,4.8 C 27,3 34.5,9 34.2,18.5 C 34.8,28.5 27,35 17.8,34.5 C 8,35.2 3,27 3.8,17.5 C 3.2,8.5 9.5,3.5 17.5,4.8 C 16,3.8 14.5,5 16,6',
+  'M 18.2,5 C 25.5,3.2 34,8 34.5,17.8 C 35.2,27.5 28,35 18,34.2 C 8.5,34.8 2.8,27 3.5,18.2 C 2.8,9.2 10.5,3.8 18.2,5 C 17,4.2 15.5,5.2 16.8,6.2',
+];
+---
+
+{
+  total > 0 && (
+    <div
+      class="selected-works"
+      data-selected-works
+      data-total={total}
+    >
+      {/* Scroll-driven sticky stage (desktop) */}
+      <div class="selected-works__scroll">
+        <div class="selected-works__pin">
+          <nav class="selected-works__index" aria-label="Selected works">
+            {works.map((work, index) => (
+              <button
+                type="button"
+                class:list={[
+                  'selected-works__index-btn',
+                  index === 0 && 'is-active',
+                ]}
+                data-work-goto={index}
+                aria-label={`${String(index + 1).padStart(2, '0')}: ${work.company} — ${work.project}`}
+                aria-current={index === 0 ? 'true' : undefined}
+              >
+                <span class="selected-works__index-mark" aria-hidden="true">
+                  <svg
+                    class="selected-works__index-circle"
+                    viewBox="0 0 38 38"
+                    overflow="visible"
+                  >
+                    <path
+                      class="selected-works__index-circle-path"
+                      d={sketchCircles[index % sketchCircles.length]}
+                      pathLength="100"
+                    />
+                    <path
+                      class="selected-works__index-circle-path selected-works__index-circle-path--accent"
+                      d="M 8,22 C 6.5,18.5 8,14.5 11.5,15.5"
+                      pathLength="100"
+                    />
+                  </svg>
+                  <span class="selected-works__index-num">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                </span>
+              </button>
+            ))}
+          </nav>
+
+          <div class="selected-works__media-stage">
+            {works.map((work, index) => (
+              <figure
+                class:list={[
+                  'selected-works__media',
+                  index === 0 && 'is-active',
+                ]}
+                data-work-media={index}
+                aria-hidden={index === 0 ? 'false' : 'true'}
+              >
+                <img
+                  src={withBase(work.image)}
+                  alt={`${work.company} — ${work.project}. ${work.imageAlt}`}
+                  width="1600"
+                  height="900"
+                  loading={index === 0 ? 'eager' : 'lazy'}
+                  decoding="async"
+                />
+              </figure>
+            ))}
+          </div>
+
+          <div class="selected-works__copy-stage">
+            {works.map((work, index) => (
+              <div
+                class:list={[
+                  'selected-works__copy',
+                  index === 0 && 'is-active',
+                ]}
+                data-work-copy={index}
+                aria-hidden={index === 0 ? 'false' : 'true'}
+              >
+                <p class="selected-works__meta">
+                  <a
+                    class="selected-works__company"
+                    href={work.companyHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    tabindex={index === 0 ? 0 : -1}
+                  >
+                    {work.company}
+                  </a>
+                  {work.date && (
+                    <>
+                      <span class="selected-works__meta-sep" aria-hidden="true">
+                        ·
+                      </span>
+                      <time class="selected-works__date">{work.date}</time>
+                    </>
+                  )}
+                </p>
+                <h2 class="selected-works__headline">{work.project}</h2>
+                {work.summary && (
+                  <p class="selected-works__summary">{work.summary}</p>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div class="selected-works__rail" aria-hidden="true">
+          {works.map((_, index) => (
+            <div class="selected-works__step" data-work-step={index} />
+          ))}
+        </div>
+      </div>
+
+      {/* Stacked fallback for small screens / reduced motion */}
+      <div class="selected-works__stack">
+        {works.map((work, index) => (
+          <article class="selected-works__stack-item">
+            <figure class="selected-works__media" data-mosaic-scroll>
+              <img
+                src={withBase(work.image)}
+                alt={`${work.company} — ${work.project}. ${work.imageAlt}`}
+                width="1600"
+                height="900"
+                loading={index === 0 ? 'eager' : 'lazy'}
+                decoding="async"
+              />
+            </figure>
+            <div class="selected-works__copy">
+              <p class="selected-works__meta">
+                <a
+                  class="selected-works__company"
+                  href={work.companyHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {work.company}
+                </a>
+                {work.date && (
+                  <>
+                    <span class="selected-works__meta-sep" aria-hidden="true">
+                      ·
+                    </span>
+                    <time class="selected-works__date">{work.date}</time>
+                  </>
+                )}
+              </p>
+              <h2 class="selected-works__headline">{work.project}</h2>
+              {work.summary && (
+                <p class="selected-works__summary">{work.summary}</p>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+<script>
+  import { playMosaicReveal, observeScrollMosaics } from '../lib/mosaic-reveal';
+
+  observeScrollMosaics('.selected-works__stack [data-mosaic-scroll]');
+
+  (() => {
+    const root = document.querySelector('[data-selected-works]');
+    if (!root) return;
+
+    const scrollRoot = root.querySelector('.selected-works__scroll');
+    if (!scrollRoot) return;
+
+    const steps = [...root.querySelectorAll('[data-work-step]')];
+    const copies = [...root.querySelectorAll('[data-work-copy]')];
+    const medias = [...root.querySelectorAll('[data-work-media]')];
+    const gotos = [...root.querySelectorAll('[data-work-goto]')];
+    if (!steps.length) return;
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let index = 0;
+    const mosaicPlayed = new Set([0]);
+
+    const setActive = (next) => {
+      if (next === index) return;
+      index = next;
+
+      copies.forEach((panel, i) => {
+        const on = i === index;
+        panel.classList.toggle('is-active', on);
+        panel.setAttribute('aria-hidden', on ? 'false' : 'true');
+        panel.querySelectorAll('a').forEach((link) => {
+          link.tabIndex = on ? 0 : -1;
+        });
+      });
+
+      medias.forEach((media, i) => {
+        const on = i === index;
+        media.classList.toggle('is-active', on);
+        media.setAttribute('aria-hidden', on ? 'false' : 'true');
+      });
+
+      gotos.forEach((btn, i) => {
+        const on = i === index;
+        btn.classList.toggle('is-active', on);
+        if (on) btn.setAttribute('aria-current', 'true');
+        else btn.removeAttribute('aria-current');
+      });
+
+      if (!reduceMotion && !mosaicPlayed.has(index)) {
+        mosaicPlayed.add(index);
+        playMosaicReveal(medias[index]);
+      }
+    };
+
+    if (!reduceMotion) {
+      const firstMedia = medias[0];
+      if (firstMedia) {
+        const ioFirst = new IntersectionObserver(
+          (entries) => {
+            if (!entries.some((e) => e.isIntersecting)) return;
+            ioFirst.disconnect();
+            playMosaicReveal(firstMedia);
+          },
+          { threshold: 0.25 },
+        );
+        ioFirst.observe(scrollRoot);
+      }
+    }
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (!visible) return;
+        const next = Number(visible.target.getAttribute('data-work-step'));
+        if (Number.isFinite(next)) setActive(next);
+      },
+      {
+        root: null,
+        threshold: [0.35, 0.55, 0.75],
+        rootMargin: '-20% 0px -35% 0px',
+      },
+    );
+
+    steps.forEach((step) => io.observe(step));
+
+    gotos.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const next = Number(btn.getAttribute('data-work-goto'));
+        const step = steps[next];
+        if (!step) return;
+        step.scrollIntoView({
+          behavior: reduceMotion ? 'auto' : 'smooth',
+          block: 'center',
+        });
+        setActive(next);
+      });
+    });
+  })();
+</script>

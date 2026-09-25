@@ -16,7 +16,7 @@ const { title, description, href, category, cover, coverAlt = '' } = Astro.props
 
 <article class="essay-feature" data-category={category}>
   <a href={withBase(href)} class="essay-feature__link">
-    <div class="essay-feature__media">
+    <div class="essay-feature__media" data-mosaic-scroll>
       <img
         src={withBase(cover)}
         alt={coverAlt}

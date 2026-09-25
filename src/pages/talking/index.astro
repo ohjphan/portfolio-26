@@ -13,7 +13,7 @@ import { withBase } from '../../lib/paths';
     <p class="text-muted talking-hero__intro">{talking.hero.intro}</p>
   </header>
 
-  <figure class="talking-feature">
+  <figure class="talking-feature" data-mosaic-scroll>
     <img
       class="talking-feature__image"
       src={withBase("/images/talking/ideation-sketching-workshop-melbourne.png")}
@@ -79,3 +79,8 @@ import { withBase } from '../../lib/paths';
     </figure>
   </section>
 </Layout>
+
+<script>
+  import { observeScrollMosaics } from '../../lib/mosaic-reveal';
+  observeScrollMosaics();
+</script>

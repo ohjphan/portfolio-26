@@ -22,7 +22,7 @@ const { title, category, tldr, publication, publicationUrl, cover, coverAlt } =
     <header class="essay-header">
       {
         cover && (
-          <figure class="essay-cover">
+          <figure class="essay-cover" data-mosaic-scroll>
             <img
               class="essay-cover__image"
               src={withBase(cover)}
@@ -90,3 +90,8 @@ const { title, category, tldr, publication, publicationUrl, cover, coverAlt } =
     }
   </article>
 </Layout>
+
+<script>
+  import { observeWritingMosaics } from '../lib/mosaic-reveal';
+  observeWritingMosaics();
+</script>

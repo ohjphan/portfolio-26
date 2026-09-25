@@ -11,6 +11,9 @@ import { withBase } from '../../lib/paths';
 
 const amazonUrl = (asin: string) =>
   `https://www.amazon.com/dp/${asin}?tag=${jessica.books.amazonTag}`;
+
+const books = jessica.books.items;
+const bookLoop = [...books, ...books];
 ---
 
 <Layout title={jessica.meta.title} description={jessica.meta.description}>
@@ -78,39 +81,43 @@ const amazonUrl = (asin: string) =>
   <JessicaSection label="A few favorite books">
     <p class="jessica-section__lede">{jessica.books.lede}</p>
     <div class="book-shelf">
-      <ul class="book-shelf__grid" role="list">
-        {
-          jessica.books.items.map((book) => (
-            <li class="book-shelf__item">
-              <a
-                class="book-shelf__cover-link"
-                href={amazonUrl(book.asin)}
-                target="_blank"
-                rel="noopener noreferrer sponsored"
-                aria-label={`View ${book.title} on Amazon`}
+      <div class="book-shelf__viewport">
+        <ul class="book-shelf__track" role="list">
+          {
+            bookLoop.map((book, index) => (
+              <li
+                class="book-shelf__item"
+                aria-hidden={index >= books.length ? 'true' : undefined}
               >
-                <div class="book-shelf__media">
-                  <img
-                    class="book-shelf__cover"
-                    src={withBase(book.image)}
-                    alt={book.imageAlt}
-                    width="240"
-                    height="360"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </div>
-              </a>
-              <div class="book-shelf__caption">
-                <p class="book-shelf__title">{book.title}</p>
-                <p class="book-shelf__author">{book.author}</p>
-                <p class="book-shelf__note">{book.note}</p>
-              </div>
-            </li>
-          ))
-        }
-      </ul>
-      <p class="book-shelf__disclosure">{jessica.books.amazonDisclosure}</p>
+                <a
+                  class="book-shelf__cover-link"
+                  href={amazonUrl(book.asin)}
+                  target="_blank"
+                  rel="noopener noreferrer sponsored"
+                  tabindex={index >= books.length ? -1 : undefined}
+                  aria-label={`View ${book.title} on Amazon`}
+                >
+                  <div class="book-shelf__media">
+                    <img
+                      class="book-shelf__cover"
+                      src={withBase(book.image)}
+                      alt={book.imageAlt}
+                      width="240"
+                      height="360"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                  <div class="book-shelf__caption">
+                    <p class="book-shelf__title">{book.title}</p>
+                    <p class="book-shelf__author">{book.author}</p>
+                  </div>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
     </div>
   </JessicaSection>
 </Layout>

@@ -1,7 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import LogoGarden from '../../components/LogoGarden.astro';
-import SelectedWorksCarousel from '../../components/SelectedWorksCarousel.astro';
+import SelectedWorks from '../../components/SelectedWorks.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
 import HandDrawnDivider from '../../components/HandDrawnDivider.astro';
 import { getCollection } from 'astro:content';
@@ -36,7 +36,7 @@ const experiments = published.filter(
   {
     selectedWorkSlides.length > 0 && (
       <section class="creating-selected" aria-label="Selected works">
-        <SelectedWorksCarousel slides={selectedWorkSlides} />
+        <SelectedWorks works={selectedWorkSlides} />
       </section>
     )
   }
@@ -49,7 +49,18 @@ const experiments = published.filter(
     experiments.length > 0 && (
       <>
         <HandDrawnDivider />
-        <section class="creating-experiments" aria-label="Projects">
+        <section class="creating-experiments" aria-labelledby="experiments-title">
+          <header class="creating-experiments__header">
+            <h2 id="experiments-title" class="section-title">
+              Experiments
+            </h2>
+            <p class="creating-experiments__intro text-muted">
+              “Play is the highest form of research.” Einstein wasn’t wrong.
+              These side builds and prototypes are my form of play — where I
+              follow curiosity without a brief, and remember that making is
+              how creative people stay alive to the work.
+            </p>
+          </header>
           <div class="project-grid">
             {experiments.map((project) => (
               <ProjectCard
