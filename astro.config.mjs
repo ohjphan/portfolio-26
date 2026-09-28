@@ -3,9 +3,10 @@ import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import { visit } from 'unist-util-visit';
 
-const siteBase = '/portfolio-26';
+// Root on custom domain (jessica.is). Use '/' — not a repo subpath.
+const siteBase = '/';
 
-/** Prefix root-absolute src/href in Markdown/MDX so GitHub Pages base works. */
+/** Prefix root-absolute src/href in Markdown/MDX when a non-root base is set. */
 function rehypePrefixBase(base = '/') {
   const prefix = base === '/' ? '' : base.replace(/\/$/, '');
   return () => (tree) => {
@@ -29,7 +30,7 @@ function rehypePrefixBase(base = '/') {
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://ohjphan.github.io',
+  site: 'https://jessica.is',
   base: siteBase,
   integrations: [mdx()],
   markdown: {

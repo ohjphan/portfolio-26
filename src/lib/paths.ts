@@ -1,4 +1,4 @@
-/** Prefix a site path with Astro `base` (e.g. `/portfolio-26/` on GitHub Pages). */
+/** Prefix a site path with Astro `base` when the site is not served from `/`. */
 export function withBase(path: string): string {
   if (
     !path ||
