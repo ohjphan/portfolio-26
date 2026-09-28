@@ -1,6 +1,6 @@
 ---
 interface Props {
-  label: string;
+  label?: string;
   title?: string;
   number?: string;
 }
@@ -9,9 +9,13 @@ const { label, title, number } = Astro.props;
 ---
 
 <section class="jessica-band">
-  <div class="jessica-band__rail">
-    <p class="jessica-band__label">{label}</p>
-  </div>
+  {
+    label && (
+      <div class="jessica-band__rail">
+        <p class="jessica-band__label">{label}</p>
+      </div>
+    )
+  }
   <div class="jessica-band__main">
     {
       number && (

@@ -10,16 +10,15 @@ export const jessica = {
   about: {
     label: 'About',
     paragraphs: [
-      'I\u2019ve spent my career helping founders and teams make sense of the undefined\u2014turning ambiguity into products, brands, and experiences people care about.',
-      'Over time, I\u2019ve realized my work has never really been about software. It\u2019s about designing meaningful experiences. Sometimes those experiences are products. Sometimes they\u2019re stories, places, or ideas shared through writing.',
+      'I\u2019ve spent my career turning ambiguity into products, brands, and experiences people care about. The work was never really about software \u2014 it\u2019s about designing meaningful experiences, whether that\u2019s a product, a place, or an idea shared through writing.',
       {
         segments: [
           {
-            text: 'Today I\u2019m continuing to help founders and teams through consulting, writing ',
+            text: 'Today I help founders and teams through consulting, writing ',
           },
           { text: 'Field Notes', href: '/writing' },
           {
-            text: ', and building whatever curiosity leads me to next. Previously, I\u2019ve built meaningful experiences for Chan Zuckerberg Initiative, OpenSea, Sequoia Capital, and more.',
+            text: ', and building whatever curiosity leads me to next. Previously: Chan Zuckerberg Initiative, OpenSea, Sequoia Capital, and more.',
           },
         ],
       },
@@ -274,6 +273,32 @@ export const jessica = {
         image: '/images/jessica/books/book-21-qualities-leader.png',
         imageAlt: 'Cover of The 21 Indispensable Qualities of a Leader by John C. Maxwell',
         asin: '0785289046',
+      },
+    ],
+  },
+  explore: {
+    label: 'Explore what Jessica is...',
+    items: [
+      {
+        title: 'Writing',
+        description:
+          'Field notes on design, product, and the curious corners of life.',
+        href: '/writing',
+        accent: 'cobalt',
+      },
+      {
+        title: 'Talking',
+        description:
+          'Keynotes, workshops, and teaching on craft, product, and building.',
+        href: '/talking',
+        accent: 'mustard',
+      },
+      {
+        title: 'Creating',
+        description:
+          'Selected work, experiments, and things made along the way.',
+        href: '/creating',
+        accent: 'poppy',
       },
     ],
   },

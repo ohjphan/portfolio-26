@@ -18,15 +18,13 @@ const bookLoop = [...books, ...books];
 
 <Layout title={jessica.meta.title} description={jessica.meta.description}>
   <header class="jessica-hero">
-    <div class="jessica-hero__main">
-      <h1 class="heading-xl">{jessica.hero.title}</h1>
-      <p class="tagline">{jessica.hero.subheading}</p>
-    </div>
+    <h1 class="heading-lg">{jessica.hero.title}</h1>
+    <p class="text-muted jessica-hero__intro">{jessica.hero.subheading}</p>
   </header>
 
   <HandDrawnDivider />
 
-  <JessicaSection label={jessica.about.label}>
+  <JessicaSection title={jessica.about.label}>
     <div class="jessica-about-layout">
       <div class="jessica-about-layout__copy">
         <div class="prose jessica-about">
@@ -57,28 +55,31 @@ const bookLoop = [...books, ...books];
           </a>
         </p>
       </div>
-      <figure class="jessica-about-layout__portrait">
-        <img
-          src={withBase("/images/jessica-in-5/16-closing-sketch.png")}
-          alt="Ink sketch of Jessica in her studio chair"
-          width="720"
-          height="900"
-          loading="lazy"
-          decoding="async"
-        />
+      <figure class="jessica-about-layout__portrait" data-jessica-collage>
+        <div class="jessica-collage" data-mosaic-scroll>
+          <img
+            class="jessica-collage__image"
+            src={withBase("/images/jessica/about-collage.png")}
+            alt="Collage portrait of Jessica smiling, layered with torn paper, a microphone, an open book, jewelry, and a winding blue path"
+            width="1024"
+            height="682"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
       </figure>
     </div>
   </JessicaSection>
 
   <HandDrawnDivider />
 
-  <JessicaSection label={jessica.funFacts.label}>
+  <JessicaSection title={jessica.funFacts.label}>
     <FunFacts items={jessica.funFacts.items} />
   </JessicaSection>
 
   <HandDrawnDivider />
 
-  <JessicaSection label="A few favorite books">
+  <JessicaSection title="A few favorite books">
     <p class="jessica-section__lede">{jessica.books.lede}</p>
     <div class="book-shelf">
       <div class="book-shelf__viewport">
@@ -120,4 +121,95 @@ const bookLoop = [...books, ...books];
       </div>
     </div>
   </JessicaSection>
+
+  <HandDrawnDivider />
+
+  <JessicaSection title={jessica.explore.label}>
+    <ul class="explore-paths" role="list">
+      {
+        jessica.explore.items.map((item) => (
+          <li class="explore-paths__item">
+            <a
+              class="explore-paths__link"
+              href={withBase(item.href)}
+              data-accent={item.accent}
+            >
+              <div class="explore-paths__copy">
+                <h3 class="explore-paths__title">
+                  <span class="explore-paths__title-sketch">
+                    <span class="explore-paths__title-text">{item.title}</span>
+                    <HandDrawnLinkStroke />
+                  </span>
+                </h3>
+                <p class="explore-paths__description">{item.description}</p>
+              </div>
+              <span class="explore-paths__arrow" aria-hidden="true">
+                →
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </JessicaSection>
 </Layout>
+
+<script>
+  import { observeScrollMosaics } from '../../lib/mosaic-reveal';
+
+  observeScrollMosaics();
+
+  function bindJessicaCollage(root: ParentNode = document) {
+    const reduceMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)',
+    ).matches;
+    if (reduceMotion) return;
+
+    root
+      .querySelectorAll<HTMLElement>('[data-jessica-collage]')
+      .forEach((host) => {
+        if (host.dataset.parallaxBound === 'true') return;
+        host.dataset.parallaxBound = 'true';
+
+        const stage = host.querySelector<HTMLElement>('.jessica-collage');
+        if (!stage) return;
+
+        let raf = 0;
+        let targetX = 0;
+        let targetY = 0;
+        let currentX = 0;
+        let currentY = 0;
+
+        const tick = () => {
+          currentX += (targetX - currentX) * 0.08;
+          currentY += (targetY - currentY) * 0.08;
+          stage.style.setProperty('--parallax-x', `${currentX.toFixed(2)}px`);
+          stage.style.setProperty('--parallax-y', `${currentY.toFixed(2)}px`);
+          raf = window.requestAnimationFrame(tick);
+        };
+
+        const onMove = (event: PointerEvent) => {
+          const rect = host.getBoundingClientRect();
+          const nx = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+          const ny = ((event.clientY - rect.top) / rect.height) * 2 - 1;
+          targetX = nx * 10;
+          targetY = ny * 7;
+        };
+
+        const onLeave = () => {
+          targetX = 0;
+          targetY = 0;
+        };
+
+        host.addEventListener('pointermove', onMove);
+        host.addEventListener('pointerleave', onLeave);
+        raf = window.requestAnimationFrame(tick);
+      });
+  }
+
+  bindJessicaCollage();
+  document.addEventListener('astro:page-load', () => {
+    observeScrollMosaics();
+    bindJessicaCollage();
+  });
+</script>

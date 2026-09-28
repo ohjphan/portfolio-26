@@ -7,6 +7,7 @@ import HandDrawnDivider from '../../components/HandDrawnDivider.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
 import PromptBlock from '../../components/PromptBlock.astro';
 import WorkflowSteps from '../../components/WorkflowSteps.astro';
+import { withBase } from '../../lib/paths';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects', ({ data }) => !data.draft);
@@ -19,8 +20,15 @@ export async function getStaticPaths() {
 
 const { project } = Astro.props;
 const { Content } = await render(project);
-const { category, organization, description, projectUrl, projectUrlLabel } =
-  project.data;
+const {
+  category,
+  organization,
+  description,
+  projectUrl,
+  projectUrlLabel,
+  illustration,
+  illustrationAlt,
+} = project.data;
 
 const ctaLabel = projectUrlLabel ?? 'Try it live';
 
@@ -44,6 +52,21 @@ const related = [
 <Layout title={project.data.title} description={description}>
   <article>
     <header class="essay-header">
+      {
+        illustration && (
+          <figure class="essay-cover" data-mosaic-scroll>
+            <img
+              class="essay-cover__image"
+              src={withBase(illustration)}
+              alt={illustrationAlt ?? ''}
+              width="1200"
+              height="900"
+              loading="eager"
+              decoding="async"
+            />
+          </figure>
+        )
+      }
       <h1 class="essay-title">{organization}</h1>
       <aside class="project-lede" aria-label="Project summary">
         <p class="project-lede__text">{description}</p>
@@ -93,3 +116,8 @@ const related = [
     }
   </article>
 </Layout>
+
+<script>
+  import { observeScrollMosaics } from '../../lib/mosaic-reveal';
+  observeScrollMosaics();
+</script>

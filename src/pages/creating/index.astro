@@ -33,6 +33,10 @@ const experiments = published.filter(
     </p>
   </header>
 
+  <LogoGarden items={selectedWorkLogos} title="Worked with" />
+
+  <HandDrawnDivider />
+
   {
     selectedWorkSlides.length > 0 && (
       <section class="creating-selected" aria-label="Selected works">
@@ -40,10 +44,6 @@ const experiments = published.filter(
       </section>
     )
   }
-
-  <HandDrawnDivider />
-
-  <LogoGarden items={selectedWorkLogos} title="Worked with" />
 
   {
     experiments.length > 0 && (
@@ -78,3 +78,8 @@ const experiments = published.filter(
     )
   }
 </Layout>
+
+<script>
+  import { observeScrollMosaics } from '../../lib/mosaic-reveal';
+  observeScrollMosaics();
+</script>

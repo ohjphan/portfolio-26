@@ -22,7 +22,12 @@ export const site = {
       emailUserRev: 'nahpanykacissej',
       emailDomain: 'gmail.com',
     },
-    madeIn: 'Made in RWC',
+    mantra: [
+      'Stay curious.',
+      'Have grit.',
+      'Be kind.',
+      'Show gratitude.',
+    ],
   },
   nav: [
     { label: 'Writing', href: '/writing' },

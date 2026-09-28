@@ -3,15 +3,32 @@ import { site } from '../data/site';
 import HandDrawnDivider from './HandDrawnDivider.astro';
 
 const year = new Date().getFullYear();
-const { contact, madeIn } = site.footer;
+const { contact, mantra } = site.footer;
+const mantraSizer = mantra.reduce((a, b) => (a.length >= b.length ? a : b));
 ---
 
 <footer class="site-footer">
   <HandDrawnDivider />
   <p class="site-footer__meta">
-    <span>{madeIn}</span>
-    <span class="site-footer__meta-sep" aria-hidden="true">·</span>
     <span>&copy; {year} Jessica Phan</span>
+    <span class="site-footer__meta-sep" aria-hidden="true">·</span>
+    <span class="site-footer__shuffle" aria-live="polite">
+      <span class="site-footer__shuffle-sizer" aria-hidden="true">
+        {mantraSizer}
+      </span>
+      {
+        mantra.map((phrase, index) => (
+          <span
+            class:list={[
+              'site-footer__shuffle-item',
+              index === 0 && 'is-active',
+            ]}
+          >
+            {phrase}
+          </span>
+        ))
+      }
+    </span>
     <span class="site-footer__socials">
       <button
         type="button"
@@ -141,6 +158,35 @@ const { contact, madeIn } = site.footer;
       });
   }
 
+  function bindFooterMantra(root: ParentNode = document) {
+    const shuffle = root.querySelector<HTMLElement>('.site-footer__shuffle');
+    if (!shuffle || shuffle.dataset.bound === 'true') return;
+    shuffle.dataset.bound = 'true';
+
+    const items = Array.from(
+      shuffle.querySelectorAll<HTMLElement>('.site-footer__shuffle-item'),
+    );
+    if (items.length < 2) return;
+
+    const reduceMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)',
+    ).matches;
+    if (reduceMotion) return;
+
+    let index = 0;
+    const intervalMs = 2800;
+
+    window.setInterval(() => {
+      items[index].classList.remove('is-active');
+      index = (index + 1) % items.length;
+      items[index].classList.add('is-active');
+    }, intervalMs);
+  }
+
   bindObfuscatedEmail();
-  document.addEventListener('astro:page-load', () => bindObfuscatedEmail());
+  bindFooterMantra();
+  document.addEventListener('astro:page-load', () => {
+    bindObfuscatedEmail();
+    bindFooterMantra();
+  });
 </script>

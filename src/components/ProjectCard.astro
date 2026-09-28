@@ -54,12 +54,12 @@ const showThumb = Boolean(illustration);
       }
       {
         !isFeatured && showThumb && (
-          <div class="project-card__thumb">
+          <div class="project-card__thumb" data-mosaic-scroll>
             <img
               src={withBase(illustration!)}
               alt={illustrationAlt}
               width="960"
-              height="640"
+              height="720"
               loading="lazy"
               decoding="async"
             />
