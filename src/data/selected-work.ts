@@ -100,7 +100,7 @@ export const selectedWork: SelectedWorkItem[] = [
       },
       {
         project: 'OpenSea, in your pocket',
-        date: '2018 – Present',
+        date: '2018',
         summary:
           'Product, marketing, and brand design for OpenSea’s first mobile app — end to end.',
         image: '/images/creating/showcases/opensea-mobile-product.jpg',
@@ -151,7 +151,7 @@ export const selectedWork: SelectedWorkItem[] = [
     showcases: [
       {
         project: 'Before anyone else hears it',
-        date: '2024 – Present',
+        date: '2024',
         summary:
           'Product design for an exclusive music community. First user: James Blake.',
         image: '/images/creating/showcases/vaultfm-ios-app.jpg',
@@ -169,7 +169,7 @@ export const selectedWork: SelectedWorkItem[] = [
     showcases: [
       {
         project: 'Music, on-chain',
-        date: '2018 – Present',
+        date: '2018',
         summary: 'Product design for a web3 music discovery app on Sound.xyz.',
         image: '/images/creating/showcases/sound-xyz-ios-app.jpg',
         imageAlt:

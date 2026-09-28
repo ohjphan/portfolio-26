@@ -10,7 +10,8 @@ const pathname = stripBase(Astro.url.pathname);
 const homeCurrent = pathname === '/';
 ---
 
-<nav class="site-nav" aria-label="Main">
+<div class="site-nav-sentinel" aria-hidden="true"></div>
+<nav class="site-nav" aria-label="Main" data-site-nav>
   <a
     href={withBase('/')}
     class="nav-link eyebrow site-nav__home"
@@ -41,3 +42,24 @@ const homeCurrent = pathname === '/';
     }
   </ul>
 </nav>
+
+<script>
+  const nav = document.querySelector('[data-site-nav]');
+  const sentinel = document.querySelector('.site-nav-sentinel');
+
+  if (nav instanceof HTMLElement && sentinel instanceof HTMLElement) {
+    const setStuck = (stuck: boolean) => {
+      nav.classList.toggle('is-stuck', stuck);
+    };
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry) return;
+        setStuck(!entry.isIntersecting);
+      },
+      { threshold: 0 },
+    );
+
+    io.observe(sentinel);
+  }
+</script>
