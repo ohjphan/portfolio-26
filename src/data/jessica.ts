@@ -175,7 +175,7 @@ export const jessica = {
       {
         image: '/images/jessica/fun-facts/05-crypto-hack.jpg',
         imageAlt:
-          'Collage of a late-night laptop hackathon with neon light trails',
+          'Torn-paper collage of five people at laptops with emoji fragments streaming from glowing screens into a yellow winking face',
         headline: 'I’ve spent Saturdays hacking with legends.',
         detail:
           'One Saturday call put me in a room with founders of Figma, OpenSea, and OpenRouter. We made a thing called Ethmoji.',

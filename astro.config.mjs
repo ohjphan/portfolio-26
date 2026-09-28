@@ -32,6 +32,13 @@ function rehypePrefixBase(base = '/') {
 export default defineConfig({
   site: 'https://jessica.is',
   base: siteBase,
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: 'viewport',
+  },
+  build: {
+    inlineStylesheets: 'auto',
+  },
   integrations: [mdx()],
   markdown: {
     rehypePlugins: [rehypePrefixBase(siteBase)],
