@@ -134,6 +134,10 @@ a:hover {
   max-width: min(calc(var(--page-max) + var(--space-page) * 2), 100%);
   margin: 0 auto;
   padding: var(--space-page);
+  padding-top: calc(var(--space-page) + env(safe-area-inset-top, 0px));
+  padding-bottom: calc(var(--space-page) + env(safe-area-inset-bottom, 0px));
+  padding-left: max(var(--space-page), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--space-page), env(safe-area-inset-right, 0px));
   width: 100%;
   box-sizing: border-box;
 }
@@ -1659,7 +1663,13 @@ a.eyebrow:hover {
   align-items: center;
   gap: 1.25rem;
   margin-bottom: var(--space-section);
-  padding-block: 0.85rem;
+  padding: 0.85rem 0;
+  transition: padding-top 320ms ease;
+}
+
+.site-nav.is-stuck,
+.site-nav.is-open {
+  padding-top: calc(0.85rem + env(safe-area-inset-top, 0px));
 }
 
 .site-nav__home {
@@ -1699,7 +1709,8 @@ a.eyebrow:hover {
 .site-nav::before {
   content: "";
   position: absolute;
-  top: 0;
+  /* Paint up through the status bar so content never shows behind time/battery */
+  top: calc(-1 * env(safe-area-inset-top, 0px) - 1.25rem);
   bottom: 0;
   left: 0;
   z-index: -1;
@@ -1914,30 +1925,6 @@ html.nav-menu-open body {
   .site-nav__mobile-link-text {
     position: relative;
     z-index: 1;
-  }
-
-  .site-nav__mobile-link .sketch-link__stroke {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0.08em;
-    width: 100%;
-    height: 0.28em;
-    opacity: 0;
-    color: color-mix(in srgb, var(--color-paper) 80%, var(--color-mustard));
-  }
-
-  .site-nav__mobile-link .sketch-link__stroke-path {
-    stroke: currentColor;
-    stroke-width: 2.4;
-    stroke-dasharray: none;
-    stroke-dashoffset: 0;
-  }
-
-  .site-nav__mobile-link.is-current .sketch-link__stroke,
-  .site-nav__mobile-link:hover .sketch-link__stroke,
-  .site-nav__mobile-link:focus-visible .sketch-link__stroke {
-    opacity: 1;
   }
 
   .site-nav__mobile-link:hover,
@@ -4075,6 +4062,22 @@ body:has(.page--deck)::after {
   padding: 1rem 0.85rem;
   border: 0;
   border-right: 1px solid var(--grid-line);
+}
+
+@media (max-width: 719px) {
+  .logo-garden__grid {
+    container-type: inline-size;
+  }
+
+  .logo-garden__grid .logo-garden__card {
+    aspect-ratio: auto;
+    min-height: calc(50cqw * 10 / 16 + 12px);
+  }
+
+  .brand-marquee__card {
+    aspect-ratio: auto;
+    height: calc(clamp(9.5rem, 18vw, 12.5rem) * 10 / 16 + 12px);
+  }
 }
 
 .brand-marquee__card:hover,

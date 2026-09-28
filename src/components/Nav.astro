@@ -3,7 +3,6 @@ import { site } from '../data/site';
 import { stripBase, withBase } from '../lib/paths';
 import NavLink from './NavLink.astro';
 import HandDrawnCircleStroke from './HandDrawnCircleStroke.astro';
-import HandDrawnLinkStroke from './HandDrawnLinkStroke.astro';
 import HandDrawnMenuIcon from './HandDrawnMenuIcon.astro';
 import HandDrawnDivider from './HandDrawnDivider.astro';
 import JessicaMark from './JessicaMark.astro';
@@ -70,13 +69,12 @@ const panelId = 'site-nav-panel';
                 <HandDrawnDivider class="site-nav__mobile-divider" />
               )}
               <a
-                class:list={['site-nav__mobile-link', current && 'is-current']}
+                class="site-nav__mobile-link"
                 href={withBase(href)}
                 aria-current={current ? 'page' : undefined}
                 data-nav-close
               >
                 <span class="site-nav__mobile-link-text">{label}</span>
-                <HandDrawnLinkStroke />
               </a>
             </li>
           );
