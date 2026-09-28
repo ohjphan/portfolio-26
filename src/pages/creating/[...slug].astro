@@ -74,10 +74,11 @@ const related = [
           projectUrl && (
             <p class="project-cta">
               <a
-                href={projectUrl}
+                href={withBase(projectUrl)}
                 class="home-btn home-btn--primary"
-                target="_blank"
-                rel="noopener noreferrer"
+                {...(projectUrl.startsWith('http')
+                  ? { target: '_blank', rel: 'noopener noreferrer' }
+                  : {})}
               >
                 <span class="home-btn__text">
                   <span class="home-btn__label">{ctaLabel}</span>
