@@ -49,7 +49,12 @@ const related = [
 ].slice(0, 3);
 ---
 
-<Layout title={project.data.title} description={description}>
+<Layout
+  title={project.data.title}
+  description={description}
+  image={illustration}
+  imageAlt={illustrationAlt ?? project.data.title}
+>
   <article>
     <header class="essay-header">
       {

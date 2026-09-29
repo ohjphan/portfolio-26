@@ -1,0 +1,49 @@
+{
+  "name": "Jessica Phan",
+  "url": "https://jessica.is",
+  "jobTitle": "Product & Brand Design Consultant",
+  "description": "Product and brand design consultant with AI fluency and hands-on builder experience. Helps founders and teams turn ambiguity into products, brands, and meaningful experiences.",
+  "sameAs": [
+    "https://www.linkedin.com/in/jessicaphan/"
+  ],
+  "knowsAbout": [
+    "Product design",
+    "Brand design",
+    "AI product design",
+    "Design leadership",
+    "UX strategy",
+    "Prototyping",
+    "Front-end development",
+    "0 to 1 product development",
+    "Design consulting"
+  ],
+  "offers": [
+    "Product design consulting",
+    "Brand design consulting",
+    "AI product design advisory",
+    "Design leadership advisory"
+  ],
+  "selectedCompanies": [
+    "Chan Zuckerberg Initiative",
+    "Learning Commons",
+    "OpenSea",
+    "Sequoia Capital",
+    "Samsung",
+    "Vault.fm",
+    "Sound.xyz",
+    "NYU",
+    "Weee!",
+    "SAP",
+    "JCPenney"
+  ],
+  "pages": {
+    "home": "https://jessica.is/",
+    "workWith": "https://jessica.is/work-with",
+    "about": "https://jessica.is/jessica",
+    "creating": "https://jessica.is/creating",
+    "creatingAi": "https://jessica.is/creating#ai",
+    "writing": "https://jessica.is/writing",
+    "talking": "https://jessica.is/talking",
+    "llms": "https://jessica.is/llms.txt"
+  }
+}

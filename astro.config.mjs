@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
+import sitemap from '@astrojs/sitemap';
 import { visit } from 'unist-util-visit';
 
 // Root on custom domain (jessica.is). Use '/' — not a repo subpath.
@@ -39,7 +40,15 @@ export default defineConfig({
   build: {
     inlineStylesheets: 'auto',
   },
-  integrations: [mdx()],
+  integrations: [
+    mdx(),
+    sitemap({
+      filter: (page) =>
+        !page.includes('/downloads/') &&
+        !page.includes('/an-occasional-artist') &&
+        !page.includes('/animal-letters'),
+    }),
+  ],
   markdown: {
     rehypePlugins: [rehypePrefixBase(siteBase)],
   },

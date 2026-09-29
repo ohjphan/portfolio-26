@@ -2,12 +2,12 @@ export const talking = {
   meta: {
     title: 'Talking',
     description:
-      'Talks, workshops, and teaching on design, product, and building.',
+      'Talks and workshops by Jessica Phan on product design, brand, entrepreneurship, and building with craft.',
   },
   hero: {
     title: 'Talking',
     intro:
-      'Keynotes, meetups, and workshops on design, product, and making the jump from craft to company.',
+      'Keynotes, meetups, and workshops on product design, brand, and making the jump from craft to company.',
   },
   talks: [
     {

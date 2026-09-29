@@ -1,11 +1,13 @@
 export const jessica = {
   meta: {
-    title: 'Jessica',
-    description: 'Design leader. Builder at heart. Writer. Occasional illustrator. Aspiring feng shui master.',
+    title: 'About Jessica Phan',
+    description:
+      'Product and brand design consultant with AI fluency and builder experience. Learn how Jessica Phan helps founders and teams shape meaningful products, brands, and experiences.',
   },
   hero: {
     title: 'Jessica',
-    subheading: 'Design leader. Builder at heart. Writer. Occasional illustrator. Aspiring feng shui master.',
+    subheading:
+      'Product & brand design consultant. AI-fluent builder. Writer of Field Notes.',
   },
   about: {
     label: 'About',
@@ -280,25 +282,32 @@ export const jessica = {
     label: 'Explore what Jessica is...',
     items: [
       {
+        title: 'Work with Jessica',
+        description:
+          'Product and brand design consulting with AI fluency and builder instincts.',
+        href: '/work-with',
+        accent: 'cobalt',
+      },
+      {
+        title: 'Creating',
+        description:
+          'Selected product, brand, and AI work — plus experiments along the way.',
+        href: '/creating',
+        accent: 'poppy',
+      },
+      {
         title: 'Writing',
         description:
-          'Field notes on design, product, and the curious corners of life.',
+          'Field notes on design, product, AI, and the curious corners of life.',
         href: '/writing',
-        accent: 'cobalt',
+        accent: 'mustard',
       },
       {
         title: 'Talking',
         description:
           'Keynotes, workshops, and teaching on craft, product, and building.',
         href: '/talking',
-        accent: 'mustard',
-      },
-      {
-        title: 'Creating',
-        description:
-          'Selected work, experiments, and things made along the way.',
-        href: '/creating',
-        accent: 'poppy',
+        accent: 'cobalt',
       },
     ],
   },

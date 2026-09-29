@@ -5,6 +5,7 @@ import SketchLink from '../components/SketchLink.astro';
 import SketchIcon from '../components/SketchIcon.astro';
 import EssayCard from '../components/EssayCard.astro';
 import { withBase } from '../lib/paths';
+import { absoluteUrl, articleJsonLd } from '../lib/seo';
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
@@ -15,9 +16,24 @@ interface Props {
 const { essay, related = [] } = Astro.props;
 const { title, category, tldr, publication, publicationUrl, cover, coverAlt } =
   essay.data;
+
+const pageUrl = absoluteUrl(`/writing/${essay.id}/`);
+const image = cover ? absoluteUrl(cover) : undefined;
 ---
 
-<Layout title={title} description={essay.data.description}>
+<Layout
+  title={title}
+  description={essay.data.description}
+  image={cover}
+  imageAlt={coverAlt ?? title}
+  type="article"
+  jsonLd={articleJsonLd({
+    title,
+    description: essay.data.description,
+    url: pageUrl,
+    image,
+  })}
+>
   <article>
     <header class="essay-header">
       {

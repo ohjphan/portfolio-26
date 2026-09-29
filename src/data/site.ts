@@ -1,7 +1,9 @@
+import { seo } from './seo';
+
 export const site = {
   title: 'Jessica.is',
   headline: 'Jessica is...',
-  description: 'Left-handed. Right-brained. Endlessly curious.',
+  description: seo.defaultDescription,
   intro: {
     hello: 'Hello',
     prefix: 'Jessica is...',
@@ -13,7 +15,7 @@ export const site = {
       'Jessica Phan.',
     ],
     closing:
-      'Designer by trade. Builder at heart. Writer when inspired. Founder when I can\u2019t help myself.',
+      'Product and brand design consultant. AI-fluent. Builder at heart. I help founders and teams turn ambiguity into products, brands, and experiences people care about.',
   },
   footer: {
     contact: {

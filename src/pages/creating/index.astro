@@ -7,7 +7,12 @@ import HandDrawnDivider from '../../components/HandDrawnDivider.astro';
 import HandDrawnCircleStroke from '../../components/HandDrawnCircleStroke.astro';
 import HandDrawnLinkStroke from '../../components/HandDrawnLinkStroke.astro';
 import { getCollection } from 'astro:content';
-import { selectedWorkLogos, selectedWorkSlides } from '../../data/selected-work';
+import {
+  aiWorkSlides,
+  selectedWorkLogos,
+  selectedWorkSlides,
+} from '../../data/selected-work';
+import { withBase } from '../../lib/paths';
 
 const published = (
   await getCollection('projects', ({ data }) => !data.draft)
@@ -24,6 +29,7 @@ const experiments = published.filter(
 
 const sections = [
   { label: 'Companies', href: '#companies' },
+  ...(aiWorkSlides.length > 0 ? [{ label: 'AI', href: '#ai' }] : []),
   ...(selectedWorkSlides.length > 0
     ? [{ label: 'Works', href: '#works' }]
     : []),
@@ -35,13 +41,13 @@ const sections = [
 
 <Layout
   title="Creating"
-  description="A few of the companies I’ve worked with along the way from early-stage startups, hypergrowth teams, enterprise, and more."
+  description="Selected product, brand, and AI design work by Jessica Phan — from early-stage startups and hypergrowth teams to experiments built for curiosity."
 >
   <header class="creating-hero">
     <h1 class="heading-lg">Creating</h1>
     <p class="text-muted creating-hero__intro">
-      A few of the companies I’ve worked with along the way from early-stage
-      startups, hypergrowth teams, enterprise, and more.
+      Product, brand, and AI design work across early-stage startups,
+      hypergrowth teams, enterprise, and personal experiments.
     </p>
   </header>
 
@@ -68,6 +74,51 @@ const sections = [
     items={selectedWorkLogos}
     title="Companies"
   />
+
+  {
+    aiWorkSlides.length > 0 && (
+      <>
+        <HandDrawnDivider />
+        <section id="ai" class="creating-ai" aria-labelledby="ai-title">
+          <header class="creating-ai__header">
+            <h2 id="ai-title" class="jessica-band__title">
+              AI
+            </h2>
+            <p class="creating-ai__intro text-muted">
+              Designing for AI platforms means earning trust, clarifying first
+              actions, and making complex systems feel usable — without hiding
+              the hard parts.
+            </p>
+          </header>
+          <ul class="creating-ai__grid" role="list">
+            {aiWorkSlides.map((slide) => (
+              <li>
+                <a class="creating-ai__card" href="#works">
+                  <div class="creating-ai__media" data-mosaic-scroll>
+                    <img
+                      src={withBase(slide.image)}
+                      alt={slide.imageAlt}
+                      width="960"
+                      height="720"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                  <div class="creating-ai__copy">
+                    <p class="creating-ai__company">{slide.company}</p>
+                    <h3 class="creating-ai__project">{slide.project}</h3>
+                    {slide.summary && (
+                      <p class="creating-ai__summary">{slide.summary}</p>
+                    )}
+                  </div>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      </>
+    )
+  }
 
   {
     selectedWorkSlides.length > 0 && (

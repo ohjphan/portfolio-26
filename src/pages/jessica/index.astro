@@ -7,7 +7,7 @@ import SketchLink from '../../components/SketchLink.astro';
 import HandDrawnCircleStroke from '../../components/HandDrawnCircleStroke.astro';
 import HandDrawnLinkStroke from '../../components/HandDrawnLinkStroke.astro';
 import { jessica } from '../../data/jessica';
-
+import { profilePageJsonLd, professionalServiceJsonLd } from '../../lib/seo';
 import { withBase } from '../../lib/paths';
 
 const amazonUrl = (asin: string) =>
@@ -17,7 +17,13 @@ const books = jessica.books.items;
 const bookLoop = [...books, ...books];
 ---
 
-<Layout title={jessica.meta.title} description={jessica.meta.description}>
+<Layout
+  title={jessica.meta.title}
+  description={jessica.meta.description}
+  image="/images/jessica/about-collage.png"
+  imageAlt="Collage portrait of Jessica Phan"
+  jsonLd={[profilePageJsonLd(), professionalServiceJsonLd()]}
+>
   <header class="jessica-hero">
     <h1 class="heading-lg">{jessica.hero.title}</h1>
     <p class="text-muted jessica-hero__intro">{jessica.hero.subheading}</p>
