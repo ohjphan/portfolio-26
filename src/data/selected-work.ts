@@ -258,18 +258,3 @@ export const selectedWorkSlides: SelectedWorkSlide[] = selectedWork.flatMap(
       date: showcase.date,
     })),
 );
-
-/** AI-forward showcases for Creating spotlight */
-export const aiWorkSlides: SelectedWorkSlide[] = selectedWork
-  .filter((item) => item.category.toLowerCase().includes('ai'))
-  .flatMap((item) =>
-    (item.showcases ?? []).map((showcase) => ({
-      company: item.label,
-      companyHref: item.href,
-      project: showcase.project,
-      image: showcase.image,
-      imageAlt: showcase.imageAlt,
-      summary: showcase.summary,
-      date: showcase.date,
-    })),
-  );

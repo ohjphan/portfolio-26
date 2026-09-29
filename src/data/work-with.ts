@@ -2,18 +2,18 @@ export const workWith = {
   meta: {
     title: 'Work with Jessica',
     description:
-      'Product and brand design consulting with Jessica Phan — AI-fluent, builder-minded support for founders and teams shaping products, brands, and experiences.',
+      'Product and brand design consulting with Jessica Phan — for founders and teams who need a partner who still builds.',
   },
   hero: {
     eyebrow: 'Consulting',
     title: 'Work with Jessica',
-    lede: 'I help founders and teams turn ambiguity into products, brands, and experiences people care about — with AI fluency and the instincts of someone who also builds.',
+    lede: 'I’ve spent my career in 0→1 environments, and I still build things myself. I help founders and teams turn ambiguity into products, brands, and experiences people care about.',
   },
   whoFor: {
     title: 'Who this is for',
     items: [
       'Founders shaping a 0→1 product or brand',
-      'Teams building AI-era products who need design that respects users and systems',
+      'Teams building new products who need design that respects users and systems',
       'Leaders who want a partner across product, brand, and shipping — not slides alone',
     ],
   },
@@ -40,7 +40,7 @@ export const workWith = {
   },
   proof: {
     title: 'Selected collaborations',
-    body: 'Work across AI infrastructure, marketplaces, venture, hardware, music, education, and enterprise — including Learning Commons, OpenSea, Sequoia Capital, and more.',
+    body: 'Client work across marketplaces, venture, education, and enterprise — plus experiments I still ship myself, like Banner Duty. Seeing both sides of making is part of how I partner.',
     href: '/creating',
     cta: 'See Creating',
   },

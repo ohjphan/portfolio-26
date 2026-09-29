@@ -874,16 +874,21 @@ a.eyebrow:hover {
   z-index: -1;
   width: 100vw;
   margin-left: calc(-1 * var(--page-inline-inset));
-  background: color-mix(in srgb, var(--color-paper) 94%, transparent);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: transparent;
   border-bottom: 1px solid var(--grid-line);
   pointer-events: none;
 }
 
+.essay-filters.is-stuck::before,
+.page-subnav.is-stuck::before {
+  background: color-mix(in srgb, var(--color-paper) 94%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .essay-filters::before,
-  .page-subnav::before {
+  .essay-filters.is-stuck::before,
+  .page-subnav.is-stuck::before {
     background: var(--color-paper);
   }
 }
@@ -1789,18 +1794,25 @@ a.eyebrow:hover {
   z-index: -1;
   width: 100vw;
   margin-left: calc(-1 * var(--page-inline-inset));
-  background: color-mix(in srgb, var(--color-paper) 94%, transparent);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: transparent;
   border-bottom: 1px solid var(--grid-line);
   pointer-events: none;
   transition:
     background 320ms ease,
-    border-color 320ms ease;
+    border-color 320ms ease,
+    backdrop-filter 320ms ease;
+}
+
+.site-nav.is-stuck::before,
+.site-nav.is-open::before {
+  background: color-mix(in srgb, var(--color-paper) 94%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .site-nav::before {
+  .site-nav.is-stuck::before,
+  .site-nav.is-open::before {
     background: var(--color-paper);
   }
 }
@@ -2667,6 +2679,11 @@ body:has(.page--deck)::after {
   opacity: 0.9;
 }
 
+.sketch-icon__path--accent {
+  stroke-width: 2;
+  opacity: 0.7;
+}
+
 .idea-card__title {
   font-family: var(--font-display);
   font-size: var(--text-xl);
@@ -2793,6 +2810,35 @@ body:has(.page--deck)::after {
   width: 100%;
 }
 
+.book-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.85rem;
+  margin: 0.15rem 0 1.35rem;
+}
+
+#fav-books .jessica-section__lede {
+  margin-bottom: 0.7rem;
+  max-width: 40rem;
+}
+
+.book-filter[data-filter='Intuitive builder'] {
+  --filter-accent: var(--color-cobalt);
+}
+
+.book-filter[data-filter='Principled human'] {
+  --filter-accent: var(--color-mustard);
+}
+
+.book-filter[data-filter='Gentle with imperfection'] {
+  --filter-accent: var(--color-poppy);
+}
+
+.book-filter[data-filter='Serious about craft'] {
+  --filter-accent: var(--color-khaki);
+}
+
 .book-shelf__viewport {
   width: calc(100% + 2 * var(--page-inline-inset));
   max-width: none;
@@ -2811,6 +2857,19 @@ body:has(.page--deck)::after {
   );
 }
 
+.book-shelf__viewport.is-filtered {
+  overflow-x: auto;
+  mask-image: none;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+.book-shelf__viewport.is-filtered .book-shelf__track {
+  animation: none;
+  padding-inline: var(--page-inline-inset);
+  transform: none;
+}
+
 .book-shelf__track {
   list-style: none;
   margin: 0;
@@ -2825,6 +2884,10 @@ body:has(.page--deck)::after {
   margin: 0;
   flex: 0 0 auto;
   width: clamp(7.5rem, 14vw, 9.5rem);
+}
+
+.book-shelf__item[hidden] {
+  display: none;
 }
 
 .book-shelf__cover-link {
@@ -2842,6 +2905,7 @@ body:has(.page--deck)::after {
 
 .book-shelf__media {
   overflow: hidden;
+  position: relative;
   border: 1px solid color-mix(in srgb, var(--color-muted) 22%, transparent);
   background: color-mix(in srgb, var(--color-sand) 55%, var(--color-paper));
   aspect-ratio: 2 / 3;
@@ -2889,6 +2953,58 @@ body:has(.page--deck)::after {
 }
 
 .jessica-band__body:has(.book-shelf) {
+  max-width: none;
+}
+
+.guides-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.75rem 1.25rem;
+  width: 100%;
+  max-width: none;
+}
+
+@media (min-width: 800px) {
+  .guides-list {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.5rem 1rem;
+  }
+}
+
+.guides-list__item {
+  margin: 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.guides-list__icon {
+  width: 2.75rem;
+  height: 2.75rem;
+  color: var(--color-ink);
+}
+
+.guides-list__title {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-weight: 400;
+  line-height: var(--line-height-heading);
+  margin: 0;
+}
+
+.guides-list__body {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  line-height: var(--line-height-body);
+  margin: 0;
+  color: var(--color-muted);
+}
+
+.jessica-band__body:has(.guides-list) {
   max-width: none;
 }
 
@@ -3211,8 +3327,16 @@ body:has(.page--deck)::after {
 .home-hero__lede {
   font-family: var(--font-serif);
   font-size: var(--text-lg);
-  color: var(--color-muted);
+  color: var(--color-ink);
   margin: 1.25rem 0 0;
+  max-width: 28rem;
+}
+
+.home-hero__helping {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  color: var(--color-muted);
+  margin: 0.5rem 0 0;
   max-width: 28rem;
 }
 
@@ -3222,6 +3346,56 @@ body:has(.page--deck)::after {
   align-items: center;
   gap: 0.75rem;
   margin: 1.75rem 0 0;
+}
+
+.home-band {
+  margin: 0;
+}
+
+.home-band__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.home-band__head .section-title {
+  margin: 0;
+}
+
+.home-band__more {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  color: var(--color-ink);
+  text-decoration: none;
+}
+
+.home-band__more-sketch {
+  position: relative;
+  display: inline-block;
+}
+
+.home-band__more-sketch .sketch-link__stroke {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.15em;
+  width: 100%;
+  height: 0.45em;
+  overflow: visible;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.home-band__more:hover .sketch-link__stroke,
+.home-band__more:focus-visible .sketch-link__stroke {
+  opacity: 1;
+}
+
+.home-field-notes {
+  margin-top: 0;
 }
 
 .home-btn {
@@ -3820,7 +3994,7 @@ body:has(.page--deck)::after {
   max-height: calc(100vh - var(--selected-works-nav-offset) - 9.5rem);
   border: 1px solid var(--grid-line);
   box-sizing: border-box;
-  background: color-mix(in srgb, var(--color-sand) 55%, var(--color-paper));
+  background: transparent;
   overflow: hidden;
 }
 

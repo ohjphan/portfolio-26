@@ -1,8 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import HandDrawnLinkStroke from '../components/HandDrawnLinkStroke.astro';
+import HandDrawnDivider from '../components/HandDrawnDivider.astro';
 import HomePortrait from '../components/HomePortrait.astro';
 import BrandMarquee from '../components/BrandMarquee.astro';
+import EssayCard from '../components/EssayCard.astro';
 import { site } from '../data/site';
 import { seo } from '../data/seo';
 import { selectedWorkLogos } from '../data/selected-work';
@@ -12,8 +14,15 @@ import {
   websiteJsonLd,
 } from '../lib/seo';
 import { withBase } from '../lib/paths';
+import { getCollection } from 'astro:content';
 
-const { hello, prefix, shuffle, closing } = site.intro;
+const { hello, prefix, shuffle, identity, helping } = site.intro;
+
+const published = await getCollection('essays', ({ data }) => !data.draft);
+const essayById = new Map(published.map((essay) => [essay.id, essay]));
+const fieldNotes = site.fieldNotes
+  .map((id) => essayById.get(id))
+  .filter((essay): essay is (typeof published)[number] => Boolean(essay));
 ---
 
 <Layout
@@ -43,9 +52,10 @@ const { hello, prefix, shuffle, closing } = site.intro;
           }
         </span>
       </h1>
-      <p class="home-hero__lede">{closing}</p>
+      <p class="home-hero__lede">{identity}</p>
+      <p class="home-hero__helping">{helping}</p>
       <div class="home-hero__cta">
-        <a href={withBase('/work-with')} class="home-btn home-btn--primary">
+        <a href={withBase('/open-to-collaborating')} class="home-btn home-btn--primary">
           <span class="home-btn__text">
             <span class="home-btn__label">Work with Jessica</span>
             <HandDrawnLinkStroke />
@@ -64,6 +74,41 @@ const { hello, prefix, shuffle, closing } = site.intro;
       <HomePortrait />
     </div>
   </header>
+
+  {
+    fieldNotes.length > 0 && (
+      <>
+        <HandDrawnDivider />
+        <section class="home-band" aria-labelledby="field-notes-title">
+          <div class="home-band__head">
+            <h2 id="field-notes-title" class="section-title">
+              From the Field Notes
+            </h2>
+            <a href={withBase('/writing')} class="home-band__more">
+              <span class="home-band__more-sketch">
+                <span class="home-band__more-text">All Writing</span>
+                <HandDrawnLinkStroke />
+              </span>
+            </a>
+          </div>
+          <div class="essay-grid home-field-notes">
+            {fieldNotes.map((essay) => (
+              <EssayCard
+                title={essay.data.title}
+                description={essay.data.description}
+                href={`/writing/${essay.id}`}
+                category={essay.data.category}
+                cover={essay.data.cover}
+                coverAlt={essay.data.coverAlt}
+              />
+            ))}
+          </div>
+        </section>
+      </>
+    )
+  }
+
+  <HandDrawnDivider />
 
   <BrandMarquee items={selectedWorkLogos} />
 </Layout>
@@ -92,4 +137,12 @@ const { hello, prefix, shuffle, closing } = site.intro;
       items[index].classList.add('is-active');
     }, intervalMs);
   })();
+</script>
+
+<script>
+  import { observeWritingMosaics } from '../lib/mosaic-reveal';
+  observeWritingMosaics();
+  document.addEventListener('astro:page-load', () => {
+    observeWritingMosaics();
+  });
 </script>

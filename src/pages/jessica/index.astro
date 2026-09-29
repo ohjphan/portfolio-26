@@ -4,6 +4,7 @@ import HandDrawnDivider from '../../components/HandDrawnDivider.astro';
 import JessicaSection from '../../components/JessicaSection.astro';
 import FunFacts from '../../components/FunFacts.astro';
 import SketchLink from '../../components/SketchLink.astro';
+import SketchIcon from '../../components/SketchIcon.astro';
 import HandDrawnCircleStroke from '../../components/HandDrawnCircleStroke.astro';
 import HandDrawnLinkStroke from '../../components/HandDrawnLinkStroke.astro';
 import { jessica } from '../../data/jessica';
@@ -13,7 +14,9 @@ import { withBase } from '../../lib/paths';
 const amazonUrl = (asin: string) =>
   `https://www.amazon.com/dp/${asin}?tag=${jessica.books.amazonTag}`;
 
-const books = jessica.books.items;
+const books = jessica.books.lenses.flatMap((lens) =>
+  lens.items.map((book) => ({ ...book, lens: lens.label })),
+);
 const bookLoop = [...books, ...books];
 ---
 
@@ -32,6 +35,13 @@ const bookLoop = [...books, ...books];
   <nav class="page-subnav" aria-label="Jessica sections" data-page-subnav>
     <a href="#about" class="page-subnav__link is-active" data-subnav-link>
       <span class="page-subnav__label">About</span>
+      <HandDrawnCircleStroke />
+      <span class="page-subnav__underline">
+        <HandDrawnLinkStroke />
+      </span>
+    </a>
+    <a href="#guides" class="page-subnav__link" data-subnav-link>
+      <span class="page-subnav__label">Guides</span>
       <HandDrawnCircleStroke />
       <span class="page-subnav__underline">
         <HandDrawnLinkStroke />
@@ -94,6 +104,24 @@ const bookLoop = [...books, ...books];
 
   <HandDrawnDivider />
 
+  <JessicaSection id="guides" title={jessica.guides.label}>
+    <ul class="guides-list" role="list">
+      {
+        jessica.guides.items.map((item) => (
+          <li class="guides-list__item">
+            <div class="guides-list__icon" aria-hidden="true">
+              <SketchIcon name={item.icon} />
+            </div>
+            <h3 class="guides-list__title">{item.title}</h3>
+            <p class="guides-list__body">{item.body}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </JessicaSection>
+
+  <HandDrawnDivider />
+
   <JessicaSection id="fun-facts" title={jessica.funFacts.label}>
     <FunFacts items={jessica.funFacts.items} />
   </JessicaSection>
@@ -102,13 +130,32 @@ const bookLoop = [...books, ...books];
 
   <JessicaSection id="fav-books" title="A few favorite books">
     <p class="jessica-section__lede">{jessica.books.lede}</p>
-    <div class="book-shelf">
+    <div class="book-filters" role="group" aria-label="Filter books by lens">
+      {
+        jessica.books.lenses.map((lens) => (
+          <button
+            type="button"
+            class="essay-filter book-filter"
+            data-filter={lens.label}
+          >
+            <span class="essay-filter__label">{lens.label}</span>
+            <HandDrawnCircleStroke />
+            <span class="essay-filter__underline">
+              <HandDrawnLinkStroke />
+            </span>
+          </button>
+        ))
+      }
+    </div>
+    <div class="book-shelf" data-book-shelf>
       <div class="book-shelf__viewport">
         <ul class="book-shelf__track" role="list">
           {
             bookLoop.map((book, index) => (
               <li
                 class="book-shelf__item"
+                data-lens={book.lens}
+                data-book-duplicate={index >= books.length ? 'true' : undefined}
                 aria-hidden={index >= books.length ? 'true' : undefined}
               >
                 <a
@@ -279,10 +326,55 @@ const bookLoop = [...books, ...books];
       });
   }
 
+  function bindBookFilters(root: ParentNode = document) {
+    const shelf = root.querySelector<HTMLElement>('[data-book-shelf]');
+    const filters = root.querySelector<HTMLElement>('.book-filters');
+    if (!shelf || !filters || filters.dataset.bound === 'true') return;
+    filters.dataset.bound = 'true';
+
+    const buttons = Array.from(
+      filters.querySelectorAll<HTMLButtonElement>('.book-filter'),
+    );
+    const items = Array.from(
+      shelf.querySelectorAll<HTMLElement>('.book-shelf__item'),
+    );
+    const viewport = shelf.querySelector<HTMLElement>('.book-shelf__viewport');
+
+    const applyFilter = (filter: string | null) => {
+      const active = Boolean(filter);
+      buttons.forEach((button) => {
+        button.classList.toggle(
+          'is-active',
+          active && button.getAttribute('data-filter') === filter,
+        );
+      });
+
+      items.forEach((item) => {
+        const lens = item.getAttribute('data-lens');
+        const isDuplicate = item.hasAttribute('data-book-duplicate');
+        const matches = !filter || lens === filter;
+        const visible = matches && (!filter || !isDuplicate);
+        item.toggleAttribute('hidden', !visible);
+      });
+
+      viewport?.classList.toggle('is-filtered', active);
+    };
+
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const next = button.getAttribute('data-filter');
+        const alreadyActive = button.classList.contains('is-active');
+        applyFilter(alreadyActive ? null : next);
+      });
+    });
+  }
+
   bindJessicaCollage();
+  bindBookFilters();
   document.addEventListener('astro:page-load', () => {
     observeScrollMosaics();
     bindPageSubnav();
     bindJessicaCollage();
+    bindBookFilters();
   });
 </script>

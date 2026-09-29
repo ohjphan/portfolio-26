@@ -258,6 +258,27 @@ const panelId = 'site-nav-panel';
     }
   }
 
+  function bindStickySubnavs(root: ParentNode = document) {
+    root.querySelectorAll<HTMLElement>('.page-subnav, .essay-filters').forEach((nav) => {
+      if (nav.dataset.stickyBound === 'true') return;
+      nav.dataset.stickyBound = 'true';
+
+      const update = () => {
+        const stickyTop = Number.parseFloat(getComputedStyle(nav).top) || 0;
+        const stuck = nav.getBoundingClientRect().top <= stickyTop + 1;
+        nav.classList.toggle('is-stuck', stuck);
+      };
+
+      update();
+      window.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update);
+    });
+  }
+
   bindSiteNav();
-  document.addEventListener('astro:page-load', () => bindSiteNav());
+  bindStickySubnavs();
+  document.addEventListener('astro:page-load', () => {
+    bindSiteNav();
+    bindStickySubnavs();
+  });
 </script>

@@ -1,10 +1,9 @@
 ---
+import EditorialList from './EditorialList.astro';
 import { site } from '../data/site';
 ---
 
-<section>
-  <p class="section-title">Currently</p>
-  <ul class="currently-list">
-    {site.currently.map((item) => <li>{item}</li>)}
-  </ul>
+<section class="home-band" aria-labelledby="currently-title">
+  <h2 id="currently-title" class="section-title">Currently</h2>
+  <EditorialList items={site.currently} />
 </section>

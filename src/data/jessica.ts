@@ -2,12 +2,12 @@ export const jessica = {
   meta: {
     title: 'About Jessica Phan',
     description:
-      'Product and brand design consultant with AI fluency and builder experience. Learn how Jessica Phan helps founders and teams shape meaningful products, brands, and experiences.',
+      'Product and brand designer, builder, and writer of Field Notes. Learn how Jessica Phan helps founders and teams shape meaningful products, brands, and experiences.',
   },
   hero: {
     title: 'Jessica',
     subheading:
-      'Product & brand design consultant. AI-fluent builder. Writer of Field Notes.',
+      'Product & brand designer. Builder at heart. Writer of Field Notes.',
   },
   about: {
     label: 'About',
@@ -23,6 +23,31 @@ export const jessica = {
             text: ', and building whatever curiosity leads next.',
           },
         ],
+      },
+    ],
+  },
+  guides: {
+    label: 'What guides me',
+    items: [
+      {
+        title: 'Stay curious.',
+        body: 'Keep asking questions long after everyone else thinks they know the answer.',
+        icon: 'curious',
+      },
+      {
+        title: 'Have grit.',
+        body: 'Most things worth making take longer than you think.',
+        icon: 'grit',
+      },
+      {
+        title: 'Be kind.',
+        body: 'How we make things matters as much as what we make.',
+        icon: 'kind',
+      },
+      {
+        title: 'Show gratitude.',
+        body: 'Don\u2019t let ambition make you miss the life you\u2019re already living.',
+        icon: 'gratitude',
       },
     ],
   },
@@ -209,72 +234,96 @@ export const jessica = {
     ],
   },
   books: {
-    lede: 'You are what you eat, what you consume, what you read. Here is a peek into mine. In short, these have shaped me to be an intuitive builder, principled human, gentle with imperfection, serious about craft.',
+    lede: 'You are what you eat, what you consume, what you read. These have shaped me into an\u2026',
     amazonTag: 'jessicaphan0d-20',
-    items: [
+    lenses: [
       {
-        title: 'Women Who Run with the Wolves',
-        author: 'Clarissa Pinkola Est\u00e9s',
-        note: 'A lifelong companion on instinct, creativity, and the wild parts of ourselves we learn to trust again.',
-        image: '/images/jessica/books/book-women-wolves.png',
-        imageAlt: 'Cover of Women Who Run with the Wolves by Clarissa Pinkola Est\u00e9s',
-        asin: '0345409876',
+        label: 'Intuitive builder',
+        items: [
+          {
+            title: 'Women Who Run with the Wolves',
+            author: 'Clarissa Pinkola Est\u00e9s',
+            note: 'A lifelong companion on instinct, creativity, and the wild parts of ourselves we learn to trust again.',
+            image: '/images/jessica/books/book-women-wolves.png',
+            imageAlt:
+              'Cover of Women Who Run with the Wolves by Clarissa Pinkola Est\u00e9s',
+            asin: '0345409876',
+          },
+          {
+            title: 'The Power of Your Subconscious Mind',
+            author: 'Joseph Murphy',
+            note: 'A classic on how belief and quiet practice shape what we notice, choose, and bring into being.',
+            image: '/images/jessica/books/book-power-subconscious.png',
+            imageAlt:
+              'Cover of The Power of Your Subconscious Mind by Joseph Murphy',
+            asin: '0735204314',
+          },
+        ],
       },
       {
-        title: 'Principles',
-        author: 'Ray Dalio',
-        note: 'A clear-eyed framework for making decisions with honesty, feedback, and shared standards.',
-        image: '/images/jessica/books/book-principles.png',
-        imageAlt: 'Cover of Principles by Ray Dalio',
-        asin: '1501124021',
+        label: 'Principled human',
+        items: [
+          {
+            title: 'The Art of Living',
+            author: 'Thich Nhat Hanh',
+            note: 'A quiet guide to presence \u2014 how to meet ordinary moments with enough attention to actually live them.',
+            image: '/images/jessica/books/book-art-of-living.png',
+            imageAlt: 'Cover of The Art of Living by Thich Nhat Hanh',
+            asin: '0063276488',
+          },
+          {
+            title: 'Principles',
+            author: 'Ray Dalio',
+            note: 'A clear-eyed framework for making decisions with honesty, feedback, and shared standards.',
+            image: '/images/jessica/books/book-principles.png',
+            imageAlt: 'Cover of Principles by Ray Dalio',
+            asin: '1501124021',
+          },
+          {
+            title: 'The 21 Indispensable Qualities of a Leader',
+            author: 'John C. Maxwell',
+            note: 'A practical reminder that leadership starts with character \u2014 becoming someone others want to follow.',
+            image: '/images/jessica/books/book-21-qualities-leader.png',
+            imageAlt:
+              'Cover of The 21 Indispensable Qualities of a Leader by John C. Maxwell',
+            asin: '0785289046',
+          },
+        ],
       },
       {
-        title: 'The Art of Living',
-        author: 'Thich Nhat Hanh',
-        note: 'A quiet guide to presence \u2014 how to meet ordinary moments with enough attention to actually live them.',
-        image: '/images/jessica/books/book-art-of-living.png',
-        imageAlt: 'Cover of The Art of Living by Thich Nhat Hanh',
-        asin: '0063276488',
+        label: 'Gentle with imperfection',
+        items: [
+          {
+            title: 'Wabi Sabi',
+            author: 'Beth Kempton',
+            note: 'Japanese wisdom for finding beauty in imperfection \u2014 and being gentler with a perfectly unfinished life.',
+            image: '/images/jessica/books/book-wabi-sabi.png',
+            imageAlt: 'Cover of Wabi Sabi by Beth Kempton',
+            asin: '0062905155',
+          },
+        ],
       },
       {
-        title: 'Wabi Sabi',
-        author: 'Beth Kempton',
-        note: 'Japanese wisdom for finding beauty in imperfection \u2014 and being gentler with a perfectly unfinished life.',
-        image: '/images/jessica/books/book-wabi-sabi.png',
-        imageAlt: 'Cover of Wabi Sabi by Beth Kempton',
-        asin: '0062905155',
-      },
-      {
-        title: 'The Laws of Simplicity',
-        author: 'John Maeda',
-        note: 'Ten laws that keep reminding me that restraint is a design skill \u2014 and usually the hardest one.',
-        image: '/images/jessica/books/book-laws-of-simplicity.png',
-        imageAlt: 'Cover of The Laws of Simplicity by John Maeda',
-        asin: '0262134721',
-      },
-      {
-        title: 'Make Something Wonderful',
-        author: 'Steve Jobs',
-        note: 'Steve Jobs in his own words \u2014 a reminder to care deeply about what you make, and why it matters.',
-        image: '/images/jessica/books/book-make-something-wonderful.png',
-        imageAlt: 'Cover of Make Something Wonderful: Steve Jobs in His Own Words',
-        asin: 'B0CVFHRB1P',
-      },
-      {
-        title: 'The Power of Your Subconscious Mind',
-        author: 'Joseph Murphy',
-        note: 'A classic on how belief and quiet practice shape what we notice, choose, and bring into being.',
-        image: '/images/jessica/books/book-power-subconscious.png',
-        imageAlt: 'Cover of The Power of Your Subconscious Mind by Joseph Murphy',
-        asin: '0735204314',
-      },
-      {
-        title: 'The 21 Indispensable Qualities of a Leader',
-        author: 'John C. Maxwell',
-        note: 'A practical reminder that leadership starts with character \u2014 becoming someone others want to follow.',
-        image: '/images/jessica/books/book-21-qualities-leader.png',
-        imageAlt: 'Cover of The 21 Indispensable Qualities of a Leader by John C. Maxwell',
-        asin: '0785289046',
+        label: 'Serious about craft',
+        items: [
+          {
+            title: 'The Laws of Simplicity',
+            author: 'John Maeda',
+            note: 'Ten laws that keep reminding me that restraint is a design skill \u2014 and usually the hardest one.',
+            image: '/images/jessica/books/book-laws-of-simplicity.png',
+            imageAlt: 'Cover of The Laws of Simplicity by John Maeda',
+            asin: '0262134721',
+          },
+          {
+            title: 'Make Something Wonderful',
+            author: 'Steve Jobs',
+            note: 'Steve Jobs in his own words \u2014 a reminder to care deeply about what you make, and why it matters.',
+            image: '/images/jessica/books/book-make-something-wonderful.png',
+            imageAlt:
+              'Cover of Make Something Wonderful: Steve Jobs in His Own Words',
+            asin: 'B0CVFHRB1P',
+          },
+        ],
       },
     ],
   },
@@ -284,28 +333,28 @@ export const jessica = {
       {
         title: 'Work with Jessica',
         description:
-          'Product and brand design consulting with AI fluency and builder instincts.',
-        href: '/work-with',
+          'Product and brand design consulting from someone who still builds.',
+        href: '/open-to-collaborating',
         accent: 'cobalt',
       },
       {
         title: 'Creating',
         description:
-          'Selected product, brand, and AI work — plus experiments along the way.',
+          'Selected product and brand work — plus experiments along the way.',
         href: '/creating',
         accent: 'poppy',
       },
       {
         title: 'Writing',
         description:
-          'Field notes on design, product, AI, and the curious corners of life.',
+          'Field Notes on design, work, curiosity, and the strange connections between them.',
         href: '/writing',
         accent: 'mustard',
       },
       {
         title: 'Talking',
         description:
-          'Keynotes, workshops, and teaching on craft, product, and building.',
+          'Keynotes, workshops, and an open invitation to speak.',
         href: '/talking',
         accent: 'cobalt',
       },

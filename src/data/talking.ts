@@ -84,7 +84,7 @@ export const talking = {
   ],
   invite: {
     title: 'Open invitation',
-    body: 'Invite me to speak or teach. I love talking with people who care about design, product, and craft.',
+    body: 'Invite me to speak or teach. Right now I’m especially interested in designing in the age of AI, product intuition, building in ambiguity, the jump from designer to founder, and curiosity as a creative advantage — and always in rooms that care about design, product, and craft.',
     cta: 'Reach out on LinkedIn',
   },
 } as const;

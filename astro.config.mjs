@@ -39,6 +39,7 @@ export default defineConfig({
   },
   redirects: {
     '/creating/a-soccer-mom': '/creating/on-banner-duty',
+    '/work-with': '/open-to-collaborating',
   },
   build: {
     inlineStylesheets: 'auto',

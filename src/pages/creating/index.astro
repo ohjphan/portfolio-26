@@ -8,11 +8,9 @@ import HandDrawnCircleStroke from '../../components/HandDrawnCircleStroke.astro'
 import HandDrawnLinkStroke from '../../components/HandDrawnLinkStroke.astro';
 import { getCollection } from 'astro:content';
 import {
-  aiWorkSlides,
   selectedWorkLogos,
   selectedWorkSlides,
 } from '../../data/selected-work';
-import { withBase } from '../../lib/paths';
 
 const published = (
   await getCollection('projects', ({ data }) => !data.draft)
@@ -29,9 +27,8 @@ const experiments = published.filter(
 
 const sections = [
   { label: 'Companies', href: '#companies' },
-  ...(aiWorkSlides.length > 0 ? [{ label: 'AI', href: '#ai' }] : []),
   ...(selectedWorkSlides.length > 0
-    ? [{ label: 'Works', href: '#works' }]
+    ? [{ label: 'Selected Work', href: '#works' }]
     : []),
   ...(experiments.length > 0
     ? [{ label: 'Experiments', href: '#experiments' }]
@@ -41,13 +38,13 @@ const sections = [
 
 <Layout
   title="Creating"
-  description="Selected product, brand, and AI design work by Jessica Phan — from early-stage startups and hypergrowth teams to experiments built for curiosity."
+  description="Selected product and brand design work by Jessica Phan — from early-stage startups and hypergrowth teams to experiments built for curiosity."
 >
   <header class="creating-hero">
     <h1 class="heading-lg">Creating</h1>
     <p class="text-muted creating-hero__intro">
-      Product, brand, and AI design work across early-stage startups,
-      hypergrowth teams, enterprise, and personal experiments.
+      Selected work across products, brands, and experiments — curated, not
+      comprehensive.
     </p>
   </header>
 
@@ -76,51 +73,6 @@ const sections = [
   />
 
   {
-    aiWorkSlides.length > 0 && (
-      <>
-        <HandDrawnDivider />
-        <section id="ai" class="creating-ai" aria-labelledby="ai-title">
-          <header class="creating-ai__header">
-            <h2 id="ai-title" class="jessica-band__title">
-              AI
-            </h2>
-            <p class="creating-ai__intro text-muted">
-              Designing for AI platforms means earning trust, clarifying first
-              actions, and making complex systems feel usable — without hiding
-              the hard parts.
-            </p>
-          </header>
-          <ul class="creating-ai__grid" role="list">
-            {aiWorkSlides.map((slide) => (
-              <li>
-                <a class="creating-ai__card" href="#works">
-                  <div class="creating-ai__media" data-mosaic-scroll>
-                    <img
-                      src={withBase(slide.image)}
-                      alt={slide.imageAlt}
-                      width="960"
-                      height="720"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
-                  <div class="creating-ai__copy">
-                    <p class="creating-ai__company">{slide.company}</p>
-                    <h3 class="creating-ai__project">{slide.project}</h3>
-                    {slide.summary && (
-                      <p class="creating-ai__summary">{slide.summary}</p>
-                    )}
-                  </div>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </section>
-      </>
-    )
-  }
-
-  {
     selectedWorkSlides.length > 0 && (
       <>
         <HandDrawnDivider />
@@ -131,7 +83,7 @@ const sections = [
         >
           <header class="creating-selected__header">
             <h2 id="works-title" class="jessica-band__title">
-              Works
+              Selected Work
             </h2>
           </header>
           <SelectedWorks works={selectedWorkSlides} />

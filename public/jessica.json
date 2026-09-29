@@ -2,7 +2,7 @@
   "name": "Jessica Phan",
   "url": "https://jessica.is",
   "jobTitle": "Product & Brand Design Consultant",
-  "description": "Product and brand design consultant with AI fluency and hands-on builder experience. Helps founders and teams turn ambiguity into products, brands, and meaningful experiences.",
+  "description": "Product and brand designer with hands-on builder experience. Helps founders and teams turn ambiguity into products, brands, and meaningful experiences.",
   "sameAs": [
     "https://www.linkedin.com/in/jessicaphan/"
   ],
@@ -38,10 +38,9 @@
   ],
   "pages": {
     "home": "https://jessica.is/",
-    "workWith": "https://jessica.is/work-with",
+    "workWith": "https://jessica.is/open-to-collaborating",
     "about": "https://jessica.is/jessica",
     "creating": "https://jessica.is/creating",
-    "creatingAi": "https://jessica.is/creating#ai",
     "writing": "https://jessica.is/writing",
     "talking": "https://jessica.is/talking",
     "llms": "https://jessica.is/llms.txt"

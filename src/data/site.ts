@@ -14,9 +14,21 @@ export const site = {
       'left-handed.',
       'Jessica Phan.',
     ],
-    closing:
-      'Product and brand design consultant. AI-fluent. Builder at heart. Helping founders and teams turn ambiguity into products, brands, and experiences people care about.',
+    identity: 'Product & brand designer. Builder at heart.',
+    helping:
+      'I help founders and teams turn ambiguity into products, brands, and experiences people care about.',
   },
+  currently: [
+    'Consulting with founders and teams.',
+    'Crossing a few things off the bucket list.',
+    'Building Banner Duty.',
+    'Writing Field Notes.',
+  ],
+  fieldNotes: [
+    'theres-never-a-good-time-to-leave',
+    'simplicity-is-the-highest-form-of-taste',
+    'perfectly-imperfect-how-wabi-sabi-fuels-team-velocity',
+  ],
   footer: {
     contact: {
       linkedin: 'https://www.linkedin.com/in/jessicaphan/',
