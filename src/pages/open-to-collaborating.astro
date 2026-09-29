@@ -72,22 +72,35 @@ const { meta, hero, whoFor, offers, proof, contact } = workWith;
 
     <HandDrawnDivider />
 
-    <section class="work-with__section work-with__closing" aria-labelledby="contact-title">
-      <h2 id="contact-title" class="jessica-band__title">{contact.title}</h2>
-      <p class="work-with__copy">{contact.body}</p>
-      <p class="work-with__cta">
-        <a
-          href={contact.linkedin}
-          class="home-btn home-btn--primary"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <span class="home-btn__text">
-            <span class="home-btn__label">{contact.linkedinLabel}</span>
-            <HandDrawnLinkStroke />
-          </span>
-        </a>
-      </p>
+    <section class="work-with__section work-with__closing talking-invite" aria-labelledby="contact-title">
+      <div class="talking-invite__copy">
+        <h2 id="contact-title" class="jessica-band__title">{contact.title}</h2>
+        <p class="work-with__copy">{contact.body}</p>
+        <p class="work-with__cta">
+          <a
+            href={contact.linkedin}
+            class="home-btn home-btn--primary"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span class="home-btn__text">
+              <span class="home-btn__label">{contact.linkedinLabel}</span>
+              <HandDrawnLinkStroke />
+            </span>
+          </a>
+        </p>
+      </div>
+      <figure class="talking-invite__figure">
+        <img
+          class="talking-invite__image"
+          src={withBase("/images/talking/open-invitation.png")}
+          alt="Collage of an empty chair linked by a hand-drawn red line to a woman gesturing in conversation"
+          width="960"
+          height="520"
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
     </section>
   </article>
 </Layout>
