@@ -10,7 +10,7 @@ export const jessica = {
   about: {
     label: 'About',
     paragraphs: [
-      'I\u2019ve spent my career turning ambiguity into products, brands, and experiences people care about. The work was never really about software \u2014 it\u2019s about designing meaningful experiences, whether that\u2019s a product, a place, or an idea shared through writing.',
+      'I turn ambiguity into products, brands, and experiences people care about. The work is never really about software \u2014 it\u2019s about designing meaningful experiences, whether that\u2019s a product, a place, or an idea shared through writing.',
       {
         segments: [
           {
@@ -18,7 +18,7 @@ export const jessica = {
           },
           { text: 'Field Notes', href: '/writing' },
           {
-            text: ', and building whatever curiosity leads me to next. Previously: Chan Zuckerberg Initiative, OpenSea, Sequoia Capital, and more.',
+            text: ', and building whatever curiosity leads next.',
           },
         ],
       },

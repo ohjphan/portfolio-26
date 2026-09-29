@@ -4,6 +4,7 @@ import HandDrawnDivider from '../../components/HandDrawnDivider.astro';
 import JessicaSection from '../../components/JessicaSection.astro';
 import FunFacts from '../../components/FunFacts.astro';
 import SketchLink from '../../components/SketchLink.astro';
+import HandDrawnCircleStroke from '../../components/HandDrawnCircleStroke.astro';
 import HandDrawnLinkStroke from '../../components/HandDrawnLinkStroke.astro';
 import { jessica } from '../../data/jessica';
 
@@ -22,9 +23,31 @@ const bookLoop = [...books, ...books];
     <p class="text-muted jessica-hero__intro">{jessica.hero.subheading}</p>
   </header>
 
-  <HandDrawnDivider />
+  <nav class="page-subnav" aria-label="Jessica sections" data-page-subnav>
+    <a href="#about" class="page-subnav__link is-active" data-subnav-link>
+      <span class="page-subnav__label">About</span>
+      <HandDrawnCircleStroke />
+      <span class="page-subnav__underline">
+        <HandDrawnLinkStroke />
+      </span>
+    </a>
+    <a href="#fun-facts" class="page-subnav__link" data-subnav-link>
+      <span class="page-subnav__label">Fun facts</span>
+      <HandDrawnCircleStroke />
+      <span class="page-subnav__underline">
+        <HandDrawnLinkStroke />
+      </span>
+    </a>
+    <a href="#fav-books" class="page-subnav__link" data-subnav-link>
+      <span class="page-subnav__label">Fav books</span>
+      <HandDrawnCircleStroke />
+      <span class="page-subnav__underline">
+        <HandDrawnLinkStroke />
+      </span>
+    </a>
+  </nav>
 
-  <JessicaSection title={jessica.about.label}>
+  <JessicaSection id="about" title={jessica.about.label}>
     <div class="jessica-about-layout">
       <div class="jessica-about-layout__copy">
         <div class="prose jessica-about">
@@ -65,13 +88,13 @@ const bookLoop = [...books, ...books];
 
   <HandDrawnDivider />
 
-  <JessicaSection title={jessica.funFacts.label}>
+  <JessicaSection id="fun-facts" title={jessica.funFacts.label}>
     <FunFacts items={jessica.funFacts.items} />
   </JessicaSection>
 
   <HandDrawnDivider />
 
-  <JessicaSection title="A few favorite books">
+  <JessicaSection id="fav-books" title="A few favorite books">
     <p class="jessica-section__lede">{jessica.books.lede}</p>
     <div class="book-shelf">
       <div class="book-shelf__viewport">
@@ -149,7 +172,58 @@ const bookLoop = [...books, ...books];
 <script>
   import { observeScrollMosaics } from '../../lib/mosaic-reveal';
 
+  function bindPageSubnav(root: ParentNode = document) {
+    const nav = root.querySelector<HTMLElement>('[data-page-subnav]');
+    if (!nav || nav.dataset.bound === 'true') return;
+    nav.dataset.bound = 'true';
+
+    const links = Array.from(
+      nav.querySelectorAll<HTMLAnchorElement>('[data-subnav-link]'),
+    );
+    const sections = links
+      .map((link) => {
+        const id = link.getAttribute('href')?.slice(1);
+        if (!id) return null;
+        const section = document.getElementById(id);
+        return section ? { link, section } : null;
+      })
+      .filter((item): item is { link: HTMLAnchorElement; section: HTMLElement } =>
+        Boolean(item),
+      );
+
+    if (sections.length === 0) return;
+
+    const setActive = (activeLink: HTMLAnchorElement) => {
+      links.forEach((link) => {
+        link.classList.toggle('is-active', link === activeLink);
+      });
+    };
+
+    links.forEach((link) => {
+      link.addEventListener('click', () => setActive(link));
+    });
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        const top = visible[0];
+        if (!top?.target) return;
+        const match = sections.find(({ section }) => section === top.target);
+        if (match) setActive(match.link);
+      },
+      {
+        rootMargin: '-35% 0px -50% 0px',
+        threshold: [0.1, 0.25, 0.5],
+      },
+    );
+
+    sections.forEach(({ section }) => observer.observe(section));
+  }
+
   observeScrollMosaics();
+  bindPageSubnav();
 
   function bindJessicaCollage(root: ParentNode = document) {
     const reduceMotion = window.matchMedia(
@@ -202,6 +276,7 @@ const bookLoop = [...books, ...books];
   bindJessicaCollage();
   document.addEventListener('astro:page-load', () => {
     observeScrollMosaics();
+    bindPageSubnav();
     bindJessicaCollage();
   });
 </script>

@@ -3,12 +3,13 @@ interface Props {
   label?: string;
   title?: string;
   number?: string;
+  id?: string;
 }
 
-const { label, title, number } = Astro.props;
+const { label, title, number, id } = Astro.props;
 ---
 
-<section class="jessica-band">
+<section class="jessica-band" id={id}>
   {
     label && (
       <div class="jessica-band__rail">

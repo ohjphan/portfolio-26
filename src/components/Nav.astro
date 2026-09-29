@@ -170,11 +170,23 @@ const panelId = 'site-nav-panel';
     const toggle = nav.querySelector<HTMLButtonElement>('[data-nav-toggle]');
     const panel = nav.querySelector<HTMLElement>('[data-nav-panel]');
 
+    const syncNavOffset = () => {
+      document.documentElement.style.setProperty(
+        '--site-nav-offset',
+        `${Math.ceil(nav.getBoundingClientRect().height)}px`,
+      );
+    };
+
+    syncNavOffset();
+    const resizeObserver = new ResizeObserver(() => syncNavOffset());
+    resizeObserver.observe(nav);
+
     if (sentinel instanceof HTMLElement) {
       const io = new IntersectionObserver(
         ([entry]) => {
           if (!entry) return;
           nav.classList.toggle('is-stuck', !entry.isIntersecting);
+          window.requestAnimationFrame(syncNavOffset);
         },
         { threshold: 0 },
       );

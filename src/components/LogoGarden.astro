@@ -8,20 +8,33 @@ interface Props {
   items: SelectedWorkItem[];
   title?: string;
   intro?: string;
+  id?: string;
 }
 
 const {
   items,
   title,
   intro,
+  id,
 } = Astro.props;
 
 const ariaLabel = title || intro || 'Companies I\u2019ve worked with';
 import { withBase } from '../lib/paths';
 ---
 
-<section class="logo-garden" aria-label={ariaLabel}>
-  {title && <p class="section-title">{title}</p>}
+<section
+  class="logo-garden"
+  id={id}
+  aria-label={title ? undefined : ariaLabel}
+  aria-labelledby={title && id ? `${id}-title` : undefined}
+>
+  {
+    title && (
+      <h2 class="jessica-band__title" id={id ? `${id}-title` : undefined}>
+        {title}
+      </h2>
+    )
+  }
   {
     intro && (
       <p class="logo-garden__intro text-muted">{intro}</p>

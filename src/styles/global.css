@@ -42,6 +42,8 @@
     var(--space-page),
     calc((100vw - var(--page-max)) / 2)
   );
+  /* Fallback until Nav measures its sticky height */
+  --site-nav-offset: calc(env(safe-area-inset-top, 0px) + 4.05rem);
 }
 
 *,
@@ -846,32 +848,69 @@ a.eyebrow:hover {
   margin: 0 0 1rem;
 }
 
-.essay-filters {
+.essay-filters,
+.page-subnav {
+  position: sticky;
+  top: calc(var(--site-nav-offset) - 1px);
+  z-index: 15;
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 0.5rem 1rem;
   margin: var(--space-section) 0 1.5rem;
+  padding-block: 1.2rem;
+  min-height: 3.75rem;
+  box-sizing: border-box;
+  overflow: visible;
 }
 
-.essay-filter {
+.essay-filters::before,
+.page-subnav::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  width: 100vw;
+  margin-left: calc(-1 * var(--page-inline-inset));
+  background: color-mix(in srgb, var(--color-paper) 94%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--grid-line);
+  pointer-events: none;
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .essay-filters::before,
+  .page-subnav::before {
+    background: var(--color-paper);
+  }
+}
+
+.essay-filter,
+.page-subnav__link {
   appearance: none;
   border: none;
   background: transparent;
   position: relative;
   display: inline-block;
-  padding: 0.2rem 0.15rem;
+  padding: 0.35rem;
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   font-weight: 400;
+  line-height: 1;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--color-muted);
+  text-decoration: none;
   cursor: pointer;
   transition: color 0.2s ease;
-  --filter-accent: var(--color-ink);
+  --filter-accent: var(--color-cobalt);
 }
 
-.essay-filter__label {
+.essay-filter__label,
+.page-subnav__label {
   position: relative;
   z-index: 1;
 }
@@ -892,11 +931,13 @@ a.eyebrow:hover {
   --filter-accent: var(--color-poppy);
 }
 
-.essay-filter .nav-link__circle {
+.essay-filter .nav-link__circle,
+.page-subnav__link .nav-link__circle {
   color: var(--filter-accent);
 }
 
-.essay-filter__underline {
+.essay-filter__underline,
+.page-subnav__underline {
   position: absolute;
   left: 0;
   right: 0;
@@ -909,7 +950,8 @@ a.eyebrow:hover {
   color: var(--filter-accent);
 }
 
-.essay-filter__underline .sketch-link__stroke {
+.essay-filter__underline .sketch-link__stroke,
+.page-subnav__underline .sketch-link__stroke {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -917,47 +959,56 @@ a.eyebrow:hover {
   opacity: 1;
 }
 
-.essay-filter__underline .sketch-link__stroke-path {
+.essay-filter__underline .sketch-link__stroke-path,
+.page-subnav__underline .sketch-link__stroke-path {
   stroke-dasharray: none;
   stroke-dashoffset: 0;
 }
 
 .essay-filter:hover,
-.essay-filter:focus-visible {
+.essay-filter:focus-visible,
+.page-subnav__link:hover,
+.page-subnav__link:focus-visible {
   color: var(--filter-accent);
 }
 
-.essay-filter.is-active {
+.essay-filter.is-active,
+.page-subnav__link.is-active {
   color: var(--filter-accent);
 }
 
-/* Hover: circle (same as nav) */
 .essay-filter:hover .nav-link__circle,
-.essay-filter:focus-visible .nav-link__circle {
+.essay-filter:focus-visible .nav-link__circle,
+.page-subnav__link:hover .nav-link__circle,
+.page-subnav__link:focus-visible .nav-link__circle {
   opacity: 1;
 }
 
 .essay-filter:hover .nav-link__circle-path,
-.essay-filter:focus-visible .nav-link__circle-path {
+.essay-filter:focus-visible .nav-link__circle-path,
+.page-subnav__link:hover .nav-link__circle-path,
+.page-subnav__link:focus-visible .nav-link__circle-path {
   stroke-dashoffset: 0;
 }
 
-/* Selected: underline (same as nav current page) */
-.essay-filter.is-active .essay-filter__underline {
+.essay-filter.is-active .essay-filter__underline,
+.page-subnav__link.is-active .page-subnav__underline {
   opacity: 1;
 }
 
-/* Don't show circle on the selected filter unless hovering it */
-.essay-filter.is-active:not(:hover):not(:focus-visible) .nav-link__circle {
+.essay-filter.is-active:not(:hover):not(:focus-visible) .nav-link__circle,
+.page-subnav__link.is-active:not(:hover):not(:focus-visible) .nav-link__circle {
   opacity: 0;
 }
 
-.essay-filter.is-active:not(:hover):not(:focus-visible) .nav-link__circle-path {
+.essay-filter.is-active:not(:hover):not(:focus-visible) .nav-link__circle-path,
+.page-subnav__link.is-active:not(:hover):not(:focus-visible) .nav-link__circle-path {
   stroke-dashoffset: 100;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .essay-filter.is-active .essay-filter__underline {
+  .essay-filter.is-active .essay-filter__underline,
+  .page-subnav__link.is-active .page-subnav__underline {
     opacity: 1;
   }
 }
@@ -2040,6 +2091,10 @@ html.nav-menu-open body {
   grid-template-columns: 1fr;
   gap: 0.85rem;
   align-items: start;
+}
+
+.jessica-band[id] {
+  scroll-margin-top: calc(var(--site-nav-offset) + 3.25rem);
 }
 
 .jessica-band__rail {
@@ -3421,7 +3476,7 @@ body:has(.page--deck)::after {
 }
 
 .creating-hero {
-  margin-bottom: var(--space-section);
+  margin-bottom: 0;
 }
 
 .creating-hero__intro {
@@ -3429,12 +3484,22 @@ body:has(.page--deck)::after {
   max-width: 36rem;
 }
 
+.creating-selected,
+.creating-experiments,
+.logo-garden[id] {
+  scroll-margin-top: calc(var(--site-nav-offset) + 3.25rem);
+}
+
 .creating-selected {
   margin: 0 0 var(--space-section);
 }
 
+.creating-selected__header .jessica-band__title {
+  margin-bottom: 1.25rem;
+}
+
 .selected-works {
-  --selected-works-nav-offset: 5rem;
+  --selected-works-nav-offset: calc(var(--site-nav-offset) + 3.25rem);
   margin: 0;
 }
 
@@ -4142,12 +4207,20 @@ body:has(.page--deck)::after {
   margin-bottom: 1.5rem;
 }
 
+.creating-experiments__header .jessica-band__title {
+  margin-bottom: 0.85rem;
+}
+
 .creating-experiments__intro {
-  margin: 0.75rem 0 0;
+  margin: 0;
   font-family: var(--font-sans);
   font-size: var(--text-base);
   line-height: var(--line-height-body);
   text-wrap: pretty;
+}
+
+.logo-garden .jessica-band__title {
+  margin-bottom: 1.25rem;
 }
 
 .project-stack {

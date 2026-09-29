@@ -4,6 +4,8 @@ import LogoGarden from '../../components/LogoGarden.astro';
 import SelectedWorks from '../../components/SelectedWorks.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
 import HandDrawnDivider from '../../components/HandDrawnDivider.astro';
+import HandDrawnCircleStroke from '../../components/HandDrawnCircleStroke.astro';
+import HandDrawnLinkStroke from '../../components/HandDrawnLinkStroke.astro';
 import { getCollection } from 'astro:content';
 import { selectedWorkLogos, selectedWorkSlides } from '../../data/selected-work';
 
@@ -19,6 +21,16 @@ const published = (
 const experiments = published.filter(
   (project) => project.data.category === 'Experiments',
 );
+
+const sections = [
+  { label: 'Companies', href: '#companies' },
+  ...(selectedWorkSlides.length > 0
+    ? [{ label: 'Works', href: '#works' }]
+    : []),
+  ...(experiments.length > 0
+    ? [{ label: 'Experiments', href: '#experiments' }]
+    : []),
+];
 ---
 
 <Layout
@@ -33,15 +45,47 @@ const experiments = published.filter(
     </p>
   </header>
 
-  <LogoGarden items={selectedWorkLogos} title="Worked with" />
+  <nav class="page-subnav" aria-label="Creating sections" data-creating-subnav>
+    {
+      sections.map(({ label, href }, index) => (
+        <a
+          href={href}
+          class:list={['page-subnav__link', index === 0 && 'is-active']}
+          data-subnav-link
+        >
+          <span class="page-subnav__label">{label}</span>
+          <HandDrawnCircleStroke />
+          <span class="page-subnav__underline">
+            <HandDrawnLinkStroke />
+          </span>
+        </a>
+      ))
+    }
+  </nav>
 
-  <HandDrawnDivider />
+  <LogoGarden
+    id="companies"
+    items={selectedWorkLogos}
+    title="Companies"
+  />
 
   {
     selectedWorkSlides.length > 0 && (
-      <section class="creating-selected" aria-label="Selected works">
-        <SelectedWorks works={selectedWorkSlides} />
-      </section>
+      <>
+        <HandDrawnDivider />
+        <section
+          id="works"
+          class="creating-selected"
+          aria-labelledby="works-title"
+        >
+          <header class="creating-selected__header">
+            <h2 id="works-title" class="jessica-band__title">
+              Works
+            </h2>
+          </header>
+          <SelectedWorks works={selectedWorkSlides} />
+        </section>
+      </>
     )
   }
 
@@ -49,9 +93,9 @@ const experiments = published.filter(
     experiments.length > 0 && (
       <>
         <HandDrawnDivider />
-        <section class="creating-experiments" aria-labelledby="experiments-title">
+        <section class="creating-experiments" id="experiments" aria-labelledby="experiments-title">
           <header class="creating-experiments__header">
-            <h2 id="experiments-title" class="section-title">
+            <h2 id="experiments-title" class="jessica-band__title">
               Experiments
             </h2>
             <p class="creating-experiments__intro text-muted">
@@ -81,5 +125,61 @@ const experiments = published.filter(
 
 <script>
   import { observeScrollMosaics } from '../../lib/mosaic-reveal';
+
+  function bindCreatingSubnav() {
+    const nav = document.querySelector<HTMLElement>('[data-creating-subnav]');
+    if (!nav || nav.dataset.bound === 'true') return;
+    nav.dataset.bound = 'true';
+
+    const links = Array.from(
+      nav.querySelectorAll<HTMLAnchorElement>('[data-subnav-link]'),
+    );
+    const sections = links
+      .map((link) => {
+        const id = link.getAttribute('href')?.slice(1);
+        if (!id) return null;
+        const section = document.getElementById(id);
+        return section ? { link, section } : null;
+      })
+      .filter((item): item is { link: HTMLAnchorElement; section: HTMLElement } =>
+        Boolean(item),
+      );
+
+    if (sections.length === 0) return;
+
+    const setActive = (activeLink: HTMLAnchorElement) => {
+      links.forEach((link) => {
+        link.classList.toggle('is-active', link === activeLink);
+      });
+    };
+
+    links.forEach((link) => {
+      link.addEventListener('click', () => setActive(link));
+    });
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        const top = visible[0];
+        if (!top?.target) return;
+        const match = sections.find(({ section }) => section === top.target);
+        if (match) setActive(match.link);
+      },
+      {
+        rootMargin: '-35% 0px -50% 0px',
+        threshold: [0.1, 0.25, 0.5],
+      },
+    );
+
+    sections.forEach(({ section }) => observer.observe(section));
+  }
+
   observeScrollMosaics();
+  bindCreatingSubnav();
+  document.addEventListener('astro:page-load', () => {
+    observeScrollMosaics();
+    bindCreatingSubnav();
+  });
 </script>
