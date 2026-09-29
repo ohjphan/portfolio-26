@@ -7,7 +7,7 @@ import { workWith } from '../data/work-with';
 import { professionalServiceJsonLd, personJsonLd } from '../lib/seo';
 import { withBase } from '../lib/paths';
 
-const { meta, hero, whoFor, offers, proof, process, contact } = workWith;
+const { meta, hero, whoFor, offers, proof, contact } = workWith;
 ---
 
 <Layout
@@ -68,27 +68,6 @@ const { meta, hero, whoFor, offers, proof, process, contact } = workWith;
       <p class="work-with__inline-cta">
         <SketchLink href={withBase(proof.href)}>{proof.cta}</SketchLink>
       </p>
-    </section>
-
-    <HandDrawnDivider />
-
-    <section class="work-with__section" aria-labelledby="process-title">
-      <h2 id="process-title" class="jessica-band__title">{process.title}</h2>
-      <ol class="work-with__steps">
-        {
-          process.steps.map((step, index) => (
-            <li class="work-with__step">
-              <p class="work-with__step-num" aria-hidden="true">
-                {String(index + 1).padStart(2, '0')}
-              </p>
-              <div>
-                <h3 class="work-with__step-title">{step.title}</h3>
-                <p class="work-with__step-body">{step.body}</p>
-              </div>
-            </li>
-          ))
-        }
-      </ol>
     </section>
 
     <HandDrawnDivider />

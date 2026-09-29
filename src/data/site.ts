@@ -8,14 +8,14 @@ export const site = {
     hello: 'Hello',
     prefix: 'Jessica is...',
     shuffle: [
-      'left-handed.',
-      'right-brained.',
-      'endlessly curious.',
       'a dot-connector.',
+      'endlessly curious.',
+      'right-brained.',
+      'left-handed.',
       'Jessica Phan.',
     ],
     closing:
-      'Product and brand design consultant. AI-fluent. Builder at heart. I help founders and teams turn ambiguity into products, brands, and experiences people care about.',
+      'Product and brand design consultant. AI-fluent. Builder at heart. Helping founders and teams turn ambiguity into products, brands, and experiences people care about.',
   },
   footer: {
     contact: {

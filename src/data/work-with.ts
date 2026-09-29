@@ -44,23 +44,6 @@ export const workWith = {
     href: '/creating',
     cta: 'See Creating',
   },
-  process: {
-    title: 'How engagements usually start',
-    steps: [
-      {
-        title: 'A clear problem',
-        body: 'You bring the ambiguity — a product bet, a brand gap, an AI experience that needs shaping.',
-      },
-      {
-        title: 'A focused partnership',
-        body: 'We align on scope, decision-makers, and what “done enough” looks like before we dive deep.',
-      },
-      {
-        title: 'Craft that ships',
-        body: 'I work in artifacts teams can use: narratives, flows, prototypes, brand systems, and guidance for builders.',
-      },
-    ],
-  },
   contact: {
     title: 'Start a conversation',
     body: 'The best next step is a note on LinkedIn with context on what you’re building and where you’re stuck.',

@@ -21,7 +21,7 @@
 
   --measure: 42rem;
   --page-max: 64rem;
-  --space-page: clamp(1.5rem, 8vw, 6rem);
+  --space-page: clamp(1.15rem, 5.5vw, 6rem);
   --space-section: 3rem;
   --space-block: 1.5rem;
 
@@ -1010,6 +1010,28 @@ a.eyebrow:hover {
   .essay-filter.is-active .essay-filter__underline,
   .page-subnav__link.is-active .page-subnav__underline {
     opacity: 1;
+  }
+}
+
+@media (max-width: 640px) {
+  .essay-filters,
+  .page-subnav {
+    flex-wrap: nowrap;
+    gap: 0.2rem 0.45rem;
+    justify-content: space-between;
+  }
+
+  .essay-filter,
+  .page-subnav__link {
+    flex: 0 1 auto;
+    padding: 0.3rem 0.1rem;
+    font-size: 0.8125rem;
+    letter-spacing: 0.03em;
+  }
+
+  .essay-filter__label,
+  .page-subnav__label {
+    white-space: nowrap;
   }
 }
 
@@ -2691,8 +2713,15 @@ body:has(.page--deck)::after {
   width: 100%;
   max-width: none;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.25rem 1rem;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .fun-facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem 1rem;
+  }
 }
 
 @media (min-width: 720px) {
