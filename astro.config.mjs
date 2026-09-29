@@ -37,6 +37,9 @@ export default defineConfig({
     prefetchAll: true,
     defaultStrategy: 'viewport',
   },
+  redirects: {
+    '/creating/a-soccer-mom': '/creating/on-banner-duty',
+  },
   build: {
     inlineStylesheets: 'auto',
   },
