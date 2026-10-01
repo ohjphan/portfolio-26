@@ -1,0 +1,4 @@
+User-Agent: *
+Allow: /
+
+Sitemap: https://jessica.is/on-banner-duty/sitemap.xml
