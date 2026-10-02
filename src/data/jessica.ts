@@ -204,8 +204,19 @@ export const jessica = {
         imageAlt:
           'Torn-paper collage of five people at laptops with emoji fragments streaming from glowing screens into a yellow winking face',
         headline: 'I’ve spent Saturdays hacking with legends.',
-        detail:
-          'One Saturday call put me in a room with founders of Figma, OpenSea, and OpenRouter. We made a thing called Ethmoji.',
+        detail: {
+          segments: [
+            {
+              text: 'One Saturday call put me in a room with founders of Figma, OpenSea, and OpenRouter. We made a thing called ',
+            },
+            {
+              text: 'Ethmoji',
+              href: 'https://www.youtube.com/watch?v=-fMUngXFXQY',
+              external: true,
+            },
+            { text: '.' },
+          ],
+        },
       },
       {
         image: '/images/jessica/fun-facts/04-jewelry.jpg',
