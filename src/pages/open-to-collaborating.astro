@@ -1,82 +1,89 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import HandDrawnDivider from '../components/HandDrawnDivider.astro';
 import HandDrawnLinkStroke from '../components/HandDrawnLinkStroke.astro';
+import WorkflowSteps from '../components/WorkflowSteps.astro';
+import JessicaSignature from '../components/JessicaSignature.astro';
 import SketchLink from '../components/SketchLink.astro';
 import { workWith } from '../data/work-with';
 import { professionalServiceJsonLd, personJsonLd } from '../lib/seo';
 import { withBase } from '../lib/paths';
 
-const { meta, hero, whoFor, offers, proof, contact } = workWith;
+const { meta, letter, collage, testimonials, contact } = workWith;
+
+const paragraphText = (
+  paragraph: (typeof letter.beforePoints)[number] | (typeof letter.afterPoints)[number],
+) =>
+  typeof paragraph === 'string'
+    ? paragraph
+    : paragraph.segments.map((segment) => segment.text).join('');
+
+const isShortLine = (text: string) => text.length <= 48 && !text.includes('. ');
+const pointSteps = letter.points.map((text) => ({ text }));
+const testimonialSizer = testimonials.reduce((a, b) =>
+  a.length >= b.length ? a : b,
+);
 ---
 
 <Layout
   title={meta.title}
   description={meta.description}
+  image="/images/og/open-to-collaborating.png"
+  imageAlt="Hands assembling a paper interface collage — Dear people building something"
   jsonLd={[professionalServiceJsonLd(), personJsonLd()]}
 >
-  <article class="work-with">
-    <header class="work-with__hero">
-      <p class="eyebrow">{hero.eyebrow}</p>
-      <h1 class="heading-lg work-with__title">{hero.title}</h1>
-      <p class="work-with__lede">{hero.lede}</p>
-      <p class="work-with__cta">
-        <a
-          href={contact.linkedin}
-          class="home-btn home-btn--primary"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <span class="home-btn__text">
-            <span class="home-btn__label">{contact.linkedinLabel}</span>
-            <HandDrawnLinkStroke />
-          </span>
-        </a>
-      </p>
+  <article class="letter">
+    <header class="letter__header">
+      <h1 class="heading-lg letter__title">{letter.title}</h1>
     </header>
 
-    <HandDrawnDivider />
-
-    <section class="work-with__section" aria-labelledby="who-for-title">
-      <h2 id="who-for-title" class="jessica-band__title">{whoFor.title}</h2>
-      <ul class="work-with__list">
-        {whoFor.items.map((item) => <li>{item}</li>)}
-      </ul>
-    </section>
-
-    <HandDrawnDivider />
-
-    <section class="work-with__section" aria-labelledby="offers-title">
-      <h2 id="offers-title" class="jessica-band__title">{offers.title}</h2>
-      <ul class="work-with__offers" role="list">
+    <div class="letter__body">
+      <section class="letter__section">
         {
-          offers.items.map((offer) => (
-            <li class="work-with__offer">
-              <h3 class="work-with__offer-title">{offer.title}</h3>
-              <p class="work-with__offer-body">{offer.body}</p>
-            </li>
+          letter.beforePoints.map((paragraph) => (
+            <p
+              class:list={[
+                'letter__p',
+                isShortLine(paragraphText(paragraph)) && 'letter__p--short',
+              ]}
+            >
+              {paragraph}
+            </p>
           ))
         }
-      </ul>
-    </section>
 
-    <HandDrawnDivider />
+        <div class="letter__points">
+          <WorkflowSteps steps={pointSteps} />
+        </div>
 
-    <section class="work-with__section" aria-labelledby="proof-title">
-      <h2 id="proof-title" class="jessica-band__title">{proof.title}</h2>
-      <p class="work-with__copy">{proof.body}</p>
-      <p class="work-with__inline-cta">
-        <SketchLink href={withBase(proof.href)}>{proof.cta}</SketchLink>
-      </p>
-    </section>
+        {
+          letter.afterPoints.map((paragraph) => (
+            <p
+              class:list={[
+                'letter__p',
+                isShortLine(paragraphText(paragraph)) && 'letter__p--short',
+              ]}
+            >
+              {typeof paragraph === 'string' ? (
+                paragraph
+              ) : (
+                paragraph.segments.map((segment) =>
+                  'href' in segment ? (
+                    <SketchLink href={segment.href}>{segment.text}</SketchLink>
+                  ) : (
+                    segment.text
+                  ),
+                )
+              )}
+            </p>
+          ))
+        }
+      </section>
 
-    <HandDrawnDivider />
-
-    <section class="work-with__section work-with__closing talking-invite" aria-labelledby="contact-title">
-      <div class="talking-invite__copy">
-        <h2 id="contact-title" class="jessica-band__title">{contact.title}</h2>
-        <p class="work-with__copy">{contact.body}</p>
-        <p class="work-with__cta">
+      <footer class="letter__close">
+        <p class="letter__signoff">
+          <JessicaSignature class="letter__signature" />
+        </p>
+        <div class="letter__cta">
           <a
             href={contact.linkedin}
             class="home-btn home-btn--primary"
@@ -88,19 +95,75 @@ const { meta, hero, whoFor, offers, proof, contact } = workWith;
               <HandDrawnLinkStroke />
             </span>
           </a>
-        </p>
-      </div>
-      <figure class="talking-invite__figure">
-        <img
-          class="talking-invite__image"
-          src={withBase("/images/talking/open-invitation.png")}
-          alt="Collage of an empty chair linked by a hand-drawn red line to a woman gesturing in conversation"
-          width="960"
-          height="520"
-          loading="lazy"
-          decoding="async"
-        />
-      </figure>
-    </section>
+          <a
+            href={withBase(contact.aboutHref)}
+            class="home-btn home-btn--secondary"
+          >
+            <span class="home-btn__text">
+              <span class="home-btn__label">{contact.aboutLabel}</span>
+              <HandDrawnLinkStroke />
+            </span>
+          </a>
+        </div>
+      </footer>
+    </div>
   </article>
+
+  <section class="letter-quotes" aria-label="Things people have said">
+    <div class="letter-quotes__shuffle" aria-live="polite">
+      <p class="letter-quotes__sizer" aria-hidden="true">
+        “{testimonialSizer}”
+      </p>
+      {
+        testimonials.map((quote, index) => (
+          <blockquote
+            class:list={[
+              'letter-quotes__item',
+              index === 0 && 'is-active',
+            ]}
+          >
+            <p>“{quote}”</p>
+          </blockquote>
+        ))
+      }
+    </div>
+  </section>
+
+  <figure class="letter-collage" data-mosaic-scroll>
+    <img
+      class="letter-collage__image"
+      src={withBase(collage.src)}
+      alt={collage.alt}
+      width={collage.width}
+      height={collage.height}
+      loading="lazy"
+      decoding="async"
+    />
+  </figure>
 </Layout>
+
+<script is:inline>
+  (() => {
+    const root = document.querySelector('.letter-quotes__shuffle');
+    if (!root) return;
+
+    const items = Array.from(
+      root.querySelectorAll('.letter-quotes__item'),
+    );
+    if (items.length < 2) return;
+
+    const reduceMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)',
+    ).matches;
+    if (reduceMotion) return;
+
+    let index = 0;
+    const intervalMs = 7000;
+
+    window.setInterval(() => {
+      items[index].classList.remove('is-active');
+      index = (index + 1) % items.length;
+      items[index].classList.add('is-active');
+    }, intervalMs);
+  })();
+</script>

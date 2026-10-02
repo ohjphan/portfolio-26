@@ -26,7 +26,7 @@ const experiments = published.filter(
 );
 
 const sections = [
-  { label: 'Companies', href: '#companies' },
+  { label: 'Worked with', href: '#worked-with' },
   ...(selectedWorkSlides.length > 0
     ? [{ label: 'Selected Work', href: '#works' }]
     : []),
@@ -69,9 +69,9 @@ const sections = [
   </nav>
 
   <LogoGarden
-    id="companies"
+    id="worked-with"
     items={selectedWorkLogos}
-    title="Companies"
+    title="Worked with"
   />
 
   {

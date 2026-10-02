@@ -1,0 +1,18 @@
+---
+import { withBase } from '../lib/paths';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<img
+  class:list={['jessica-signature', className]}
+  src={withBase('/images/jessica-signature.svg')}
+  alt="Jessica"
+  width="240"
+  height="125"
+  decoding="async"
+/>

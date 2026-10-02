@@ -49,6 +49,11 @@ const pages = [
     title: 'Jessica is writing',
     url: 'jessica.is/writing',
   },
+  {
+    id: 'open-to-collaborating',
+    titleLines: ['Dear people', 'building something,'],
+    url: 'jessica.is/open-to-collaborating',
+  },
 ];
 
 if (!fs.existsSync(fontPath)) {
@@ -81,14 +86,24 @@ async function composePage(page) {
 
   ctx.drawImage(mark, W - MARK - MARK_INSET, MARK_INSET, MARK, MARK);
 
+  const titleLines = page.titleLines ?? [page.title];
+  const lineHeight = TITLE_SIZE * 1.15;
+  const titleBlockHeight = lineHeight * (titleLines.length - 1);
+  const firstLineY = TITLE_Y - titleBlockHeight / 2;
+
   ctx.fillStyle = INK;
   ctx.font = `${TITLE_SIZE}px "Faculty Glyphic"`;
   ctx.textBaseline = 'alphabetic';
-  ctx.fillText(page.title, TEXT_X, TITLE_Y);
+  titleLines.forEach((line, index) => {
+    ctx.fillText(line, TEXT_X, firstLineY + index * lineHeight);
+  });
 
-  const titleMetrics = ctx.measureText(page.title);
+  const lastLine = titleLines[titleLines.length - 1];
+  const titleMetrics = ctx.measureText(lastLine);
   const titleBottom =
-    TITLE_Y + (titleMetrics.actualBoundingBoxDescent || 0);
+    firstLineY +
+    titleBlockHeight +
+    (titleMetrics.actualBoundingBoxDescent || 0);
 
   ctx.fillStyle = COBALT;
   ctx.font = `${URL_SIZE}px "Faculty Glyphic"`;

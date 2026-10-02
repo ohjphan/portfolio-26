@@ -18,7 +18,7 @@
 
 ## Primary pages
 - [Home](https://jessica.is/): Currently, Field Notes, and selected companies
-- [Open to collaborating](https://jessica.is/open-to-collaborating): Consulting, client work, and how to start
+- [Open to collaborating](https://jessica.is/open-to-collaborating): A letter from Jessica — open to collaborating with people building something
 - [Jessica / About](https://jessica.is/jessica): Bio, values, fun facts, books, explore paths
 - [Creating](https://jessica.is/creating): Selected work, companies, and experiments
 - [Writing / Field Notes](https://jessica.is/writing): Essays on design, work, curiosity, and life

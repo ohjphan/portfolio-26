@@ -333,7 +333,7 @@ export const jessica = {
       {
         title: 'Work with Jessica',
         description:
-          'Product and brand design consulting from someone who still builds.',
+          'A letter for people building something — open to collaborating.',
         href: '/open-to-collaborating',
         accent: 'cobalt',
       },

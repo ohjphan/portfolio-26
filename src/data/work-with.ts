@@ -2,52 +2,60 @@ export const workWith = {
   meta: {
     title: 'Work with Jessica',
     description:
-      'Product and brand design consulting with Jessica Phan — for founders and teams who need a partner who still builds.',
+      'A letter from Jessica Phan — open to collaborating with people building something, from the messy beginning through the craft of making it real.',
   },
-  hero: {
-    eyebrow: 'Consulting',
-    title: 'Work with Jessica',
-    lede: 'I’ve spent my career in 0→1 environments, and I still build things myself. I help founders and teams turn ambiguity into products, brands, and experiences people care about.',
-  },
-  whoFor: {
-    title: 'Who this is for',
-    items: [
-      'Founders shaping a 0→1 product or brand',
-      'Teams building new products who need design that respects users and systems',
-      'Leaders who want a partner across product, brand, and shipping — not slides alone',
+  letter: {
+    title: 'Dear people building something,',
+    beforePoints: [
+      'I really like the beginning.',
+      'The messy part. When the idea is still half formed, the path isn’t obvious, and someone has to start connecting the dots.',
+      'That’s usually where I’m happiest.',
+      'I’ve spent most of my career in 0→1 environments as a founding designer, sometimes the solo designer, sometimes player-coach, and sometimes a founder myself.',
+      'And still, I’m someone who likes opening Figma (actually, these days, Cursor) and making the thing myself.',
+      'I’m open to collaborating.',
+      'That might mean shaping a new product, helping a founder give an idea form, advising a team, joining something more deeply, or simply being another creative brain in the room.',
+      'I’m interested in good people, interesting problems, and work that feels worth caring about.',
+    ],
+    points: [
+      'I like figuring out the big ideas, then zooming in to sweat the small details.',
+      'I like asking what and why we should build before jumping into how.',
+      'I care about how product, brand, story, and craft fit together — the overall experience.',
+      'I like making complicated things feel simple, thoughtful, and human.',
+      'I like being there before everything makes sense.',
+    ],
+    afterPoints: [
+      'A lot of my work starts the same way: curiosity first, then figuring out what to make.',
+      {
+        segments: [
+          { text: 'I’m not an expert in one industry. ' },
+          { text: 'I’ve worked', href: '/creating' },
+          {
+            text: ' across crypto, HR tech, education, AI, ecommerce, enterprise, and a few things in between.',
+          },
+        ],
+      },
+      'I think of myself more as a specialist design generalist: someone who can zoom out, connect the dots, and then get close enough to the work to make it real.',
+      'Tell me what you’re building, what you’re excited about, and where you’re stuck.',
+      'You don’t need to have it all figured out. Actually, I might prefer that you don’t. We can figure it out together.',
     ],
   },
-  offers: {
-    title: 'How I can help',
-    items: [
-      {
-        title: 'Product design consulting',
-        body: 'Strategy, flows, UX, and product craft for early-stage through growth — from first principles to something shippable.',
-      },
-      {
-        title: 'Brand for product companies',
-        body: 'Identity, narrative, and visual systems that make a product feel coherent as it scales.',
-      },
-      {
-        title: 'AI product design',
-        body: 'Guidance for AI interfaces and platforms: clarity, trust, evaluation surfaces, and experiences that leave room to think.',
-      },
-      {
-        title: 'Design leadership advisory',
-        body: 'A sounding board for hiring, process, storytelling, and the messy middle of building design into a company.',
-      },
-    ],
+  collage: {
+    src: '/images/open-to-collaborating/journey-collage.jpg',
+    alt: 'Collage of scribbled ideas connected by a cobalt line through wireframes, color swatches, and a hand placing the final dot',
+    width: 1024,
+    height: 341,
   },
-  proof: {
-    title: 'Selected collaborations',
-    body: 'Client work across marketplaces, venture, education, and enterprise — plus experiments I still ship myself, like Banner Duty. Seeing both sides of making is part of how I partner.',
-    href: '/creating',
-    cta: 'See Creating',
-  },
+  testimonials: [
+    'She’s really good at cutting cubes out of the fog. Jessica can take something ambiguous and give it shape, strategy, and direction, while still caring about the little details that make it feel special.',
+    'Jessica is thoughtful in all the ways she shows up. She thinks deeply about the work, the story, what people need to understand, and how something will be received.',
+    'Jess is just a light. She brings intelligence and substance into the room, but also warmth, humor, and a kind of energy that makes people genuinely look forward to working with her.',
+    'Jessica has this builder instinct where she’ll probably just go make the thing. She doesn’t stop at the idea. She figures out how to turn it into something real.',
+    'She has an incredible eye for craft. Jessica notices the spacing, the composition, the system, the tiny thing that’s one pixel off, and she cares enough to make it right.',
+  ],
   contact: {
-    title: 'Start a conversation',
-    body: 'The best next step is a note on LinkedIn with context on what you’re building and where you’re stuck.',
     linkedin: 'https://www.linkedin.com/in/jessicaphan/',
-    linkedinLabel: 'Message on LinkedIn',
+    linkedinLabel: 'Message me on LinkedIn',
+    aboutHref: '/jessica',
+    aboutLabel: 'More about me',
   },
 } as const;
