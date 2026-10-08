@@ -1,23 +1,14 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import EssayCard from '../../components/EssayCard.astro';
-import EssayFeature from '../../components/EssayFeature.astro';
 import HandDrawnCircleStroke from '../../components/HandDrawnCircleStroke.astro';
 import HandDrawnLinkStroke from '../../components/HandDrawnLinkStroke.astro';
 import { getCollection } from 'astro:content';
 import { essayCategories } from '../../content.config';
-import { interleaveEssaysByCategory } from '../../lib/essays';
+import { sortEssaysByDateAdded } from '../../lib/essays';
 
 const published = await getCollection('essays', ({ data }) => !data.draft);
-
-const featured =
-  published.find((essay) => essay.data.featured && essay.data.cover) ?? null;
-
-const essays = interleaveEssaysByCategory(
-  featured
-    ? published.filter((essay) => essay.id !== featured.id)
-    : published,
-);
+const essays = sortEssaysByDateAdded(published);
 
 const activeCategories = essayCategories;
 const filters = [
@@ -39,19 +30,6 @@ const filters = [
       them.
     </p>
   </header>
-
-  {
-    featured && (
-      <EssayFeature
-        title={featured.data.title}
-        description={featured.data.description}
-        href={`/writing/${featured.id}`}
-        category={featured.data.category}
-        cover={featured.data.cover!}
-        coverAlt={featured.data.coverAlt}
-      />
-    )
-  }
 
   <div class="essay-filters" role="group" aria-label="Filter by category">
     {

@@ -3398,7 +3398,8 @@ body:has(.page--deck)::after {
   margin-top: 0;
 }
 
-.home-btn {
+.home-btn,
+.prose .home-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -3413,14 +3414,17 @@ body:has(.page--deck)::after {
   transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
-.home-btn--primary {
+.home-btn--primary,
+.prose .home-btn--primary {
   background: var(--color-ink);
   color: var(--color-paper);
   border-color: var(--color-ink);
 }
 
 .home-btn--primary:hover,
-.home-btn--primary:focus-visible {
+.home-btn--primary:focus-visible,
+.prose .home-btn--primary:hover,
+.prose .home-btn--primary:focus-visible {
   background: var(--color-ink);
   color: var(--color-paper);
   border-color: var(--color-ink);

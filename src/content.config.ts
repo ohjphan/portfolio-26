@@ -22,6 +22,7 @@ const essays = defineCollection({
     description: z.string(),
     tldr: z.string(),
     category: z.enum(essayCategories),
+    dateAdded: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
     order: z.number().optional(),
     draft: z.boolean().default(false),
     publication: z.string().optional(),

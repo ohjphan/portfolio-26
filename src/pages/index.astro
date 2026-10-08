@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import HandDrawnLinkStroke from '../components/HandDrawnLinkStroke.astro';
 import HandDrawnDivider from '../components/HandDrawnDivider.astro';
+import HomeButton from '../components/HomeButton.astro';
 import HomePortrait from '../components/HomePortrait.astro';
 import BrandMarquee from '../components/BrandMarquee.astro';
 import EssayCard from '../components/EssayCard.astro';
@@ -55,12 +56,10 @@ const fieldNotes = site.fieldNotes
       <p class="home-hero__lede">{identity}</p>
       <p class="home-hero__helping">{helping}</p>
       <div class="home-hero__cta">
-        <a href={withBase('/open-to-collaborating')} class="home-btn home-btn--primary">
-          <span class="home-btn__text">
-            <span class="home-btn__label">Work with Jessica</span>
-            <HandDrawnLinkStroke />
-          </span>
-        </a>
+        <HomeButton
+          href="/open-to-collaborating"
+          label="Work with Jessica"
+        />
         <a href={withBase('/creating')} class="home-btn home-btn--secondary">
           <span class="home-btn__text">
             <span class="home-btn__label">See Creating</span>

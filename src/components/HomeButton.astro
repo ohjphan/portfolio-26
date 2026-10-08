@@ -1,0 +1,26 @@
+---
+import HandDrawnLinkStroke from './HandDrawnLinkStroke.astro';
+import { withBase } from '../lib/paths';
+
+interface Props {
+  href: string;
+  label: string;
+  download?: boolean | string;
+}
+
+const { href, label, download } = Astro.props;
+---
+
+<a
+  href={withBase(href)}
+  class="home-btn home-btn--primary"
+  download={download || undefined}
+>
+  <span class="home-btn__text">
+    <span class="home-btn__label">
+      {label}
+      {download && <span aria-hidden="true"> ↓</span>}
+    </span>
+    <HandDrawnLinkStroke />
+  </span>
+</a>
