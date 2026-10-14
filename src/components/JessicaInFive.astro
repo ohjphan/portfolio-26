@@ -3,6 +3,7 @@ interface Slide {
   image: string;
   alt: string;
   eyebrow: string;
+  eyebrowHref?: string;
   title: string;
   note: string;
 }
@@ -15,6 +16,7 @@ interface Props {
 const { slides, presentation = false } = Astro.props;
 const total = slides.length;
 import { withBase } from '../lib/paths';
+import SketchLink from './SketchLink.astro';
 ---
 
 <div
@@ -41,7 +43,15 @@ import { withBase } from '../lib/paths';
             />
           </div>
           <figcaption class="in-five__caption">
-            <p class="in-five__eyebrow">{slide.eyebrow}</p>
+            <p class="in-five__eyebrow">
+              {slide.eyebrowHref ? (
+                <SketchLink href={slide.eyebrowHref} external>
+                  {slide.eyebrow}
+                </SketchLink>
+              ) : (
+                slide.eyebrow
+              )}
+            </p>
             <h2 class="in-five__title">{slide.title}</h2>
             <p class="in-five__note">{slide.note}</p>
           </figcaption>

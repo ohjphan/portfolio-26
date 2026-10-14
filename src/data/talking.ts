@@ -29,8 +29,17 @@ export const talking = {
       date: 'Feb 2021',
       venue:
         'Design Field Notes · Jacobs Institute for Design Innovation, UC Berkeley · Virtual',
-      description:
-        'A candid look at moving from product designer to entrepreneur — drawing from founding Hathorway and co-founding Ritual Meals, and the lessons of designing both products and businesses.',
+      description: {
+        segments: [
+          {
+            text: 'A candid look at moving from product designer to entrepreneur — drawing from founding ',
+          },
+          { text: 'Hathorway', href: 'https://hathorway.com/', external: true },
+          {
+            text: ' and co-founding Ritual Meals, and the lessons of designing both products and businesses.',
+          },
+        ],
+      },
     },
     {
       title: 'New Year’s Resolutions for Designers',

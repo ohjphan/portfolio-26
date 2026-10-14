@@ -131,8 +131,9 @@ export const jessica = {
       },
       {
         image: '/images/jessica-in-5/10-jewelry-sketch.png',
-        alt: 'Ink sketch of Hathorway jewelry studies',
+        alt: 'Ink sketch of jewelry studies',
         eyebrow: '10 \u2014 Hathorway',
+        eyebrowHref: 'https://hathorway.com/',
         title: 'My ring made it to Netflix \u2014 and SFMOMA.',
         note: 'I design jewelry on the side. Fun fact: one of my rings was featured on the leading lady in Netflix\u2019s Clickbait. Some pieces were also displayed and sold at SFMOMA after I persistently emailed the buyer.',
       },
@@ -223,8 +224,14 @@ export const jessica = {
         imageAlt:
           'Surreal collage of a gold and black ring on a pedestal with a Newton’s cradle shadow',
         headline: 'I founded a jewelry brand on the side.',
-        detail:
-          'Hathorway — geometric pieces in upcycled buffalo horn. One ring sold at SFMOMA and was worn by the leading lady in Netflix’s Clickbait.',
+        detail: {
+          segments: [
+            { text: 'Hathorway', href: 'https://hathorway.com/', external: true },
+            {
+              text: ' — geometric pieces in upcycled buffalo horn. One ring sold at SFMOMA and was worn by the leading lady in Netflix’s Clickbait.',
+            },
+          ],
+        },
       },
       {
         image: '/images/jessica/fun-facts/06-ritual-meals.jpg',
