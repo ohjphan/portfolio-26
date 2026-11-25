@@ -11,15 +11,7 @@ export const workWith = {
       'The messy part. When the idea is still half formed, the path isn’t obvious, and someone has to start connecting the dots.',
       'That’s usually where I’m happiest.',
       'I’ve spent most of my career building 0→1 — as a founding designer, solo designer, player-coach, and sometimes a founder myself. And I still like opening Figma (actually, these days, Cursor) and making the thing myself.',
-      {
-        segments: [
-          { text: 'I think of myself as a specialist design generalist. ' },
-          { text: 'I’ve worked', href: '/creating' },
-          {
-            text: ' across crypto, HR tech, education, AI, ecommerce, enterprise, and a few things in between.',
-          },
-        ],
-      },
+      'I think of myself as a specialist design generalist. I’ve worked across crypto, HR tech, education, AI, ecommerce, enterprise, and a few things in between.',
       'Different industries. Same instincts.',
     ],
     points: [
