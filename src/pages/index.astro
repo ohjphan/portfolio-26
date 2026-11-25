@@ -1,147 +1,18 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import HandDrawnLinkStroke from '../components/HandDrawnLinkStroke.astro';
-import HandDrawnDivider from '../components/HandDrawnDivider.astro';
-import HomeButton from '../components/HomeButton.astro';
-import HomePortrait from '../components/HomePortrait.astro';
-import BrandMarquee from '../components/BrandMarquee.astro';
-import EssayCard from '../components/EssayCard.astro';
-import { site } from '../data/site';
-import { seo } from '../data/seo';
-import { selectedWorkLogos } from '../data/selected-work';
-import {
-  personJsonLd,
-  professionalServiceJsonLd,
-  websiteJsonLd,
-} from '../lib/seo';
-import { withBase } from '../lib/paths';
-import { getCollection } from 'astro:content';
+import CollaboratingPage from '../components/CollaboratingPage.astro';
+import { workWith } from '../data/work-with';
+import { professionalServiceJsonLd, personJsonLd, websiteJsonLd } from '../lib/seo';
 
-const { hello, prefix, shuffle, identity, helping } = site.intro;
-
-const published = await getCollection('essays', ({ data }) => !data.draft);
-const essayById = new Map(published.map((essay) => [essay.id, essay]));
-const fieldNotes = site.fieldNotes
-  .map((id) => essayById.get(id))
-  .filter((essay): essay is (typeof published)[number] => Boolean(essay));
+const { meta } = workWith;
 ---
 
 <Layout
-  description={seo.defaultDescription}
-  jsonLd={[websiteJsonLd(), personJsonLd(), professionalServiceJsonLd()]}
+  title={meta.title}
+  description={meta.description}
+  image="/images/og/open-to-collaborating.png"
+  imageAlt="Hands assembling a paper interface collage — Dear people building something"
+  jsonLd={[websiteJsonLd(), professionalServiceJsonLd(), personJsonLd()]}
 >
-  <header class="home-hero">
-    <div class="home-hero__copy">
-      <p class="eyebrow home-hero__hello">{hello}</p>
-      <h1 class="heading-xl home-hero__title">
-        <span class="home-hero__prefix">{prefix}</span>
-        <span class="home-hero__shuffle" aria-live="polite">
-          <span class="home-hero__shuffle-sizer" aria-hidden="true">
-            {shuffle.reduce((a, b) => (a.length >= b.length ? a : b))}
-          </span>
-          {
-            shuffle.map((phrase, index) => (
-              <span
-                class:list={[
-                  'home-hero__shuffle-item',
-                  index === 0 && 'is-active',
-                ]}
-              >
-                {phrase}
-              </span>
-            ))
-          }
-        </span>
-      </h1>
-      <p class="home-hero__lede">{identity}</p>
-      <p class="home-hero__helping">{helping}</p>
-      <div class="home-hero__cta">
-        <HomeButton
-          href="/open-to-collaborating"
-          label="Work with Jessica"
-        />
-        <a href={withBase('/creating')} class="home-btn home-btn--secondary">
-          <span class="home-btn__text">
-            <span class="home-btn__label">See Creating</span>
-            <HandDrawnLinkStroke />
-          </span>
-        </a>
-      </div>
-    </div>
-
-    <div class="home-hero__visual">
-      <HomePortrait />
-    </div>
-  </header>
-
-  {
-    fieldNotes.length > 0 && (
-      <>
-        <HandDrawnDivider />
-        <section class="home-band" aria-labelledby="field-notes-title">
-          <div class="home-band__head">
-            <h2 id="field-notes-title" class="section-title">
-              From the Field Notes
-            </h2>
-            <a href={withBase('/writing')} class="home-band__more">
-              <span class="home-band__more-sketch">
-                <span class="home-band__more-text">All Writing</span>
-                <HandDrawnLinkStroke />
-              </span>
-            </a>
-          </div>
-          <div class="essay-grid home-field-notes">
-            {fieldNotes.map((essay) => (
-              <EssayCard
-                title={essay.data.title}
-                description={essay.data.description}
-                href={`/writing/${essay.id}`}
-                category={essay.data.category}
-                cover={essay.data.cover}
-                coverAlt={essay.data.coverAlt}
-              />
-            ))}
-          </div>
-        </section>
-      </>
-    )
-  }
-
-  <HandDrawnDivider />
-
-  <BrandMarquee items={selectedWorkLogos} />
+  <CollaboratingPage />
 </Layout>
-
-<script is:inline>
-  (() => {
-    const root = document.querySelector('.home-hero__shuffle');
-    if (!root) return;
-
-    const items = Array.from(
-      root.querySelectorAll('.home-hero__shuffle-item'),
-    );
-    if (items.length < 2) return;
-
-    const reduceMotion = window.matchMedia(
-      '(prefers-reduced-motion: reduce)',
-    ).matches;
-    if (reduceMotion) return;
-
-    let index = 0;
-    const intervalMs = 2800;
-
-    window.setInterval(() => {
-      items[index].classList.remove('is-active');
-      index = (index + 1) % items.length;
-      items[index].classList.add('is-active');
-    }, intervalMs);
-  })();
-</script>
-
-<script>
-  import { observeWritingMosaics } from '../lib/mosaic-reveal';
-  observeWritingMosaics();
-  document.addEventListener('astro:page-load', () => {
-    observeWritingMosaics();
-  });
-</script>
